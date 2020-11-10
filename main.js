@@ -1,5 +1,5 @@
 function setupAudio() {
-    document.querySelector('.play-button')?.addEventListener('click', async () => {
+    document.querySelector('.play-button').addEventListener('click', async () => {
         await Tone.start()
         console.log('audio is ready')
     });
@@ -13,8 +13,8 @@ function sequencer() {
     let index = 0;
 
     Tone.Transport.scheduleRepeat(repeat, '4n');
-    Tone.Transport.start();
-    let metronomePlaying = true;
+    // Tone.Transport.start();
+    let metronomePlaying = false;
 
     function repeat() {
         let step = index % 4;
@@ -29,13 +29,18 @@ function sequencer() {
         index++;
     }
 
-    document.querySelector('.play-button-2').addEventListener('click', () => {
+    playButton = document.querySelector('.play-button');
+    playButton.addEventListener('click', () => {
         if (metronomePlaying) {
             Tone.Transport.stop();
+            playButton.classList.remove('fa-pause');
+            playButton.classList.add('fa-play');
             metronomePlaying = false;
         }
         else {
             Tone.Transport.start();
+            playButton.classList.remove('fa-play');
+            playButton.classList.add('fa-pause');
             metronomePlaying = true;
         }
     });
