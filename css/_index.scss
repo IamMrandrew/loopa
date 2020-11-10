@@ -63,25 +63,34 @@ body {
             .text-wrapper {
                 display: flex;
                 justify-content: space-between;
+                align-items: bottom;
                 color: #FFFFFF;
                 font-size: 24px;
                 font-weight: 600;
 
-                .bpm-input {
-                    color: #FFFFFF;
-                    font-size: 26px;
-                    font-weight: 600;
-                    text-align: right; 
-                    border: 0px;
-                    width: 45px;
-                    height: 27px;
+                .input-wrapper {
+                    .bpm-input {
+                        display: block;
+                        margin-top: -0.1em;
+                        margin-bottom: 0px;
+                        color: #FFFFFF;
+                        font-size: 24px;
+                        font-weight: 600;
+                        text-align: right; 
+                        border: 0px;
+                        border-bottom: solid 3px;
+                        width: 45px;
+                        padding: 0px;
+                        appearance: none;
+                        -webkit-appearance: none;
+                        -moz-appearance: none;
+                        outline: none;
+                        background: transparent;
+                    }
+                }
+
+                .bpm-text {
                     padding: 0px;
-                    vertical-align: top;
-                    appearance: none;
-                    -webkit-appearance: none;
-                    -moz-appearance: none;
-                    outline: none;
-                    background: transparent;
                 }
             }
         }

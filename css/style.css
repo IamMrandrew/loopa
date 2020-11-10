@@ -745,25 +745,34 @@ body .bottom .bpm .text-wrapper {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  -webkit-box-align: bottom;
+      -ms-flex-align: bottom;
+          align-items: bottom;
   color: #FFFFFF;
   font-size: 24px;
   font-weight: 600;
 }
 
-body .bottom .bpm .text-wrapper .bpm-input {
+body .bottom .bpm .text-wrapper .input-wrapper .bpm-input {
+  display: block;
+  margin-top: -0.1em;
+  margin-bottom: 0px;
   color: #FFFFFF;
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 600;
   text-align: right;
   border: 0px;
+  border-bottom: solid 3px;
   width: 45px;
-  height: 27px;
   padding: 0px;
-  vertical-align: top;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   outline: none;
   background: transparent;
+}
+
+body .bottom .bpm .text-wrapper .bpm-text {
+  padding: 0px;
 }
 /*# sourceMappingURL=style.css.map */
