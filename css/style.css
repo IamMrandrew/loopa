@@ -669,12 +669,17 @@ body {
   background-color: #94AFA6;
 }
 
-body .audio-control {
+body nav {
+  margin-top: 15px;
+}
+
+body nav .audio-control {
   margin-left: auto;
   margin-right: auto;
   max-width: 150px;
   padding: 15px;
-  padding-left: 35px;
+  padding-left: 25px;
+  padding-right: 25px;
   background-color: rgba(239, 239, 239, 0.3);
   border-radius: 20px;
   display: -webkit-box;
@@ -685,9 +690,13 @@ body .audio-control {
           justify-content: center;
 }
 
-body .audio-control .play-button {
+body nav .audio-control .play-button {
   color: #FFFFFF;
   font-size: 32px;
+}
+
+body nav .audio-control .play-button:hover, body nav .audio-control .play-button:focus {
+  cursor: pointer;
 }
 
 body .bottom {
@@ -739,5 +748,22 @@ body .bottom .bpm .text-wrapper {
   color: #FFFFFF;
   font-size: 24px;
   font-weight: 600;
+}
+
+body .bottom .bpm .text-wrapper .bpm-input {
+  color: #FFFFFF;
+  font-size: 26px;
+  font-weight: 600;
+  text-align: right;
+  border: 0px;
+  width: 45px;
+  height: 27px;
+  padding: 0px;
+  vertical-align: top;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none;
+  background: transparent;
 }
 /*# sourceMappingURL=style.css.map */

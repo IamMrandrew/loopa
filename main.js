@@ -8,8 +8,14 @@ function setupAudio() {
 function sequencer() {
     const metronomeSound = new Tone.Player("audio/metronome-me.mp3").toMaster();
     metronomeSound.volume.value = -15;
+
+    const bpmInput = document.querySelector('.bpm-input');
     let bpm = 130;
     Tone.Transport.bpm.value = bpm;
+    bpmInput.addEventListener('input', () => {
+        bpm = bpmInput.value;
+        Tone.Transport.bpm.value = bpm;
+    });
     let index = 0;
 
     Tone.Transport.scheduleRepeat(repeat, '4n');
