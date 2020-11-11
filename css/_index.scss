@@ -3,7 +3,7 @@ body {
 
     nav {
         margin-top: 15px;
-        margin-bottom: 45px;
+        margin-bottom: 60px;
 
         .audio-control {
             margin-left: auto;
@@ -31,7 +31,7 @@ body {
 
     .main {
         display: flex;
-
+        justify-content: center;
 
         .looper-outer {
             height: 485px;

@@ -671,7 +671,7 @@ body {
 
 body nav {
   margin-top: 15px;
-  margin-bottom: 45px;
+  margin-bottom: 60px;
 }
 
 body nav .audio-control {
@@ -704,6 +704,9 @@ body .main {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 body .main .looper-outer {
