@@ -1,8 +1,11 @@
 function setupAudio() {
+    
     document.querySelector('.play-button').addEventListener('click', async () => {
-        await Tone.start()
-        console.log('audio is ready')
+        await Tone.start();
+        audio_context.resume();
+        console.log('audio is ready');
     });
+
 }
 let recording = new Tone.Player("");
 
@@ -150,29 +153,30 @@ function createDownloadLink() {
 }
 
 
-window.onload = function init() {
-    try {
-    // webkit shim
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
-    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
-    window.URL = window.URL || window.webkitURL;
-    
-    audio_context = new AudioContext;
-    console.log('Audio context set up.');
-    console.log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
-    } catch (e) {
-    alert('No web audio support in this browser!');
-    }
-    
-    navigator.getUserMedia({audio: true}, startUserMedia, function(e) {
-    console.log('No live audio input: ' + e);
-    });
-};
+function setupRecorder() {
+    window.onload = function init() {
+        try {
+        // webkit shim
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
+        window.URL = window.URL || window.webkitURL;
+        
+        audio_context = new AudioContext;
+        console.log('Audio context set up.');
+        console.log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
+        } catch (e) {
+        alert('No web audio support in this browser!');
+        }
+        
+        navigator.getUserMedia({audio: true}, startUserMedia, function(e) {
+        console.log('No live audio input: ' + e);
+        });
+    };
+}
 
 
-
-
-
+setupRecorder();
 setupAudio();
+
 sequencer();
 looper();
