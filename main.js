@@ -52,5 +52,13 @@ function sequencer() {
     });
 }
 
+function looper() {
+    loopButton = document.querySelector('.loop-button');
+    loopButton.addEventListener('click', () => {
+        loopButton.classList.toggle('loop-button-recording');
+    })
+}
+
 setupAudio();
 sequencer();
+looper();

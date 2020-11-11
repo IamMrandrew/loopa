@@ -14,6 +14,18 @@
         <i class="play-button fas fa-play"></i>
     </div>
     </nav>
+    <div class="container main">
+        <div class="looper-outer">
+        <div class="looper">
+            <div class="looper-header">
+                <h2>Loop 1</h2>
+            </div>
+            <div class="loop-button-circle">
+                <div class="loop-button"></div>
+            </div>
+        </div>
+        </div>
+    </div>
     <div class="container bottom"> 
         <div class="metronome">
             <div class="metronome-dot dot1"></div>
@@ -21,15 +33,20 @@
             <div class="metronome-dot dot3"></div>
             <div class="metronome-dot dot4"></div>
         </div>
-        <div class="bpm">
-        <div class="text-wrapper">
-            <div class="input-wrapper">
-                <input type="text" class="bpm-input" value="130"> 
+        <div class="bpm-control">
+            <div class="bpm">
+            <div class="text-wrapper">
+                <div class="input-wrapper">
+                    <input type="text" class="bpm-input" value="130"> 
+                </div>
+                <span class="bpm-text">BPM</span>
+                <span class="rhythm-input">4/4</span>
             </div>
-            <span class="bpm-text">BPM</span>
-            <span class="rhythm-input">4/4</span>
+            </div> 
+            <div class="bpm-mute">
+                <i class="fas fa-volume-down"></i>
+            </div>
         </div>
-        </div> 
     </div>
 
     <script src="https://kit.fontawesome.com/988906133c.js" crossorigin="anonymous"></script>

@@ -19,7 +19,7 @@ body {
             justify-content: center;
     
             .play-button {
-                color: #FFFFFF;
+                color: $themeWhite;
                 font-size: 32px;
     
                 &:hover, &:focus {
@@ -32,30 +32,60 @@ body {
     .main {
         display: flex;
 
-        .looper {
+
+        .looper-outer {
             height: 485px;
             width: 300px;
-            background-color: $themeBlack;
             border-radius: 40px;
+            padding: 18px;
+            background-color: $transparent;
+            
+            .looper {
+                height: 100%;
+                background-color: $themeBlack;
+                border-radius: 40px;
+                padding: 15px;
 
-            .loop-button-circle {
-                margin-left: auto;
-                margin-right: auto;
-                margin-top: 30px;
-                width: 100px;
-                height: 100px;
-                border-radius: 50%;
-                background-color: #FFFFFF;
+                .looper-header {
+                    margin-top: 15px;
+                    margin-bottom: 30px;
 
-                .loop-button {
+                    h2 {
+                        color: $themeWhite;
+                        font-size: 24px;
+                    }
+                }
+
+                .loop-button-circle {
                     margin-left: auto;
                     margin-right: auto;
-                    margin-top: 30px;
                     width: 100px;
                     height: 100px;
                     border-radius: 50%;
-                    background-color: #F17474;
-    
+                    background-color: $themeWhite;
+                    box-shadow: 0 0 0 13px $transparent;
+                    
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    
+                    .loop-button {
+                        width: 45px;
+                        height: 45px;
+                        border-radius: 50%;
+                        background-color: #F17474;
+                        transition: all 0.25s;
+
+                        &:hover, &:focus {
+                            cursor: pointer;
+                        }
+                    }
+
+                    .loop-button-recording {
+                        width: 35px;
+                        height: 35px;
+                        border-radius: 20%;
+                    }
                 }
             }
         }
@@ -76,55 +106,70 @@ body {
                 width: 50px;
                 height: 50px;
                 border-radius: 50%;
-                background-color: #FFFFFF;
+                background-color: $themeWhite;
             }
 
             .current-dot {
                 background-color: $themeBlack;
             }
         }
+        .bpm-control {
+            display: flex;
+            justify-content: center;
+            align-content: center;
 
-        .bpm {
-            margin-left: auto;
-            margin-right: auto;    
-            max-width: 200px;
-            padding: 15px;
-            padding-left: 25px;
-            padding-right: 25px;
-            background-color: $transparent;
-            border-radius: 20px;
-            
-            .text-wrapper {
-                display: flex;
-                justify-content: space-between;
-                align-items: bottom;
-                color: #FFFFFF;
-                font-size: 24px;
-                font-weight: 600;
+            .bpm {
+                max-width: 200px;
+                padding: 15px;
+                padding-left: 25px;
+                padding-right: 25px;
+                background-color: $transparent;
+                border-radius: 20px;
+                margin-right: 10px;
+                
+                .text-wrapper {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: bottom;
+                    color: $themeWhite;
+                    font-size: 24px;
+                    font-weight: 600;
 
-                .input-wrapper {
-                    .bpm-input {
-                        display: block;
-                        margin-top: -0.1em;
-                        margin-bottom: 0px;
-                        color: #FFFFFF;
-                        font-size: 24px;
-                        font-weight: 600;
-                        text-align: right; 
-                        border: 0px;
-                        border-bottom: solid 3px;
-                        width: 45px;
+                    .input-wrapper {
+                        .bpm-input {
+                            display: block;
+                            margin-top: -0.1em;
+                            margin-bottom: 0px;
+                            color: $themeWhite;
+                            font-size: 24px;
+                            font-weight: 600;
+                            text-align: right; 
+                            border: 0px;
+                            border-bottom: solid 3px;
+                            width: 45px;
+                            padding: 0px;
+                            appearance: none;
+                            -webkit-appearance: none;
+                            -moz-appearance: none;
+                            outline: none;
+                            background: transparent;
+                        }
+                    }
+
+                    .bpm-text {
                         padding: 0px;
-                        appearance: none;
-                        -webkit-appearance: none;
-                        -moz-appearance: none;
-                        outline: none;
-                        background: transparent;
                     }
                 }
+            }
 
-                .bpm-text {
-                    padding: 0px;
+            .bpm-mute {
+                padding: 15px;
+                background-color: $transparent;
+                border-radius: 20px;
+
+                i {
+                    font-size: 25px;
+                    color: $themeWhite;
                 }
             }
         }
