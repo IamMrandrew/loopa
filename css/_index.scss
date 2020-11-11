@@ -1,8 +1,9 @@
 body {
-    background-color: #94AFA6;
+    background-color: $themeGreen;
 
     nav {
         margin-top: 15px;
+        margin-bottom: 45px;
 
         .audio-control {
             margin-left: auto;
@@ -11,7 +12,8 @@ body {
             padding: 15px;
             padding-left: 25px;
             padding-right: 25px;
-            background-color: rgba(239, 239, 239, 0.3);
+
+            background-color: $transparent;
             border-radius: 20px;
             display: flex;
             justify-content: center;
@@ -22,6 +24,38 @@ body {
     
                 &:hover, &:focus {
                     cursor: pointer;
+                }
+            }
+        }
+    }
+
+    .main {
+        display: flex;
+
+        .looper {
+            height: 485px;
+            width: 300px;
+            background-color: $themeBlack;
+            border-radius: 40px;
+
+            .loop-button-circle {
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 30px;
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                background-color: #FFFFFF;
+
+                .loop-button {
+                    margin-left: auto;
+                    margin-right: auto;
+                    margin-top: 30px;
+                    width: 100px;
+                    height: 100px;
+                    border-radius: 50%;
+                    background-color: #F17474;
+    
                 }
             }
         }
@@ -46,7 +80,7 @@ body {
             }
 
             .current-dot {
-                background-color: #4B4B4B;
+                background-color: $themeBlack;
             }
         }
 
@@ -57,7 +91,7 @@ body {
             padding: 15px;
             padding-left: 25px;
             padding-right: 25px;
-            background-color: rgba(239, 239, 239, 0.3);
+            background-color: $transparent;
             border-radius: 20px;
             
             .text-wrapper {

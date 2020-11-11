@@ -671,6 +671,7 @@ body {
 
 body nav {
   margin-top: 15px;
+  margin-bottom: 45px;
 }
 
 body nav .audio-control {
@@ -697,6 +698,39 @@ body nav .audio-control .play-button {
 
 body nav .audio-control .play-button:hover, body nav .audio-control .play-button:focus {
   cursor: pointer;
+}
+
+body .main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+body .main .looper {
+  height: 485px;
+  width: 300px;
+  background-color: #4B4B4B;
+  border-radius: 40px;
+}
+
+body .main .looper .loop-button-circle {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+}
+
+body .main .looper .loop-button-circle .loop-button {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #F17474;
 }
 
 body .bottom {
