@@ -1,9 +1,11 @@
 body {
     background-color: $themeGreen;
 
+
     nav {
         margin-top: 15px;
-        margin-bottom: 60px;
+        // margin-bottom: 60px;
+        margin-bottom: 2vh;
 
         .audio-control {
             margin-left: auto;
@@ -164,7 +166,7 @@ body {
             }
 
             .bpm-mute {
-                padding: 15px;
+                padding: 18px;
                 background-color: $transparent;
                 border-radius: 20px;
 
