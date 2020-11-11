@@ -754,7 +754,7 @@ body .main .looper-outer .looper .loop-button-circle {
           align-items: center;
 }
 
-body .main .looper-outer .looper .loop-button-circle .loop-button {
+body .main .looper-outer .looper .loop-button-circle .loop-button, body .main .looper-outer .looper .loop-button-circle .loop-stop {
   width: 45px;
   height: 45px;
   border-radius: 50%;
@@ -763,7 +763,7 @@ body .main .looper-outer .looper .loop-button-circle .loop-button {
   transition: all 0.25s;
 }
 
-body .main .looper-outer .looper .loop-button-circle .loop-button:hover, body .main .looper-outer .looper .loop-button-circle .loop-button:focus {
+body .main .looper-outer .looper .loop-button-circle .loop-button:hover, body .main .looper-outer .looper .loop-button-circle .loop-button:focus, body .main .looper-outer .looper .loop-button-circle .loop-stop:hover, body .main .looper-outer .looper .loop-button-circle .loop-stop:focus {
   cursor: pointer;
 }
 
