@@ -18,7 +18,12 @@ function sequencer() {
     let bpm = 130;
     Tone.Transport.bpm.value = bpm;
     bpmInput.addEventListener('input', () => {
-        bpm = bpmInput.value;
+        if (bpm > 5000) {
+            console.log("bpm too high");
+        } else {
+            bpm = bpmInput.value;
+        }
+            
         Tone.Transport.bpm.value = bpm;
     });
 
