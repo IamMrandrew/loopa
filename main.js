@@ -10,7 +10,6 @@ function setupAudio() {
 let recording = new Tone.Player("");
 
 function sequencer() {
-    // const metronomeSound = new Tone.Player("audio/metronome-me.mp3").toMaster();
     const metronomeSound = new Tone.Player("audio/metronome.mp3").toDestination();
     metronomeSound.volume.value = -10;
 
