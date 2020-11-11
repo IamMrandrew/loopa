@@ -16,22 +16,33 @@ function sequencer() {
         bpm = bpmInput.value;
         Tone.Transport.bpm.value = bpm;
     });
+
+    const bpmMute = document.querySelector('.bpm-mute i');
+    let bpmMuted = false;
+    bpmMute.addEventListener('click', () => {
+        if (!bpmMuted)
+            bpmMuted = true;
+        else
+            bpmMuted = false;
+        bpmMute.classList.toggle('bpm-mute-disable');
+    });
+
     let index = 0;
 
     Tone.Transport.scheduleRepeat(repeat, '4n');
-    // Tone.Transport.start();
     let metronomePlaying = false;
 
     function repeat() {
         let step = index % 4;
         let metronomedots = document.querySelectorAll('.metronome-dot');
         metronomedots.forEach(metronomedot => {
-            // console.log(metronomedot);
             metronomedot.classList.remove('current-dot');
         });
         let currentMetronomeDot = document.querySelector(`.metronome .metronome-dot:nth-child(${step + 1}`);
         currentMetronomeDot.classList.add('current-dot');
-        metronomeSound.start();
+
+        if (!bpmMuted)
+            metronomeSound.start();
         index++;
     }
 

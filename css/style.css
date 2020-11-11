@@ -810,7 +810,6 @@ body .bottom .bpm-control {
 }
 
 body .bottom .bpm-control .bpm {
-  max-width: 200px;
   padding: 15px;
   padding-left: 25px;
   padding-right: 25px;
@@ -838,6 +837,7 @@ body .bottom .bpm-control .bpm .text-wrapper .input-wrapper .bpm-input {
   display: block;
   margin-top: -0.1em;
   margin-bottom: 0px;
+  margin-right: 5px;
   color: #FFFFFF;
   font-size: 24px;
   font-weight: 600;
@@ -855,6 +855,7 @@ body .bottom .bpm-control .bpm .text-wrapper .input-wrapper .bpm-input {
 
 body .bottom .bpm-control .bpm .text-wrapper .bpm-text {
   padding: 0px;
+  margin-right: 10px;
 }
 
 body .bottom .bpm-control .bpm-mute {
@@ -866,5 +867,15 @@ body .bottom .bpm-control .bpm-mute {
 body .bottom .bpm-control .bpm-mute i {
   font-size: 25px;
   color: #FFFFFF;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+body .bottom .bpm-control .bpm-mute i:hover, body .bottom .bpm-control .bpm-mute i:focus {
+  cursor: pointer;
+}
+
+body .bottom .bpm-control .bpm-mute .bpm-mute-disable {
+  opacity: 30%;
 }
 /*# sourceMappingURL=style.css.map */
