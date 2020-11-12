@@ -674,6 +674,12 @@ body nav {
   margin-bottom: 2vh;
 }
 
+@media screen and (min-height: 800px) {
+  body nav {
+    margin-bottom: 10vh;
+  }
+}
+
 body nav .audio-control {
   margin-left: auto;
   margin-right: auto;
@@ -704,9 +710,8 @@ body .main {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
 }
 
 body .main .looper-outer {
