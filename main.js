@@ -2,11 +2,11 @@ function setupAudio() {
     
     document.querySelector('.play-button').addEventListener('click', async () => {
         await Tone.start();
-        audio_context.resume();
         console.log('audio is ready');
     });
 
 }
+
 let recording = new Tone.Player("");
 
 function sequencer() {
@@ -100,86 +100,128 @@ function looper() {
 }
 
 
-//Recorderjs
+// Recorderjs
 
-var audio_context;
-var recorder;
+//webkitURL is deprecated but nevertheless
+URL = window.URL || window.webkitURL;
 
-function startUserMedia(stream) {
-    var input = audio_context.createMediaStreamSource(stream);
-    console.log('Media stream created.');
 
-    // Uncomment if you want the audio to feedback directly
-    //input.connect(audio_context.destination);
-    //console.log('Input connected to audio context destination.');
-    
-    recorder = new Recorder(input);
-    console.log('Recorder initialised.');
-}
+var gumStream; 						//stream from getUserMedia()
+var rec; 							//Recorder.js object
+var input; 							//MediaStreamAudioSourceNode we'll be recording
+
+
+// shim for AudioContext when it's not avb. 
+var AudioContext = window.AudioContext || window.webkitAudioContext;
+var audioContext //audio context to help us record
+
 
 function startRecording() {
-    recorder && recorder.record();
-    console.log('Recording...');
+	console.log("recordButton clicked");
+
+
+	/*
+		Simple constraints object, for more advanced audio features see
+		https://addpipe.com/blog/audio-constraints-getusermedia/
+	*/
+    
+    var constraints = { audio: true, video:false }
+
+
+ 	/*
+    	Disable the record button until we get a success or fail from getUserMedia() 
+	*/
+
+
+	/*
+    	We're using the standard promise based getUserMedia() 
+    	https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
+	*/
+
+
+	navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
+		console.log("getUserMedia() success, stream created, initializing Recorder.js ...");
+
+
+		/*
+			create an audio context after getUserMedia is called
+			sampleRate might change after getUserMedia is called, like it does on macOS when recording through AirPods
+			the sampleRate defaults to the one set in your OS for your playback device
+
+		*/
+		audioContext = new AudioContext();
+
+		/*  assign to gumStream for later use  */
+		gumStream = stream;
+		
+		/* use the stream */
+		input = audioContext.createMediaStreamSource(stream);
+
+
+		/* 
+			Create the Recorder object and configure to record mono sound (1 channel)
+			Recording 2 channels  will double the file size
+		*/
+		rec = new Recorder(input,{numChannels:1})
+
+
+		//start the recording process
+		rec.record()
+
+
+		console.log("Recording started");
+
+
+	}).catch(function(err) {
+	  	//enable the record button if getUserMedia() fails
+        console.log("error");
+	});
 }
+
+
+function pauseRecording(){
+	console.log("pauseButton clicked rec.recording=",rec.recording );
+	if (rec.recording){
+		//pause
+		rec.stop();
+	}else{
+		//resume
+		rec.record()
+
+	}
+}
+
 
 function stopRecording() {
-    recorder && recorder.stop();
-    console.log('Stopped recording.');
-    
-    // create WAV download link using audio data blob
-    createDownloadLink();
-    
-    recorder.clear();
+	console.log("stopButton clicked");
+
+	//tell the recorder to stop the recording
+	rec.stop();
+
+
+	//stop microphone access
+	gumStream.getAudioTracks()[0].stop();
+
+
+	//create the wav blob and pass it on to createDownloadLink
+	rec.exportWAV(createDownloadLink);
 }
 
-var url;
 
-function createDownloadLink() {
-    recorder && recorder.exportWAV(function(blob) {
-    // var url = URL.createObjectURL(blob);
-    url = URL.createObjectURL(blob);
-    // var li = document.createElement('li');
-    // var au = document.createElement('audio');
-    // var hf = document.createElement('a');
-    
-    // au.controls = true;
-    // au.src = url;
-    // hf.href = url;
-    // hf.download = new Date().toISOString() + '.wav';
-    // hf.innerHTML = hf.download;
-    // li.appendChild(au);
-    // li.appendChild(hf);
-    // recordingslist.appendChild(li);
+function createDownloadLink(blob) {
+	
+	var url = URL.createObjectURL(blob);
+	var au = document.createElement('audio');
+	var li = document.createElement('li');
+	var link = document.createElement('a');
 
-    console.log(url);
     recording = new Tone.Player(url).toDestination();
-    });
+
 }
 
 
-function setupRecorder() {
-    window.onload = function init() {
-        try {
-        // webkit shim
-        window.AudioContext = window.AudioContext || window.webkitAudioContext;
-        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
-        window.URL = window.URL || window.webkitURL;
-        
-        audio_context = new AudioContext;
-        console.log('Audio context set up.');
-        console.log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
-        } catch (e) {
-        alert('No web audio support in this browser!');
-        }
-        
-        navigator.getUserMedia({audio: true}, startUserMedia, function(e) {
-        console.log('No live audio input: ' + e);
-        });
-    };
-}
 
-
-setupRecorder();
+// setupRecorder();
 setupAudio();
 
 sequencer();
