@@ -12,6 +12,11 @@ recordings[0] = new Tone.Player("");
 recordings[1] = new Tone.Player("");
 recordings[2] = new Tone.Player("");
 
+let recordingsTime = [];
+recordingsTime[0] = 0.0;
+recordingsTime[1] = 0.0;
+recordingsTime[2] = 0.0;
+
 let recordingIndex = 0;
 
 function sequencer() {
@@ -46,7 +51,7 @@ function sequencer() {
     Tone.Transport.scheduleRepeat(repeat, '4n');
     let metronomePlaying = false;
 
-    function repeat() {
+    function repeat(time) {
         let step = index % 4;
         let metronomedots = document.querySelectorAll('.metronome-dot');
         metronomedots.forEach(metronomedot => {
@@ -57,17 +62,29 @@ function sequencer() {
 
         if (!bpmMuted)
             metronomeSound.start();
-        if (step == 0)
-        try {
-            recordings[0].start();
-            recordings[1].start();
-            recordings[2].start();
-        } catch {
-            console.log("Require input recordings");
-        }
-            
-        index++;
 
+        // if (step == 0)
+        // try {
+        //     recordings[0].start();
+        // } catch {
+        //     console.log("Require input recordings for Loop 1");
+        // }
+
+        // if (step == 0)
+        // try {
+        //     recordings[1].start();
+        // } catch {
+        //     console.log("Require input recordings for Loop 2");
+        // }
+
+        // if (step == 0)
+        // try {
+        //     recordings[2].start();
+        // } catch {
+        //     console.log("Require input recordings for Loop 3");
+        // }
+        
+        index++;
     }
 
     playButton = document.querySelector('.play-button');
@@ -97,6 +114,7 @@ function looper() {
             if (!isRecording) {
                 startRecording();
                 isRecording = true;
+                recordingsTime[index] = Tone.Transport.ticks; 
             }
             else {
                 stopRecording();
@@ -108,6 +126,26 @@ function looper() {
         });
     });
 
+    setInterval(() => {
+        if (Tone.Transport.ticks % (Tone.Ticks("4n").toTicks() * 4) == recordingsTime[0] % (Tone.Ticks("4n").toTicks() * 4))
+        try {
+            recordings[0].start();
+        } catch {
+            console.log("Require input recordings for Loop 1");
+        }
+        if (Tone.Transport.ticks % (Tone.Ticks("4n").toTicks() * 4) == recordingsTime[1] % (Tone.Ticks("4n").toTicks() * 4))
+        try {
+            recordings[1].start();
+        } catch {
+            console.log("Require input recordings for Loop 1");
+        }
+        if (Tone.Transport.ticks % (Tone.Ticks("4n").toTicks() * 4) == recordingsTime[2] % (Tone.Ticks("4n").toTicks() * 4))
+        try {
+            recordings[2].start();
+        } catch {
+            console.log("Require input recordings for Loop 1");
+        }
+    }, 1);
 }
 
 
@@ -230,6 +268,5 @@ function createDownloadLink(blob) {
 
 
 setupAudio();
-
 sequencer();
 looper();

@@ -744,7 +744,7 @@ body .main {
 
 body .main .looper-outer {
   height: 485px;
-  width: 300px;
+  width: 330px;
   border-radius: 40px;
   padding: 18px;
   margin-bottom: 30px;
@@ -810,6 +810,7 @@ body .main .looper-outer .looper .loop-button-circle .loop-button-recording {
 body .bottom {
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 20px;
   max-width: 350px;
 }
 
