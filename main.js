@@ -10,6 +10,7 @@ function setupAudio() {
 let recordings = [];
 recordings[0] = new Tone.Player("");
 recordings[1] = new Tone.Player("");
+recordings[2] = new Tone.Player("");
 
 let recordingIndex = 0;
 
@@ -18,7 +19,7 @@ function sequencer() {
     metronomeSound.volume.value = -10;
 
     const bpmInput = document.querySelector('.bpm-input');
-    let bpm = 130;
+    let bpm = 60;
     Tone.Transport.bpm.value = bpm;
     bpmInput.addEventListener('input', () => {
         if (bpm > 5000) {
@@ -60,6 +61,7 @@ function sequencer() {
         try {
             recordings[0].start();
             recordings[1].start();
+            recordings[2].start();
         } catch {
             console.log("Require input recordings");
         }

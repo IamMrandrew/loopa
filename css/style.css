@@ -680,7 +680,25 @@ body nav {
   }
 }
 
-body nav .audio-control {
+body nav .nav-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-left: 15px;
+  padding-right: 30px;
+}
+
+body nav .nav-wrap .main-title {
+  color: #FFFFFF;
+  font-size: 2rem;
+  font-weight: 600;
+  justify-self: flex-start;
+}
+
+body nav .nav-wrap .audio-control {
   margin-left: auto;
   margin-right: auto;
   max-width: 150px;
@@ -697,13 +715,21 @@ body nav .audio-control {
           justify-content: center;
 }
 
-body nav .audio-control .play-button {
+body nav .nav-wrap .audio-control .play-button {
   color: #FFFFFF;
   font-size: 28px;
 }
 
-body nav .audio-control .play-button:hover, body nav .audio-control .play-button:focus {
+body nav .nav-wrap .audio-control .play-button:hover, body nav .nav-wrap .audio-control .play-button:focus {
   cursor: pointer;
+}
+
+body nav .nav-wrap .bar {
+  background-color: #FFFFFF;
+  width: 26px;
+  height: 4px;
+  margin-bottom: 5px;
+  justify-self: flex-end;
 }
 
 body .main {
@@ -712,6 +738,8 @@ body .main {
   display: flex;
   -ms-flex-pack: distribute;
       justify-content: space-around;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 
 body .main .looper-outer {
@@ -719,6 +747,7 @@ body .main .looper-outer {
   width: 300px;
   border-radius: 40px;
   padding: 18px;
+  margin-bottom: 30px;
   background-color: rgba(239, 239, 239, 0.3);
 }
 
@@ -791,7 +820,6 @@ body .bottom .metronome {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  margin-top: 30px;
   margin-bottom: 25px;
 }
 
