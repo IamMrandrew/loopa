@@ -7,7 +7,11 @@ function setupAudio() {
 
 }
 
-let recording = new Tone.Player("");
+let recordings = [];
+recordings[0] = new Tone.Player("");
+recordings[1] = new Tone.Player("");
+
+let recordingIndex = 0;
 
 function sequencer() {
     const metronomeSound = new Tone.Player("audio/metronome.mp3").toDestination();
@@ -54,7 +58,8 @@ function sequencer() {
             metronomeSound.start();
         if (step == 0)
         try {
-            recording.start();
+            recordings[0].start();
+            recordings[1].start();
         } catch {
             console.log("Require input recordings");
         }
@@ -82,21 +87,25 @@ function sequencer() {
 
 
 function looper() {
-    let recording = false;
-    loopButton = document.querySelector('.loop-button');
-    loopButton.addEventListener('click', () => {
-        if (!recording) {
-            startRecording();
-            recording = true;
-        }
-        else {
-            stopRecording();
-            recording = false;
-        }
+    let isRecording = false;
+    loopButtons = document.querySelectorAll('.loop-button');
+    loopButtons.forEach((loopButton, index) => {
+        loopButton.addEventListener('click', () => {
+            recordingIndex = index;
+            if (!isRecording) {
+                startRecording();
+                isRecording = true;
+            }
+            else {
+                stopRecording();
+                isRecording = false;
+            }
+                
+            loopButton.classList.toggle('loop-button-recording');
             
-        loopButton.classList.toggle('loop-button-recording');
-        
+        });
     });
+
 }
 
 
@@ -117,111 +126,107 @@ var audioContext //audio context to help us record
 
 
 function startRecording() {
-	console.log("recordButton clicked");
+    console.log("recordButton clicked");
 
-
-	/*
-		Simple constraints object, for more advanced audio features see
-		https://addpipe.com/blog/audio-constraints-getusermedia/
-	*/
+    /*
+        Simple constraints object, for more advanced audio features see
+        https://addpipe.com/blog/audio-constraints-getusermedia/
+    */
     
     var constraints = { audio: true, video:false }
 
 
- 	/*
-    	Disable the record button until we get a success or fail from getUserMedia() 
-	*/
+    /*
+        Disable the record button until we get a success or fail from getUserMedia() 
+    */
 
 
-	/*
-    	We're using the standard promise based getUserMedia() 
-    	https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
-	*/
+    /*
+        We're using the standard promise based getUserMedia() 
+        https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
+    */
 
 
-	navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
-		console.log("getUserMedia() success, stream created, initializing Recorder.js ...");
+    navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
+        console.log("getUserMedia() success, stream created, initializing Recorder.js ...");
 
 
-		/*
-			create an audio context after getUserMedia is called
-			sampleRate might change after getUserMedia is called, like it does on macOS when recording through AirPods
-			the sampleRate defaults to the one set in your OS for your playback device
+        /*
+            create an audio context after getUserMedia is called
+            sampleRate might change after getUserMedia is called, like it does on macOS when recording through AirPods
+            the sampleRate defaults to the one set in your OS for your playback device
 
-		*/
-		audioContext = new AudioContext();
+        */
+        audioContext = new AudioContext();
 
-		/*  assign to gumStream for later use  */
-		gumStream = stream;
-		
-		/* use the stream */
-		input = audioContext.createMediaStreamSource(stream);
-
-
-		/* 
-			Create the Recorder object and configure to record mono sound (1 channel)
-			Recording 2 channels  will double the file size
-		*/
-		rec = new Recorder(input,{numChannels:1})
+        /*  assign to gumStream for later use  */
+        gumStream = stream;
+        
+        /* use the stream */
+        input = audioContext.createMediaStreamSource(stream);
 
 
-		//start the recording process
-		rec.record()
+        /* 
+            Create the Recorder object and configure to record mono sound (1 channel)
+            Recording 2 channels  will double the file size
+        */
+        rec = new Recorder(input,{numChannels:1})
 
 
-		console.log("Recording started");
+        //start the recording process
+        rec.record()
 
 
-	}).catch(function(err) {
-	  	//enable the record button if getUserMedia() fails
+        console.log("Recording started");
+
+
+    }).catch(function(err) {
+        //enable the record button if getUserMedia() fails
         console.log("error");
-	});
+    });
 }
 
 
 function pauseRecording(){
-	console.log("pauseButton clicked rec.recording=",rec.recording );
-	if (rec.recording){
-		//pause
-		rec.stop();
-	}else{
-		//resume
-		rec.record()
+    console.log("pauseButton clicked rec.recording=",rec.recording );
+    if (rec.recording){
+        //pause
+        rec.stop();
+    }else{
+        //resume
+        rec.record()
 
-	}
+    }
 }
 
 
 function stopRecording() {
-	console.log("stopButton clicked");
+    console.log("stopButton clicked");
 
-	//tell the recorder to stop the recording
-	rec.stop();
+    //tell the recorder to stop the recording
+    rec.stop();
+
+    //stop microphone access
+    gumStream.getAudioTracks()[0].stop();
 
 
-	//stop microphone access
-	gumStream.getAudioTracks()[0].stop();
-
-
-	//create the wav blob and pass it on to createDownloadLink
-	rec.exportWAV(createDownloadLink);
+    //create the wav blob and pass it on to createDownloadLink
+    rec.exportWAV(createDownloadLink);
 }
 
 
 function createDownloadLink(blob) {
-	
-	var url = URL.createObjectURL(blob);
-	var au = document.createElement('audio');
-	var li = document.createElement('li');
-	var link = document.createElement('a');
+    var url = URL.createObjectURL(blob);
+    var au = document.createElement('audio');
+    var li = document.createElement('li');
+    var link = document.createElement('a');
 
-    recording = new Tone.Player(url).toDestination();
+    recordings[recordingIndex] = new Tone.Player(url).toDestination();
 
 }
 
 
 
-// setupRecorder();
 setupAudio();
 
 sequencer();
