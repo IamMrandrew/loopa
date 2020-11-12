@@ -127,19 +127,19 @@ function looper() {
     });
 
     setInterval(() => {
-        if (Tone.Transport.ticks % (Tone.Ticks("4n").toTicks() * 4) == recordingsTime[0] % (Tone.Ticks("4n").toTicks() * 4))
+        if (Math.abs(Tone.Transport.ticks % (Tone.Ticks("4n").toTicks() * 4) - recordingsTime[0] % (Tone.Ticks("4n").toTicks() * 4)) < 3)
         try {
             recordings[0].start();
         } catch {
             console.log("Require input recordings for Loop 1");
         }
-        if (Tone.Transport.ticks % (Tone.Ticks("4n").toTicks() * 4) == recordingsTime[1] % (Tone.Ticks("4n").toTicks() * 4))
+        if (Math.abs(Tone.Transport.ticks % (Tone.Ticks("4n").toTicks() * 4) - recordingsTime[1] % (Tone.Ticks("4n").toTicks() * 4)) < 3)
         try {
             recordings[1].start();
         } catch {
             console.log("Require input recordings for Loop 1");
         }
-        if (Tone.Transport.ticks % (Tone.Ticks("4n").toTicks() * 4) == recordingsTime[2] % (Tone.Ticks("4n").toTicks() * 4))
+        if (Math.abs(Tone.Transport.ticks % (Tone.Ticks("4n").toTicks() * 4) - recordingsTime[2] % (Tone.Ticks("4n").toTicks() * 4)) < 3)
         try {
             recordings[2].start();
         } catch {
