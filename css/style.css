@@ -1056,11 +1056,6 @@ body .main .looper-outer .looper .vol-field .vol-control {
   outline: none;
 }
 
-body .main .looper-outer .looper .vol-field .vol-control::-webkit-slider-runnable-track {
-  -webkit-appearance: none;
-  border: none;
-}
-
 body .main .looper-outer .looper .vol-field .vol-control::-webkit-slider-thumb {
   -webkit-appearance: none;
   background-color: #FFFFFF;
