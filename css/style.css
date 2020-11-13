@@ -756,6 +756,7 @@ body .main .looper-outer .looper {
   background-color: #4B4B4B;
   border-radius: 40px;
   padding: 15px;
+  position: relative;
 }
 
 body .main .looper-outer .looper .looper-header {
@@ -805,6 +806,51 @@ body .main .looper-outer .looper .loop-button-circle .loop-button-recording {
   width: 35px;
   height: 35px;
   border-radius: 20%;
+}
+
+body .main .looper-outer .looper .loop-bars {
+  position: absolute;
+  top: 100px;
+  left: 30px;
+  background-color: rgba(239, 239, 239, 0.3);
+  border-radius: 15px;
+  padding: 3px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+body .main .looper-outer .looper .loop-bars .loop-bars-inc, body .main .looper-outer .looper .loop-bars .loop-bars-dec {
+  font-size: 30px;
+  color: #FFFFFF;
+}
+
+body .main .looper-outer .looper .loop-bars .loop-bars-input {
+  display: block;
+  color: #FFFFFF;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  border: 0px;
+  width: 30px;
+  padding: 0px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none;
+  background: transparent;
 }
 
 body .bottom {
