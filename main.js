@@ -340,7 +340,7 @@ new Glider(document.querySelector('.glider'), {
                 draggable: true,
             }
         }, {
-            breakpoint: 1200,
+            breakpoint: 1024,
             settings: {
                 slidesToShow: 3,
             }
