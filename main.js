@@ -330,7 +330,6 @@ new Glider(document.querySelector('.glider'), {
     slidesToShow: 1,
     draggable: true,
     dots: '.dots',
-    draggable: false,
     dragVelocity: 1,
     responsive: [
         {
@@ -343,7 +342,7 @@ new Glider(document.querySelector('.glider'), {
             breakpoint: 1024,
             settings: {
                 slidesToShow: 3,
-                draggable: true,
+                draggable: false,
             }
         }, {
             breakpoint: 1440,
