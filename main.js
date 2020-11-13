@@ -329,13 +329,13 @@ new Glider(document.querySelector('.glider'), {
     // itemWidth: 320,
     slidesToShow: 1,
     dots: '.dots',
-    dragVelocity: 1,
     responsive: [
         {
             breakpoint: 768,
             settings: {
                 slidesToShow: 2,
                 draggable: true,
+                dragVelocity: 1,
             }
         }, {
             breakpoint: 1024,
