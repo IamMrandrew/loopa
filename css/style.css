@@ -1076,7 +1076,13 @@ body .main .looper-outer .looper .vol-field .vol-control::-moz-range-thumb {
 }
 
 body .glider-contain {
-  margin-bottom: 30px;
+  margin-bottom: 15px;
+}
+
+@media screen and (min-height: 800px) {
+  body .glider-contain {
+    margin-bottom: 50px;
+  }
 }
 
 body .glider-contain .glider {
@@ -1118,7 +1124,13 @@ body .bottom .metronome {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
+}
+
+@media screen and (min-height: 800px) {
+  body .bottom .metronome {
+    margin-bottom: 40px;
+  }
 }
 
 body .bottom .metronome .metronome-dot {
