@@ -1188,6 +1188,7 @@ body .bottom .bpm-control .bpm .text-wrapper .input-wrapper .bpm-input {
   font-size: 24px;
   font-weight: 600;
   text-align: right;
+  border-radius: 0;
   border: 0px;
   border-bottom: solid 3px;
   width: 45px;
