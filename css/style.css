@@ -919,6 +919,7 @@ body .main {
       justify-content: space-around;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+  padding: 0px;
 }
 
 body .main .looper-outer {
