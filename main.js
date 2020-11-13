@@ -1,35 +1,43 @@
 function setupAudio() {
-    
     document.querySelector('.play-button').addEventListener('click', async () => {
         await Tone.start();
         console.log('audio is ready');
     });
-
 }
+
+// Index for Recorded Audio Files Array
 let recordingIndex = 0;
 
+// Array for Recorded Audio Files
 let recordings = [];
 recordings[0] = new Tone.Player("");
 recordings[1] = new Tone.Player("");
 recordings[2] = new Tone.Player("");
 
+// Array for the Record Time (Ticks away from the start beat of Transport) of Recorded Audio Files
 let recordingsTime = [];
 recordingsTime[0] = 0.0;
 recordingsTime[1] = 0.0;
 recordingsTime[2] = 0.0;
 
+// Array for loopBars Input for Individual Looper
 let loopBarsIndex = 0;
 let loopBars = [2, 1, 1];
 
+// Array of Volume Control for Individual Looper
 let volNodes = [];
 
-function sequencer() {
+function transport() {
+    // Initial Metronome Audio File to Player
     const metronomeSound = new Tone.Player("audio/metronome.mp3").toDestination();
     metronomeSound.volume.value = -10;
 
-    const bpmInput = document.querySelector('.bpm-input');
+    // Initial bpm value
     let bpm = 60;
     Tone.Transport.bpm.value = bpm;
+
+    // Get BPM Input
+    const bpmInput = document.querySelector('.bpm-input');
     bpmInput.addEventListener('input', () => {
         if (bpm > 5000) {
             console.log("bpm too high");
@@ -40,6 +48,7 @@ function sequencer() {
         Tone.Transport.bpm.value = bpm;
     });
 
+    // Bpm Mute Button
     const bpmMute = document.querySelector('.bpm-mute i');
     let bpmMuted = false;
     bpmMute.addEventListener('click', () => {
@@ -50,7 +59,7 @@ function sequencer() {
         bpmMute.classList.toggle('bpm-mute-disable');
     });
 
-    
+    // Get the value of how many bars it will loop once for Individual Looper
     const loopBarsInputs = document.querySelectorAll('.loop-bars-input');
     loopBarsInputs.forEach((loopBarsInput, index) => {
         loopBars[index] = loopBarsInput.value * 4;
@@ -60,6 +69,7 @@ function sequencer() {
         });
     });
 
+    // Loop Bars Control (Increase bars)
     const loopBarsIncs = document.querySelectorAll('.loop-bars-inc');
     loopBarsIncs.forEach((loopBarsInc, index) => {
         loopBarsInc.addEventListener('click', () => {
@@ -67,6 +77,7 @@ function sequencer() {
         });
     });
 
+    // Loop Bars Control (Increase bars)
     const loopBarsDecs = document.querySelectorAll('.loop-bars-dec');
     loopBarsDecs.forEach((loopBarsDec, index) => {
         loopBarsDec.addEventListener('click', () => {
@@ -74,6 +85,7 @@ function sequencer() {
         });
     });
 
+    // Volume Control for Individual Looper
     const volControls = document.querySelectorAll('.vol-control');
     volControls.forEach((volControl, index) => {
         volNodes[index] = new Tone.Volume(-20).toDestination();
@@ -82,13 +94,19 @@ function sequencer() {
         });
     });
 
+    // Tone.Transport
     let index = 0;
 
     Tone.Transport.scheduleRepeat(repeat, '4n');
+
+    // Status of metronome (Initial)
     let metronomePlaying = false;
 
     function repeat(time) {
+        // Metronome back to first beat 
         let step = index % 4;
+
+        // Metronome Dots Visualize
         let metronomedots = document.querySelectorAll('.metronome-dot');
         metronomedots.forEach(metronomedot => {
             metronomedot.classList.remove('current-dot');
@@ -96,17 +114,14 @@ function sequencer() {
         let currentMetronomeDot = document.querySelector(`.metronome .metronome-dot:nth-child(${step + 1}`);
         currentMetronomeDot.classList.add('current-dot');
 
+        // Mute Control for Metronome
         if (!bpmMuted)
             metronomeSound.start();
 
+        // Calc the Loop Bars
         let looper1Step = index % loopBars[0];
         let looper2Step = index % loopBars[1];
         let looper3Step = index % loopBars[2];
-
-        console.log(looper1Step);
-        console.log(looper2Step);
-        console.log(looper3Step);
-
         
         if (looper1Step == 0) {
             try {
@@ -130,9 +145,11 @@ function sequencer() {
             }
         }
         
+        // Step Transport.scheduleRepeat
         index++;
     }
 
+    // Transport start/stop Control (Play Button)
     playButton = document.querySelector('.play-button');
     playButton.addEventListener('click', () => {
         if (metronomePlaying) {
@@ -307,6 +324,6 @@ function sliderControl() {
 
 
 setupAudio();
-sequencer();
+transport();
 sliderControl();
 looper();
