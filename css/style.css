@@ -853,7 +853,7 @@ body nav {
   margin-bottom: 2vh;
 }
 
-@media screen and (min-height: 800px) {
+@media screen and (min-height: 900px) {
   body nav {
     margin-bottom: 10vh;
   }
@@ -1079,7 +1079,7 @@ body .glider-contain {
   margin-bottom: 15px;
 }
 
-@media screen and (min-height: 800px) {
+@media screen and (min-height: 900px) {
   body .glider-contain {
     margin-bottom: 50px;
   }
@@ -1127,7 +1127,7 @@ body .bottom .metronome {
   margin-bottom: 15px;
 }
 
-@media screen and (min-height: 800px) {
+@media screen and (min-height: 900px) {
   body .bottom .metronome {
     margin-bottom: 40px;
   }
