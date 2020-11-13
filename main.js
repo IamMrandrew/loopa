@@ -343,16 +343,19 @@ new Glider(document.querySelector('.glider'), {
             breakpoint: 1024,
             settings: {
                 slidesToShow: 3,
+                draggable: true,
             }
         }, {
             breakpoint: 1440,
             settings: {
                 slidesToShow: 4,
+                draggable: false,
             }
         },{
             breakpoint: 1700,
             settings: {
                 slidesToShow: 5,
+                draggable: false,
             }
         }
     ]
