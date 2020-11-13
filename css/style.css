@@ -875,6 +875,7 @@ body nav .nav-wrap .main-title {
   font-size: 2rem;
   font-weight: 600;
   justify-self: flex-start;
+  margin-bottom: 0px;
 }
 
 body nav .nav-wrap .audio-control {
