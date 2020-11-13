@@ -157,6 +157,48 @@ body {
                         background: transparent;
                     }
                 }
+
+                .vol-field {
+                    margin-top: 15px;
+
+                    .vol-title {
+                        font-size: 18px;
+                        color: $themeWhite;
+                        margin-bottom: 0px;
+                        padding-bottom: 2px;
+                    }
+
+                    .vol-control {
+                        -webkit-appearance: none;
+                        background: linear-gradient(90deg, $themeLightGreen 30%, $themeWhite 30%);
+                        border-radius: 15px;
+                        width: 249px;
+                        height: 10px;
+                        margin-left: 15px;
+                        margin-right: 15px;
+                        outline: none;
+                        
+
+                        &::-webkit-slider-thumb {
+                            -webkit-appearance: none;
+                            background-color: $themeWhite;
+                            width: 24px;
+                            height: 24px;
+                            border-radius: 50%;
+
+                            &:hover, &focus {
+                                cursor: pointer;
+                            }
+                        }
+
+                        &::-moz-range-thumb {
+                            background-color: $themeWhite;
+                            width: 24px;
+                            height: 24px;
+                            border-radius: 50%;
+                        }
+                    }
+                }
             }
         }
     }

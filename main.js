@@ -21,6 +21,7 @@ recordingsTime[2] = 0.0;
 let loopBarsIndex = 0;
 let loopBars = [2, 1, 1];
 
+let volNodes = [];
 
 function sequencer() {
     const metronomeSound = new Tone.Player("audio/metronome.mp3").toDestination();
@@ -73,6 +74,14 @@ function sequencer() {
         });
     });
 
+    const volControls = document.querySelectorAll('.vol-control');
+    volControls.forEach((volControl, index) => {
+        volNodes[index] = new Tone.Volume(-20).toDestination();
+        volControl.addEventListener('input', () => {
+            volNodes[index].volume.value = volControl.value;
+        });
+    });
+
     let index = 0;
 
     Tone.Transport.scheduleRepeat(repeat, '4n');
@@ -98,9 +107,10 @@ function sequencer() {
         console.log(looper2Step);
         console.log(looper3Step);
 
+        
         if (looper1Step == 0) {
             try {
-                recordings[0].start("+" + recordingsTime[0] % (Tone.Ticks("4n").toTicks() * 4) + "i");
+                recordings[0].chain(volNodes[0], Tone.Destination).start("+" + recordingsTime[0] % (Tone.Ticks("4n").toTicks() * 4) + "i");
             } catch {
                 console.log("Require input recordings for Loop 1");
             }
@@ -280,12 +290,23 @@ function createDownloadLink(blob) {
     var li = document.createElement('li');
     var link = document.createElement('a');
 
-    recordings[recordingIndex] = new Tone.Player(url).toDestination();
+    recordings[recordingIndex] = new Tone.Player(url);
 
 }
 
+function sliderControl() {
+    let sliders = document.querySelectorAll(".vol-control");
+    sliders.forEach((slider) => {
+        slider.addEventListener('input', () => {
+            let x = ((slider.value - slider.min) / (slider.max-slider.min)) * 100;
+            let color = `linear-gradient(90deg, #DEFFE7 ${x}%,  #FFFFFF ${x}%)`;
+            slider.style.background = color;
+        });
+    });
+}
 
 
 setupAudio();
 sequencer();
+sliderControl();
 looper();
