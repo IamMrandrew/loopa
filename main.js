@@ -74,7 +74,7 @@ function transport() {
     loopBarsIncs.forEach((loopBarsInc, index) => {
         loopBarsInc.addEventListener('click', () => {
             loopBarsInputs[index].value++;
-            loopBars[index] = loopBarsInput[index].value * 4;
+            loopBars[index] = loopBarsInputs[index].value * 4;
         });
     });
 
@@ -83,7 +83,7 @@ function transport() {
     loopBarsDecs.forEach((loopBarsDec, index) => {
         loopBarsDec.addEventListener('click', () => {
             loopBarsInputs[index].value--;
-            loopBars[index] = loopBarsInput[index].value * 4;
+            loopBars[index] = loopBarsInputs[index].value * 4;
         });
     });
 
