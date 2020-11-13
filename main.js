@@ -117,14 +117,14 @@ function sequencer() {
         }
         if (looper2Step == 0) {
             try {
-                recordings[1].start("+" + recordingsTime[1] % (Tone.Ticks("4n").toTicks() * 4) + "i");
+                recordings[1].chain(volNodes[1], Tone.Destination).start("+" + recordingsTime[1] % (Tone.Ticks("4n").toTicks() * 4) + "i");
             } catch {
                 console.log("Require input recordings for Loop 2");
             }
         }
         if (looper3Step == 0) {
             try {
-                recordings[2].start("+" + recordingsTime[2] % (Tone.Ticks("4n").toTicks() * 4) + "i");
+                recordings[2].chain(volNodes[2], Tone.Destination).start("+" + recordingsTime[2] % (Tone.Ticks("4n").toTicks() * 4) + "i");
             } catch {
                 console.log("Require input recordings for Loop 3");
             }
