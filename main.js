@@ -53,9 +53,23 @@ function sequencer() {
     const loopBarsInputs = document.querySelectorAll('.loop-bars-input');
     loopBarsInputs.forEach((loopBarsInput, index) => {
         loopBars[index] = loopBarsInput.value * 4;
-        
+
         loopBarsInput.addEventListener('input', () => {
             loopBars[index] = loopBarsInput.value * 4;
+        });
+    });
+
+    const loopBarsIncs = document.querySelectorAll('.loop-bars-inc');
+    loopBarsIncs.forEach((loopBarsInc, index) => {
+        loopBarsInc.addEventListener('click', () => {
+            loopBarsInputs[index].value++;
+        });
+    });
+
+    const loopBarsDecs = document.querySelectorAll('.loop-bars-dec');
+    loopBarsDecs.forEach((loopBarsDec, index) => {
+        loopBarsDec.addEventListener('click', () => {
+            loopBarsInputs[index].value--;
         });
     });
 
