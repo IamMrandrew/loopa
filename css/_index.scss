@@ -203,6 +203,34 @@ body {
         }
     }
 
+    .glider-contain {
+        margin-bottom: 30px;
+        
+        .glider {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+    
+            &::-webkit-scrollbar {
+                height: 0px !important;
+                width: 0 !important;
+                background: transparent;
+                display: none;
+            }
+
+            .glider-item{
+
+                display: flex;
+                justify-content: center;
+
+            }
+        }
+
+        .dots {
+            margin-top: -20px;
+        }
+
+    }
+
     .bottom {
         margin-left: auto;
         margin-right: auto;  

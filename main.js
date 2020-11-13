@@ -324,6 +324,32 @@ function sliderControl() {
     });
 }
 
+new Glider(document.querySelector('.glider'), {
+    // slidesToShow: 'auto',
+    // itemWidth: 320,
+    slidesToShow: 1,
+    draggable: true,
+    dots: '.dots',
+    dragVelocity: 1,
+    responsive: [
+        {
+            breakpoint: 768,
+            settings: {
+                slidesToShow: 2,
+            }
+        }, {
+            breakpoint: 1200,
+            settings: {
+                slidesToShow: 3,
+            }
+        }, {
+            breakpoint: 1700,
+            settings: {
+                slidesToShow: 3,
+            }
+        }
+    ]
+});
 
 setupAudio();
 transport();
