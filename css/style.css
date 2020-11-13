@@ -1056,12 +1056,18 @@ body .main .looper-outer .looper .vol-field .vol-control {
   outline: none;
 }
 
+body .main .looper-outer .looper .vol-field .vol-control::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  border: none;
+}
+
 body .main .looper-outer .looper .vol-field .vol-control::-webkit-slider-thumb {
   -webkit-appearance: none;
   background-color: #FFFFFF;
   width: 24px;
   height: 24px;
   border-radius: 50%;
+  border: none !important;
 }
 
 body .main .looper-outer .looper .vol-field .vol-control::-webkit-slider-thumb:hover, body .main .looper-outer .looper .vol-field .vol-control::-webkit-slider-thumbfocus {
@@ -1073,6 +1079,7 @@ body .main .looper-outer .looper .vol-field .vol-control::-moz-range-thumb {
   width: 24px;
   height: 24px;
   border-radius: 50%;
+  border: none !important;
 }
 
 body .glider-contain {
