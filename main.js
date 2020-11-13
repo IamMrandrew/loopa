@@ -328,7 +328,6 @@ new Glider(document.querySelector('.glider'), {
     // slidesToShow: 'auto',
     // itemWidth: 320,
     slidesToShow: 1,
-    draggable: true,
     dots: '.dots',
     dragVelocity: 1,
     responsive: [
