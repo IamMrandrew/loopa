@@ -22,7 +22,7 @@ recordingsTime[2] = 0.0;
 
 // Array for loopBars Input for Individual Looper
 let loopBarsIndex = 0;
-let loopBars = [2, 1, 1];
+let loopBars = [1, 1, 1];
 
 // Array of Volume Control for Individual Looper
 let volNodes = [];
@@ -74,6 +74,7 @@ function transport() {
     loopBarsIncs.forEach((loopBarsInc, index) => {
         loopBarsInc.addEventListener('click', () => {
             loopBarsInputs[index].value++;
+            loopBars[index] = loopBarsInput[index].value * 4;
         });
     });
 
@@ -82,6 +83,7 @@ function transport() {
     loopBarsDecs.forEach((loopBarsDec, index) => {
         loopBarsDec.addEventListener('click', () => {
             loopBarsInputs[index].value--;
+            loopBars[index] = loopBarsInput[index].value * 4;
         });
     });
 
