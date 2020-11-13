@@ -345,9 +345,14 @@ new Glider(document.querySelector('.glider'), {
                 slidesToShow: 3,
             }
         }, {
+            breakpoint: 1440,
+            settings: {
+                slidesToShow: 4,
+            }
+        },{
             breakpoint: 1700,
             settings: {
-                slidesToShow: 3,
+                slidesToShow: 5,
             }
         }
     ]
