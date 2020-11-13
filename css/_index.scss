@@ -184,7 +184,7 @@ body {
                             width: 24px;
                             height: 24px;
                             border-radius: 50%;
-                            border: none;
+                            border: none !important;
 
                             &:hover, &focus {
                                 cursor: pointer;
