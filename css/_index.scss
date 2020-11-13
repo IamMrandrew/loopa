@@ -177,6 +177,10 @@ body {
                         margin-right: 15px;
                         outline: none;
                         
+                        &::-webkit-slider-runnable-track {
+                            -webkit-appearance: none;
+                            border: none;
+                        }
 
                         &::-webkit-slider-thumb {
                             -webkit-appearance: none;
