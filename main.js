@@ -27,6 +27,9 @@ let loopBars = [1, 1, 1];
 // Array of Volume Control for Individual Looper
 let volNodes = [];
 
+// Boolean for start recording
+let loopStartRecord = [];
+
 function transport() {
     // Initial Metronome Audio File to Player
     const metronomeSound = new Tone.Player("audio/metronome.mp3").toDestination();
@@ -98,6 +101,9 @@ function transport() {
 
     // Tone.Transport
     let index = 0;
+    let looper1Index = 0
+    let looper2Index = 0
+    let looper3Index = 0
 
     Tone.Transport.scheduleRepeat(repeat, '4n');
 
@@ -120,10 +126,26 @@ function transport() {
         if (!bpmMuted)
             metronomeSound.start();
 
+        // Loop Bars index
+        if (loopStartRecord[0]) {
+            looper1Index = 0
+            loopStartRecord[0] = false;
+        }
+            
+        if (loopStartRecord[1]){
+            looper2Index = 0;
+            loopStartRecord[1] = false;
+        }
+      
+        if (loopStartRecord[2]) {
+            looper3Index = 0;
+            loopStartRecord[2] = false;
+        }
+
         // Calc the Loop Bars
-        let looper1Step = index % loopBars[0];
-        let looper2Step = index % loopBars[1];
-        let looper3Step = index % loopBars[2];
+        let looper1Step = looper1Index % loopBars[0];
+        let looper2Step = looper2Index % loopBars[1];
+        let looper3Step = looper3Index % loopBars[2];
         
         if (looper1Step == 0) {
             try {
@@ -149,6 +171,10 @@ function transport() {
         
         // Step Transport.scheduleRepeat
         index++;
+
+        looper1Index++;
+        looper2Index++;
+        looper3Index++;
     }
 
     // Transport start/stop Control (Play Button)
@@ -183,6 +209,7 @@ function looper() {
                 startRecording();
                 isRecording = true;
                 recordingsTime[index] = Tone.Transport.ticks; 
+                loopStartRecord[index] = true;
             }
             else {
                 stopRecording();
