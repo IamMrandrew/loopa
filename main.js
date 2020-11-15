@@ -358,7 +358,6 @@ new Glider(document.querySelector('.glider'), {
     dots: '.dots',
     draggable: false,
     dragVelocity: 1,
-    scrollLock: true,
     responsive: [
         {
             breakpoint: 768,
