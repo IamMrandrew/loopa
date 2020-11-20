@@ -27,8 +27,13 @@ let loopBars = [1, 1, 1];
 // Array of Volume Control for Individual Looper
 let volNodes = [];
 
-// Boolean for start recording
-let loopStartRecord = [];
+// Array for looper invidual count index
+let looperIndex = [];
+looperIndex[0] = 0;
+looperIndex[1] = 0;
+looperIndex[2] = 0;
+
+let loopBarsCount = [];
 
 function transport() {
     // Initial Metronome Audio File to Player
@@ -65,10 +70,10 @@ function transport() {
     // Get the value of how many bars it will loop once for Individual Looper
     const loopBarsInputs = document.querySelectorAll('.loop-bars-input');
     loopBarsInputs.forEach((loopBarsInput, index) => {
-        loopBars[index] = loopBarsInput.value * 4;
+        loopBars[index] = loopBarsInput.value;
 
         loopBarsInput.addEventListener('input', () => {
-            loopBars[index] = loopBarsInput.value * 4;
+            loopBars[index] = loopBarsInput.value;
         });
     });
 
@@ -77,7 +82,7 @@ function transport() {
     loopBarsIncs.forEach((loopBarsInc, index) => {
         loopBarsInc.addEventListener('click', () => {
             loopBarsInputs[index].value++;
-            loopBars[index] = loopBarsInputs[index].value * 4;
+            loopBars[index] = loopBarsInputs[index].value;
         });
     });
 
@@ -86,7 +91,7 @@ function transport() {
     loopBarsDecs.forEach((loopBarsDec, index) => {
         loopBarsDec.addEventListener('click', () => {
             loopBarsInputs[index].value--;
-            loopBars[index] = loopBarsInputs[index].value * 4;
+            loopBars[index] = loopBarsInputs[index].value;
         });
     });
 
@@ -101,9 +106,7 @@ function transport() {
 
     // Tone.Transport
     let index = 0;
-    let looper1Index = 0
-    let looper2Index = 0
-    let looper3Index = 0
+
 
     Tone.Transport.scheduleRepeat(repeat, '4n');
 
@@ -126,44 +129,34 @@ function transport() {
         if (!bpmMuted)
             metronomeSound.start();
 
-        // Loop Bars index
-        if (loopStartRecord[0]) {
-            looper1Index = 0
-            loopStartRecord[0] = false;
-        }
-            
-        if (loopStartRecord[1]){
-            looper2Index = 0;
-            loopStartRecord[1] = false;
-        }
-      
-        if (loopStartRecord[2]) {
-            looper3Index = 0;
-            loopStartRecord[2] = false;
-        }
-
         // Calc the Loop Bars
-        let looper1Step = looper1Index % loopBars[0];
-        let looper2Step = looper2Index % loopBars[1];
-        let looper3Step = looper3Index % loopBars[2];
+        // let looper1Step = looperIndex[0] % loopBars[0];
+        // let looper2Step = looperIndex[1] % loopBars[1];
+        // let looper3Step = looperIndex[2] % loopBars[2];
         
-        if (looper1Step == 0) {
+        loopBarsCount[0] %= loopBars[0];
+
+        if (step == 0) {
             try {
-                recordings[0].chain(volNodes[0], Tone.Destination).start("+" + recordingsTime[0] % (Tone.Ticks("4n").toTicks() * 4) + "i");
+                if (loopBarsCount[0] == 0)
+                    recordings[0].chain(volNodes[0], Tone.Destination).start("+" + recordingsTime[0] % (Tone.Ticks("4n").toTicks() * 4) + "i");
+                loopBarsCount[0]++;
             } catch {
                 console.log("Require input recordings for Loop 1");
             }
         }
-        if (looper2Step == 0) {
+        if (step == 0) {
             try {
-                recordings[1].chain(volNodes[1], Tone.Destination).start("+" + recordingsTime[1] % (Tone.Ticks("4n").toTicks() * 4) + "i");
+                if (loopBarsCount[1] == 0)
+                    recordings[1].chain(volNodes[1], Tone.Destination).start("+" + recordingsTime[1] % (Tone.Ticks("4n").toTicks() * 4) + "i");
             } catch {
                 console.log("Require input recordings for Loop 2");
             }
         }
-        if (looper3Step == 0) {
+        if (step == 0) {
             try {
-                recordings[2].chain(volNodes[2], Tone.Destination).start("+" + recordingsTime[2] % (Tone.Ticks("4n").toTicks() * 4) + "i");
+                if (loopBarsCount[2] == 0)
+                    recordings[2].chain(volNodes[2], Tone.Destination).start("+" + recordingsTime[2] % (Tone.Ticks("4n").toTicks() * 4) + "i");
             } catch {
                 console.log("Require input recordings for Loop 3");
             }
@@ -172,9 +165,11 @@ function transport() {
         // Step Transport.scheduleRepeat
         index++;
 
-        looper1Index++;
-        looper2Index++;
-        looper3Index++;
+        looperIndex[0]++;
+        looperIndex[1]++;
+        looperIndex[2]++;
+
+        
     }
 
     // Transport start/stop Control (Play Button)
@@ -209,7 +204,10 @@ function looper() {
                 startRecording();
                 isRecording = true;
                 recordingsTime[index] = Tone.Transport.ticks; 
-                loopStartRecord[index] = true;
+
+                // Loop Bars Count
+                loopBarsCount[index] = 0;
+
             }
             else {
                 stopRecording();
