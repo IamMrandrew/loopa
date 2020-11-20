@@ -340,7 +340,7 @@ function createDownloadLink(blob) {
 }
 
 function sliderControl() {
-    let sliders = document.querySelectorAll(".vol-control");
+    let sliders = document.querySelectorAll(".slider-control");
     sliders.forEach((slider) => {
         slider.addEventListener('input', () => {
             let x = ((slider.value - slider.min) / (slider.max-slider.min)) * 100;
