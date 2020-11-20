@@ -149,6 +149,7 @@ function transport() {
             try {
                 if (loopBarsCount[1] == 0)
                     recordings[1].chain(volNodes[1], Tone.Destination).start("+" + recordingsTime[1] % (Tone.Ticks("4n").toTicks() * 4) + "i");
+                loopBarsCount[1]++;
             } catch {
                 console.log("Require input recordings for Loop 2");
             }
@@ -157,6 +158,7 @@ function transport() {
             try {
                 if (loopBarsCount[2] == 0)
                     recordings[2].chain(volNodes[2], Tone.Destination).start("+" + recordingsTime[2] % (Tone.Ticks("4n").toTicks() * 4) + "i");
+                loopBarsCount[2]++;
             } catch {
                 console.log("Require input recordings for Loop 3");
             }
@@ -168,7 +170,6 @@ function transport() {
         looperIndex[0]++;
         looperIndex[1]++;
         looperIndex[2]++;
-
         
     }
 
