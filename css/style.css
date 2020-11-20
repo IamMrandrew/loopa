@@ -1078,6 +1078,50 @@ body .main .looper-outer .looper .vol-field .vol-control::-moz-range-thumb {
   border: none !important;
 }
 
+body .main .looper-outer .looper .rev-field {
+  margin-top: 15px;
+}
+
+body .main .looper-outer .looper .rev-field .rev-title {
+  font-size: 18px;
+  color: #FFFFFF;
+  margin-bottom: 0px;
+  padding-bottom: 2px;
+}
+
+body .main .looper-outer .looper .rev-field .rev-control {
+  -webkit-appearance: none;
+  background: -webkit-gradient(linear, left top, right top, color-stop(30%, #DEFFE7), color-stop(30%, #FFFFFF));
+  background: linear-gradient(90deg, #DEFFE7 30%, #FFFFFF 30%);
+  border-radius: 15px;
+  width: 249px;
+  height: 10px;
+  margin-left: 15px;
+  margin-right: 15px;
+  outline: none;
+}
+
+body .main .looper-outer .looper .rev-field .rev-control::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background-color: #FFFFFF;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none !important;
+}
+
+body .main .looper-outer .looper .rev-field .rev-control::-webkit-slider-thumb:hover, body .main .looper-outer .looper .rev-field .rev-control::-webkit-slider-thumbfocus {
+  cursor: pointer;
+}
+
+body .main .looper-outer .looper .rev-field .rev-control::-moz-range-thumb {
+  background-color: #FFFFFF;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none !important;
+}
+
 body .glider-contain {
   margin-bottom: 15px;
 }
