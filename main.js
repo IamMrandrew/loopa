@@ -99,11 +99,11 @@ function transport() {
     const volControls = document.querySelectorAll('.vol-control');
     volControls.forEach((volControl, index) => {
         volNodes[index] = new Tone.Volume(-20).toDestination();
-        volControl.addEventListener('input', () => {
+        volControl.addEventListener('input', () => {            
             volNodes[index].volume.value = volControl.value;
         });
     });
-
+    
     // Tone.Transport
     let index = 0;
 
@@ -339,6 +339,12 @@ function createDownloadLink(blob) {
 
 }
 
+
+
+
+
+
+// CSS Controls
 function sliderControl() {
     let sliders = document.querySelectorAll(".slider-control");
     sliders.forEach((slider) => {
