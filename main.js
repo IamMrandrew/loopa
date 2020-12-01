@@ -35,6 +35,12 @@ looperIndex[2] = 0;
 
 let loopBarsCount = [];
 
+////////////////////////////////////
+//                                //
+//          Main Transport        //
+//                                //
+////////////////////////////////////
+
 function transport() {
     // Initial Metronome Audio File to Player
     const metronomeSound = new Tone.Player("audio/metronome.mp3").toDestination();
@@ -135,6 +141,8 @@ function transport() {
         // let looper3Step = looperIndex[2] % loopBars[2];
         
         loopBarsCount[0] %= loopBars[0];
+        loopBarsCount[1] %= loopBars[1];
+        loopBarsCount[2] %= loopBars[2];
 
         if (step == 0) {
             try {
@@ -194,9 +202,15 @@ function transport() {
     });
 }
 
+////////////////////////////////////
+//                                //
+//             Looper             //
+//                                //
+////////////////////////////////////
+
+let isRecording = false;
 
 function looper() {
-    let isRecording = false;
     loopButtons = document.querySelectorAll('.loop-button');
     loopButtons.forEach((loopButton, index) => {
         loopButton.addEventListener('click', () => {
@@ -208,7 +222,6 @@ function looper() {
 
                 // Loop Bars Count
                 loopBarsCount[index] = 0;
-
             }
             else {
                 stopRecording();
@@ -222,129 +235,56 @@ function looper() {
 
 }
 
+function addLooper() {
+    let addLooper = document.querySelector('.add-looper');
+    let gliderTrack = document.querySelector('.glider-track');
+    // looperGliderItem = looperGliderItem.cloneNode(true); // use for grab from html
 
-// Recorderjs
-
-//webkitURL is deprecated but nevertheless
-URL = window.URL || window.webkitURL;
-
-
-var gumStream; 						//stream from getUserMedia()
-var rec; 							//Recorder.js object
-var input; 							//MediaStreamAudioSourceNode we'll be recording
-
-
-// shim for AudioContext when it's not avb. 
-var AudioContext = window.AudioContext || window.webkitAudioContext;
-var audioContext //audio context to help us record
-
-
-function startRecording() {
-    console.log("recordButton clicked");
-
-    /*
-        Simple constraints object, for more advanced audio features see
-        https://addpipe.com/blog/audio-constraints-getusermedia/
-    */
+    addLooper.addEventListener('click', () => {      
+        let looperGliderItem = document.createElement('div');
+        looperGliderItem.classList.add("glider-item");
     
-    var constraints = { audio: true, video:false }
-
-
-    /*
-        Disable the record button until we get a success or fail from getUserMedia() 
-    */
-
-
-    /*
-        We're using the standard promise based getUserMedia() 
-        https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
-    */
-
-
-    navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
-        console.log("getUserMedia() success, stream created, initializing Recorder.js ...");
-
-
-        /*
-            create an audio context after getUserMedia is called
-            sampleRate might change after getUserMedia is called, like it does on macOS when recording through AirPods
-            the sampleRate defaults to the one set in your OS for your playback device
-
-        */
-        audioContext = new AudioContext();
-
-        /*  assign to gumStream for later use  */
-        gumStream = stream;
-        
-        /* use the stream */
-        input = audioContext.createMediaStreamSource(stream);
-
-
-        /* 
-            Create the Recorder object and configure to record mono sound (1 channel)
-            Recording 2 channels  will double the file size
-        */
-        rec = new Recorder(input,{numChannels:1})
-
-
-        //start the recording process
-        rec.record()
-
-
-        console.log("Recording started");
-
-
-    }).catch(function(err) {
-        //enable the record button if getUserMedia() fails
-        console.log("error");
+        looperGliderItem.innerHTML = '' +
+        '<div class="looper-outer">' +
+        '<div class="looper">' +
+            '<div class="looper-header">' +
+                '<h2>Loop 2</h2>' +
+            '</div>' +
+            '<div class="loop-button-circle">' +
+                '<div class="loop-button"></div>' +
+            '</div>' +
+            '<div class="loop-bars">' +
+                '<i class="fas fa-sort-up loop-bars-inc"></i>' +
+                '<input type="text" class="loop-bars-input" value="1">' +
+                '<i class="fas fa-sort-down loop-bars-dec"></i>' +
+            '</div>' +
+            '<div class="vol-field slider-field">' +
+                '<h3 class="vol-title slider-title">Volume</h3>' +
+                '<input type="range" class="vol-control slider-control" value="-20" max="4" min="-30">' +
+            '</div>' +
+            '<div class="rev-field slider-field">' +
+                '<h3 class="rev-title slider-title">Reverb</h3>' +
+                '<input type="range" class="rev-control slider-control" value="-20" max="4" min="-30">' +
+            '</div>' +
+        '</div>' +
+        '</div>'
+      
+        // glider.removeItem(glider.slides.length-1);
+        gliderTrack.insertBefore(looperGliderItem, gliderTrack.childNodes[glider.slides.length - 1]);
+        glider.refresh(true);
+        sliderControl();
+        looper();
+        // glider.addItem(addGliderItem);
     });
-}
-
-
-function pauseRecording(){
-    console.log("pauseButton clicked rec.recording=",rec.recording );
-    if (rec.recording){
-        //pause
-        rec.stop();
-    }else{
-        //resume
-        rec.record()
-
-    }
-}
-
-
-function stopRecording() {
-    console.log("stopButton clicked");
-
-    //tell the recorder to stop the recording
-    rec.stop();
-
-    //stop microphone access
-    gumStream.getAudioTracks()[0].stop();
-
-
-    //create the wav blob and pass it on to createDownloadLink
-    rec.exportWAV(createDownloadLink);
-}
-
-
-function createDownloadLink(blob) {
-    var url = URL.createObjectURL(blob);
-    var au = document.createElement('audio');
-    var li = document.createElement('li');
-    var link = document.createElement('a');
-
-    recordings[recordingIndex] = new Tone.Player(url);
 
 }
 
+////////////////////////////////////
+//                                //
+//           CSS Control          //
+//                                //
+////////////////////////////////////
 
-
-
-
-
-// CSS Controls
 function sliderControl() {
     let sliders = document.querySelectorAll(".slider-control");
     sliders.forEach((slider) => {
@@ -356,7 +296,7 @@ function sliderControl() {
     });
 }
 
-new Glider(document.querySelector('.glider'), {
+let glider = new Glider(document.querySelector('.glider'), {
     // slidesToShow: 'auto',
     // itemWidth: 320,
     slidesToShow: 1,
@@ -391,7 +331,103 @@ new Glider(document.querySelector('.glider'), {
     ]
 });
 
+////////////////////////////////////
+//                                //
+//           Recorderjs           //
+//                                //
+////////////////////////////////////
+
+//webkitURL is deprecated but nevertheless
+URL = window.URL || window.webkitURL;
+
+var gumStream; 						//stream from getUserMedia()
+var rec; 							//Recorder.js object
+var input; 							//MediaStreamAudioSourceNode we'll be recording
+
+// shim for AudioContext when it's not avb. 
+var AudioContext = window.AudioContext || window.webkitAudioContext;
+var audioContext //audio context to help us record
+
+function startRecording() {
+    console.log("recordButton clicked");
+    
+    var constraints = { audio: true, video:false }
+
+    navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
+        console.log("getUserMedia() success, stream created, initializing Recorder.js ...");
+
+        /*
+            create an audio context after getUserMedia is called
+            sampleRate might change after getUserMedia is called, like it does on macOS when recording through AirPods
+            the sampleRate defaults to the one set in your OS for your playback device
+
+        */
+        audioContext = new AudioContext();
+
+        /*  assign to gumStream for later use  */
+        gumStream = stream;
+        
+        /* use the stream */
+        input = audioContext.createMediaStreamSource(stream);
+
+
+        /* 
+            Create the Recorder object and configure to record mono sound (1 channel)
+            Recording 2 channels  will double the file size
+        */
+        rec = new Recorder(input,{numChannels:1})
+
+        //start the recording process
+        rec.record()
+
+        console.log("Recording started");
+
+    }).catch(function(err) {
+        //enable the record button if getUserMedia() fails
+        console.log("error");
+    });
+}
+
+function pauseRecording(){
+    console.log("pauseButton clicked rec.recording=",rec.recording );
+    if (rec.recording){
+        //pause
+        rec.stop();
+    }else{
+        //resume
+        rec.record()
+
+    }
+}
+
+function stopRecording() {
+    console.log("stopButton clicked");
+
+    //tell the recorder to stop the recording
+    rec.stop();
+
+    //stop microphone access
+    gumStream.getAudioTracks()[0].stop();
+
+
+    //create the wav blob and pass it on to createDownloadLink
+    rec.exportWAV(createDownloadLink);
+}
+
+
+function createDownloadLink(blob) {
+    var url = URL.createObjectURL(blob);
+    var au = document.createElement('audio');
+    var li = document.createElement('li');
+    var link = document.createElement('a');
+
+    recordings[recordingIndex] = new Tone.Player(url);
+}
+
+
+
 setupAudio();
 transport();
 sliderControl();
 looper();
+addLooper();
