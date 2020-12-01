@@ -1,10 +1,9 @@
 body {
     background-color: $themeGreen;
 
-
     nav {
         margin-top: 10px;
-        margin-bottom: 2vh;
+        margin-bottom: 3vh;
 
         @media screen and (min-height: 900px) {
             margin-bottom: 10vh;
@@ -65,11 +64,11 @@ body {
         padding: 0px;
 
         .looper-outer {
-            height: 485px;
+            height: 465px;
             width: 330px;
             border-radius: 40px;
             padding: 18px;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
             background-color: $transparent;
             
             .looper {
@@ -207,7 +206,7 @@ body {
     }
 
     .glider-contain {
-        margin-bottom: 15px;
+        margin-bottom: 30px;
 
         @media screen and (min-height: 900px) {
             margin-bottom: 50px;
@@ -239,7 +238,7 @@ body {
         margin-left: auto;
         margin-right: auto;  
         margin-bottom: 20px;  
-        max-width: 350px;
+        max-width: 300px;
 
         .metronome {
             display: flex;
@@ -251,8 +250,8 @@ body {
             }
 
             .metronome-dot {
-                width: 50px;
-                height: 50px;
+                width: 45px;
+                height: 45px;
                 border-radius: 50%;
                 background-color: $themeWhite;
             }

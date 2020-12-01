@@ -850,7 +850,7 @@ body {
 
 body nav {
   margin-top: 10px;
-  margin-bottom: 2vh;
+  margin-bottom: 3vh;
 }
 
 @media screen and (min-height: 900px) {
@@ -924,11 +924,11 @@ body .main {
 }
 
 body .main .looper-outer {
-  height: 485px;
+  height: 465px;
   width: 330px;
   border-radius: 40px;
   padding: 18px;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   background-color: rgba(239, 239, 239, 0.3);
 }
 
@@ -1079,7 +1079,7 @@ body .main .looper-outer .looper .slider-field .slider-control::-moz-range-thumb
 }
 
 body .glider-contain {
-  margin-bottom: 15px;
+  margin-bottom: 30px;
 }
 
 @media screen and (min-height: 900px) {
@@ -1113,7 +1113,7 @@ body .bottom {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 20px;
-  max-width: 350px;
+  max-width: 300px;
 }
 
 body .bottom .metronome {
@@ -1133,8 +1133,8 @@ body .bottom .metronome {
 }
 
 body .bottom .metronome .metronome-dot {
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
   background-color: #FFFFFF;
 }
