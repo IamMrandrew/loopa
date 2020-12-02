@@ -297,12 +297,60 @@ body {
                     cursor: pointer;                    
                 }
 
+                .filter-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: baseline;
+
+                    .filter-title {
+                        font-size: 16px;
+                        color: $themeWhite;
+                        margin-top: 10px;
+                        margin-bottom: 0px;
+                        padding-bottom: 5px;
+                    }
+
+                    .filter-toggle {
+                        position: relative;    
+                        top: 5px;                   
+                        width: 35px;
+                        height: 20px;
+                        margin: 0px 10px;
+                        -webkit-appearance: none;
+                        background-color: $themeTransparent;
+                        outline: none;
+                        border-radius: 10px;
+                        transition: all 0.5s;
+
+                        &:checked {
+                            background-color: #A9C9BD;
+                        }
+
+                        &::before {
+                            content: '';
+                            position: absolute;
+                            width: 20px;
+                            height: 20px;
+                            border-radius: 10px;
+                            top: 0px;
+                            left: 0px;
+                            background-color: $themeWhite;
+                            transition: all 0.4s;
+                        }
+
+
+                        &:checked::before {
+                            left: 15px;                            
+                        }
+                    }
+
+                }
+
                 .slider-title {
                     font-size: 16px;
                     color: $themeWhite;
-                    margin-top: 10px;
                     margin-bottom: 0px;
-                    padding-bottom: 5px;
+                    padding-bottom: 2px;
                 }
 
                 .slider-control {
