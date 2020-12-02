@@ -863,6 +863,9 @@ body nav .nav-wrap {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -879,9 +882,7 @@ body nav .nav-wrap .main-title {
 }
 
 body nav .nav-wrap .audio-control {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 150px;
+  width: 145px;
   padding: 10px;
   padding-left: 25px;
   padding-right: 25px;
@@ -890,9 +891,11 @@ body nav .nav-wrap .audio-control {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 body nav .nav-wrap .audio-control .play-button {
@@ -902,6 +905,22 @@ body nav .nav-wrap .audio-control .play-button {
 
 body nav .nav-wrap .audio-control .play-button:hover, body nav .nav-wrap .audio-control .play-button:focus {
   cursor: pointer;
+}
+
+body nav .nav-wrap .audio-control .separator {
+  width: 4px;
+  height: 35px;
+  border-radius: 2px;
+  background-color: #FFFFFF;
+  margin-left: 5px;
+}
+
+body nav .nav-wrap .audio-control .record-button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #F17474;
+  margin-left: 5px;
 }
 
 body nav .nav-wrap .bar {
@@ -947,6 +966,7 @@ body .main .looper-outer .looper .looper-header {
 
 body .main .looper-outer .looper .looper-header h2 {
   color: #FFFFFF;
+  font-weight: 600;
   font-size: 24px;
 }
 
@@ -1078,6 +1098,15 @@ body .main .looper-outer .looper .slider-field .slider-control::-moz-range-thumb
   border: none !important;
 }
 
+body .main .add-looper {
+  color: #FFFFFF;
+  font-size: 40px;
+  border-radius: 25px;
+  background-color: rgba(239, 239, 239, 0.3);
+  padding: 25px;
+  cursor: pointer;
+}
+
 body .glider-contain {
   margin-bottom: 30px;
 }
@@ -1107,6 +1136,9 @@ body .glider-contain .glider .glider-item {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 body .bottom {

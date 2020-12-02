@@ -1,39 +1,42 @@
 function setupAudio() {
+    let audioReady = false;
     document.querySelector('.play-button').addEventListener('click', async () => {
-        await Tone.start();
-        console.log('audio is ready');
+        if (!audioReady) {
+            await Tone.start();
+            console.log('Audio Ready');
+            audioReady = true;
+        }
     });
 }
+
+////////////////////////////////////
+//                                //
+//          Initialization        //
+//                                //
+////////////////////////////////////
+
+
+// Recording status
+let isRecording = false;
 
 // Index for Recorded Audio Files Array
 let recordingIndex = 0;
 
 // Array for Recorded Audio Files
 let recordings = [];
-recordings[0] = new Tone.Player("");
-recordings[1] = new Tone.Player("");
-recordings[2] = new Tone.Player("");
 
 // Array for the Record Time (Ticks away from the start beat of Transport) of Recorded Audio Files
 let recordingsTime = [];
-recordingsTime[0] = 0.0;
-recordingsTime[1] = 0.0;
-recordingsTime[2] = 0.0;
 
 // Array for loopBars Input for Individual Looper
-let loopBarsIndex = 0;
-let loopBars = [1, 1, 1];
+let loopBars = [];
+
+// Array to count how many bars now between last played for Individual Looper
+let loopBarsCount = [];
 
 // Array of Volume Control for Individual Looper
 let volNodes = [];
 
-// Array for looper invidual count index
-let looperIndex = [];
-looperIndex[0] = 0;
-looperIndex[1] = 0;
-looperIndex[2] = 0;
-
-let loopBarsCount = [];
 
 ////////////////////////////////////
 //                                //
@@ -72,43 +75,6 @@ function transport() {
             bpmMuted = false;
         bpmMute.classList.toggle('bpm-mute-disable');
     });
-
-    // Get the value of how many bars it will loop once for Individual Looper
-    const loopBarsInputs = document.querySelectorAll('.loop-bars-input');
-    loopBarsInputs.forEach((loopBarsInput, index) => {
-        loopBars[index] = loopBarsInput.value;
-
-        loopBarsInput.addEventListener('input', () => {
-            loopBars[index] = loopBarsInput.value;
-        });
-    });
-
-    // Loop Bars Control (Increase bars)
-    const loopBarsIncs = document.querySelectorAll('.loop-bars-inc');
-    loopBarsIncs.forEach((loopBarsInc, index) => {
-        loopBarsInc.addEventListener('click', () => {
-            loopBarsInputs[index].value++;
-            loopBars[index] = loopBarsInputs[index].value;
-        });
-    });
-
-    // Loop Bars Control (Increase bars)
-    const loopBarsDecs = document.querySelectorAll('.loop-bars-dec');
-    loopBarsDecs.forEach((loopBarsDec, index) => {
-        loopBarsDec.addEventListener('click', () => {
-            loopBarsInputs[index].value--;
-            loopBars[index] = loopBarsInputs[index].value;
-        });
-    });
-
-    // Volume Control for Individual Looper
-    const volControls = document.querySelectorAll('.vol-control');
-    volControls.forEach((volControl, index) => {
-        volNodes[index] = new Tone.Volume(-20).toDestination();
-        volControl.addEventListener('input', () => {            
-            volNodes[index].volume.value = volControl.value;
-        });
-    });
     
     // Tone.Transport
     let index = 0;
@@ -135,50 +101,23 @@ function transport() {
         if (!bpmMuted)
             metronomeSound.start();
 
-        // Calc the Loop Bars
-        // let looper1Step = looperIndex[0] % loopBars[0];
-        // let looper2Step = looperIndex[1] % loopBars[1];
-        // let looper3Step = looperIndex[2] % loopBars[2];
-        
-        loopBarsCount[0] %= loopBars[0];
-        loopBarsCount[1] %= loopBars[1];
-        loopBarsCount[2] %= loopBars[2];
+        for (i = 0; i < glider.slides.length - 1; i++) {
+            loopBarsCount[i] %= loopBars[i];
+        }
 
-        if (step == 0) {
-            try {
-                if (loopBarsCount[0] == 0)
-                    recordings[0].chain(volNodes[0], Tone.Destination).start("+" + recordingsTime[0] % (Tone.Ticks("4n").toTicks() * 4) + "i");
-                loopBarsCount[0]++;
-            } catch {
-                console.log("Require input recordings for Loop 1");
+        if (step == 0 ) {
+            for (i = 0; i < glider.slides.length - 1; i++ ){
+                try {
+                    if (loopBarsCount[i] == 0)
+                        recordings[i].chain(volNodes[i], Tone.Destination).start("+" + recordingsTime[i] % (Tone.Ticks("4n").toTicks() * 4) + "i");
+                } catch {
+                    console.log("Require input recordings for Loop " + (i + 1));
+                } 
+                loopBarsCount[i]++;
             }
         }
-        if (step == 0) {
-            try {
-                if (loopBarsCount[1] == 0)
-                    recordings[1].chain(volNodes[1], Tone.Destination).start("+" + recordingsTime[1] % (Tone.Ticks("4n").toTicks() * 4) + "i");
-                loopBarsCount[1]++;
-            } catch {
-                console.log("Require input recordings for Loop 2");
-            }
-        }
-        if (step == 0) {
-            try {
-                if (loopBarsCount[2] == 0)
-                    recordings[2].chain(volNodes[2], Tone.Destination).start("+" + recordingsTime[2] % (Tone.Ticks("4n").toTicks() * 4) + "i");
-                loopBarsCount[2]++;
-            } catch {
-                console.log("Require input recordings for Loop 3");
-            }
-        }
-        
-        // Step Transport.scheduleRepeat
+
         index++;
-
-        looperIndex[0]++;
-        looperIndex[1]++;
-        looperIndex[2]++;
-        
     }
 
     // Transport start/stop Control (Play Button)
@@ -186,9 +125,11 @@ function transport() {
     playButton.addEventListener('click', () => {
         if (metronomePlaying) {
             Tone.Transport.stop();
-            recordings[0].stop();
-            recordings[1].stop();
-            recordings[2].stop();
+
+            for (i = 0; i < glider.slides.length - 1; i++) {
+                recordings[i].stop();
+            }
+
             playButton.classList.remove('fa-pause');
             playButton.classList.add('fa-play');
             metronomePlaying = false;
@@ -208,32 +149,89 @@ function transport() {
 //                                //
 ////////////////////////////////////
 
-let isRecording = false;
-
 function looper() {
-    loopButtons = document.querySelectorAll('.loop-button');
-    loopButtons.forEach((loopButton, index) => {
-        loopButton.addEventListener('click', () => {
-            recordingIndex = index;
-            if (!isRecording) {
-                startRecording();
-                isRecording = true;
-                recordingsTime[index] = Tone.Transport.ticks; 
+    // Initialize recordings and loopBars item
+    recordings[glider.slides.length - 2] = new Tone.Player("");
+    recordingsTime[glider.slides.length - 2] = 0.0;
+    loopBars[glider.slides.length - 2] = 1;
+    loopBarsCount[glider.slides.length - 2] = 0;
 
-                // Loop Bars Count
-                loopBarsCount[index] = 0;
-            }
-            else {
-                stopRecording();
-                isRecording = false;
-            }
+    // Get the value of how many bars it will loop once for Individual Looper
+    const loopBarsInputs = document.querySelectorAll('.loop-bars-input');
+    loopBarsInputs.forEach((loopBarsInput, index) => {
+        if (index >= glider.slides.length - 2) {
+            loopBars[index] = loopBarsInput.value;
+            loopBarsInput.addEventListener('input', () => {
+                loopBars[index] = loopBarsInput.value;
+            });
+        }
+    });
+
+    // Loop Bars Control (Increase bars)
+    const loopBarsIncs = document.querySelectorAll('.loop-bars-inc');
+    loopBarsIncs.forEach((loopBarsInc, index) => {
+        if (index >= glider.slides.length - 2) {
+            loopBarsInc.addEventListener('click', inc = () => {
+                loopBarsInputs[index].value++;
+                loopBars[index] = loopBarsInputs[index].value;
+            });
+        }
+    });
+
+
+    // Loop Bars Control (Increase bars)
+    const loopBarsDecs = document.querySelectorAll('.loop-bars-dec');
+    loopBarsDecs.forEach((loopBarsDec, index) => {
+        if (index >= glider.slides.length - 2) {
+            loopBarsDec.addEventListener('click', () => {
+                loopBarsInputs[index].value--;
+                loopBars[index] = loopBarsInputs[index].value;
+            });
+        }
+    });
+
+    // Volume Control for Individual Looper
+    const volControls = document.querySelectorAll('.vol-control');
+    volControls.forEach((volControl, index) => {
+        if (index >= glider.slides.length - 2) {
+            volNodes[index] = new Tone.Volume(-20).toDestination();
+            volControl.addEventListener('input', () => {            
+                volNodes[index].volume.value = volControl.value;
+            });
+        }
+    });
+
+    const loopButtons = document.querySelectorAll('.loop-button');
+    loopButtons.forEach((loopButton, index) => {
+        if (index >= glider.slides.length - 2) {
+            loopButton.addEventListener('click', () => {
+                recordingIndex = index;
+                if (!isRecording) {
+                    startRecording();
+                    isRecording = true;
+                    recordingsTime[index] = Tone.Transport.ticks; 
+
+                    // Loop Bars Count (Start on 1 as the loopBarsCount will increase from 0 to 1 in that moment)
+                    loopBarsCount[index] = 1;
+                }
+                else {
+                    stopRecording();
+                    isRecording = false;
+                }
+                    
+                loopButton.classList.toggle('loop-button-recording');
                 
-            loopButton.classList.toggle('loop-button-recording');
-            
-        });
+            });
+        }
     });
 
 }
+
+////////////////////////////////////
+//                                //
+//         Add Looper             //
+//                                //
+////////////////////////////////////
 
 function addLooper() {
     let addLooper = document.querySelector('.add-looper');
@@ -241,42 +239,18 @@ function addLooper() {
     // looperGliderItem = looperGliderItem.cloneNode(true); // use for grab from html
 
     addLooper.addEventListener('click', () => {      
-        let looperGliderItem = document.createElement('div');
-        looperGliderItem.classList.add("glider-item");
-    
-        looperGliderItem.innerHTML = '' +
-        '<div class="looper-outer">' +
-        '<div class="looper">' +
-            '<div class="looper-header">' +
-                '<h2>Loop 2</h2>' +
-            '</div>' +
-            '<div class="loop-button-circle">' +
-                '<div class="loop-button"></div>' +
-            '</div>' +
-            '<div class="loop-bars">' +
-                '<i class="fas fa-sort-up loop-bars-inc"></i>' +
-                '<input type="text" class="loop-bars-input" value="1">' +
-                '<i class="fas fa-sort-down loop-bars-dec"></i>' +
-            '</div>' +
-            '<div class="vol-field slider-field">' +
-                '<h3 class="vol-title slider-title">Volume</h3>' +
-                '<input type="range" class="vol-control slider-control" value="-20" max="4" min="-30">' +
-            '</div>' +
-            '<div class="rev-field slider-field">' +
-                '<h3 class="rev-title slider-title">Reverb</h3>' +
-                '<input type="range" class="rev-control slider-control" value="-20" max="4" min="-30">' +
-            '</div>' +
-        '</div>' +
-        '</div>'
-      
-        // glider.removeItem(glider.slides.length-1);
-        gliderTrack.insertBefore(looperGliderItem, gliderTrack.childNodes[glider.slides.length - 1]);
+        let newLooper = document.querySelector('.glider-item');
+        newLooper = newLooper.cloneNode(true);
+
+        // ChildNodes[1] because the first node is occupied by spaces
+        newLooper.childNodes[1].childNodes[1].childNodes[1].innerHTML = `<h2>Loop ${glider.slides.length + 1 - 1}</h2>`;
+
+        gliderTrack.insertBefore(newLooper, gliderTrack.childNodes[glider.slides.length - 1]);
         glider.refresh(true);
+
         sliderControl();
         looper();
-        // glider.addItem(addGliderItem);
     });
-
 }
 
 ////////////////////////////////////
@@ -349,7 +323,7 @@ var AudioContext = window.AudioContext || window.webkitAudioContext;
 var audioContext //audio context to help us record
 
 function startRecording() {
-    console.log("recordButton clicked");
+    console.log("Record Button Clicked");
     
     var constraints = { audio: true, video:false }
 
@@ -401,7 +375,7 @@ function pauseRecording(){
 }
 
 function stopRecording() {
-    console.log("stopButton clicked");
+    console.log("Stop Button Clicked");
 
     //tell the recorder to stop the recording
     rec.stop();

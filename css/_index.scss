@@ -11,7 +11,7 @@ body {
 
         .nav-wrap {
             display: flex;
-            // justify-content: space-between;
+            justify-content: space-between;
             align-items: center;
             padding-left: 15px;
             padding-right: 30px;
@@ -25,9 +25,7 @@ body {
             }
     
             .audio-control {
-                margin-left: auto;
-                margin-right: auto;    
-                max-width: 150px;
+                width: 145px;
                 padding: 10px;
                 padding-left: 25px;
                 padding-right: 25px;
@@ -35,7 +33,8 @@ body {
                 background-color: $transparent;
                 border-radius: 20px;
                 display: flex;
-                justify-content: center;
+                justify-content: space-around;
+                align-items: center;
         
                 .play-button {
                     color: $themeWhite;
@@ -44,6 +43,22 @@ body {
                     &:hover, &:focus {
                         cursor: pointer;
                     }
+                }
+
+                .separator {
+                    width: 4px;
+                    height: 35px;
+                    border-radius: 2px;
+                    background-color: $themeWhite;
+                    margin-left: 5px;
+                }
+                
+                .record-button {
+                    width: 32px;
+                    height: 32px;
+                    border-radius: 50%;
+                    background-color: $themeRed;
+                    margin-left: 5px;
                 }
             }
     
@@ -84,6 +99,7 @@ body {
 
                     h2 {
                         color: $themeWhite;
+                        font-weight: 600;
                         font-size: 24px;
                     }
                 }
@@ -203,6 +219,15 @@ body {
                 }
             }
         }
+
+        .add-looper {
+            color: $themeWhite;
+            font-size: 40px;
+            border-radius: 25px;
+            background-color: $transparent;     
+            padding: 25px;
+            cursor: pointer;
+        }
     }
 
     .glider-contain {
@@ -224,9 +249,9 @@ body {
             }
 
             .glider-item{
-
                 display: flex;
                 justify-content: center;
+                align-items: center;
 
             }
         }
