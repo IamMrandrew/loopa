@@ -43,6 +43,8 @@ let loopButtonsProgress;
 
 let loopBarsCountFake = [];
 let looperIndex = [];
+// Array of Reverb Control for Individual Looper
+let revNodes = [];
 
 ////////////////////////////////////
 //                                //
@@ -124,7 +126,7 @@ function transport() {
             for (i = 0; i < glider.slides.length - 1; i++ ){
                 try {
                     if (loopBarsCount[i] == 0)
-                        recordings[i].chain(volNodes[i], Tone.Destination).start("+" + recordingsTime[i] % (Tone.Ticks("4n").toTicks() * 4) + "i");
+                        recordings[i].chain(revNodes[i],volNodes[i], Tone.Destination).start("+" + recordingsTime[i] % (Tone.Ticks("4n").toTicks() * 4) + "i");
                 } catch {
                     console.log('%c   Require Input Recordings for Loop  ' + (i + 1) + '  ', "color: #FFFFFF; font-weight: 600; background-color: #4B4B4B");
                 } 
@@ -238,6 +240,17 @@ function looper() {
             })
         }
     })
+
+    // Reverb Control for Individual Looper
+    const revControls = document.querySelectorAll('.rev-control');
+    revControls.forEach((revControl, index) => {
+        if (index >= glider.slides.length - 2) {
+            revNodes[index] = new Tone.JCReverb(0.2).toDestination();
+           revControl.addEventListener('input', () => {            
+                revNodes[index].roomSize.value = revControl.value;
+            });
+        }
+    });
 
     const loopButtons = document.querySelectorAll('.loop-button');
     loopButtons.forEach((loopButton, index) => {
