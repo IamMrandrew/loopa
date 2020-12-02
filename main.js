@@ -3,7 +3,7 @@ function setupAudio() {
     document.querySelector('.play-button').addEventListener('click', async () => {
         if (!audioReady) {
             await Tone.start();
-            console.log('Audio Ready');
+            console.log('%c   Audio Ready   ', "color: #FFFFFF; font-weight: 600; background-color: #94AFA6");
             audioReady = true;
         }
     });
@@ -56,8 +56,8 @@ function transport() {
     // Get BPM Input
     const bpmInput = document.querySelector('.bpm-input');
     bpmInput.addEventListener('input', () => {
-        if (bpm > 5000) {
-            console.log("bpm too high");
+        if (bpmInput.value > 500) {
+            console.warn('%c   BPM Too High   ', "color: #FFFFFF; font-weight: 600; background-color: #f8423f");
         } else {
             bpm = bpmInput.value;
         }
@@ -111,7 +111,7 @@ function transport() {
                     if (loopBarsCount[i] == 0)
                         recordings[i].chain(volNodes[i], Tone.Destination).start("+" + recordingsTime[i] % (Tone.Ticks("4n").toTicks() * 4) + "i");
                 } catch {
-                    console.log("Require input recordings for Loop " + (i + 1));
+                    console.log('%c  Require Input Recordings for Loop ' + (i + 1) + '  ', "color: #FFFFFF; font-weight: 600; background-color: #4B4B4B");
                 } 
                 loopBarsCount[i]++;
             }
@@ -323,12 +323,13 @@ var AudioContext = window.AudioContext || window.webkitAudioContext;
 var audioContext //audio context to help us record
 
 function startRecording() {
-    console.log("Record Button Clicked");
+    console.log('%c   Record Button Clicked   ', "color: #FFFFFF; font-weight: 600; background-color: #94AFA6");
+
     
     var constraints = { audio: true, video:false }
 
     navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
-        console.log("getUserMedia() success, stream created, initializing Recorder.js ...");
+        console.log('%c   Success getUserMedia()         \n   Stream created                 \n   Initializing Recorder.js ...   ', "color: #FFFFFF; font-weight: 600; background-color: #94AFA6");
 
         /*
             create an audio context after getUserMedia is called
@@ -354,28 +355,16 @@ function startRecording() {
         //start the recording process
         rec.record()
 
-        console.log("Recording started");
+        console.log('%c   Recording started   ', "color: #FFFFFF; font-weight: 600; background-color: #94AFA6");
 
     }).catch(function(err) {
         //enable the record button if getUserMedia() fails
-        console.log("error");
+        console.error("error");
     });
 }
 
-function pauseRecording(){
-    console.log("pauseButton clicked rec.recording=",rec.recording );
-    if (rec.recording){
-        //pause
-        rec.stop();
-    }else{
-        //resume
-        rec.record()
-
-    }
-}
-
 function stopRecording() {
-    console.log("Stop Button Clicked");
+    console.log('%c  Stop Button Clicked  ', "color: #FFFFFF; font-weight: 600; background-color: #F17474");
 
     //tell the recorder to stop the recording
     rec.stop();
