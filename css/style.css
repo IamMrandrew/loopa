@@ -973,12 +973,11 @@ body .main .looper-outer .looper .looper-header h2 {
 body .main .looper-outer .looper .loop-button-circle {
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 15px;
   width: 100px;
   height: 100px;
   border-radius: 50%;
   background-color: #FFFFFF;
-  -webkit-box-shadow: 0 0 0 13px rgba(239, 239, 239, 0.3);
-          box-shadow: 0 0 0 13px rgba(239, 239, 239, 0.3);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -991,6 +990,8 @@ body .main .looper-outer .looper .loop-button-circle {
 }
 
 body .main .looper-outer .looper .loop-button-circle .loop-button, body .main .looper-outer .looper .loop-button-circle .loop-stop {
+  position: relative;
+  z-index: 100;
   width: 45px;
   height: 45px;
   border-radius: 50%;
@@ -1007,6 +1008,28 @@ body .main .looper-outer .looper .loop-button-circle .loop-button-recording {
   width: 35px;
   height: 35px;
   border-radius: 20%;
+}
+
+body .main .looper-outer .looper .loop-button-circle svg {
+  position: absolute;
+}
+
+body .main .looper-outer .looper .loop-button-circle svg .loop-button-track {
+  stroke: rgba(239, 239, 239, 0.3);
+  fill: none;
+  stroke-width: 13px;
+}
+
+body .main .looper-outer .looper .loop-button-circle svg .loop-button-progress {
+  stroke: #DEFFE7;
+  fill: none;
+  stroke-width: 13px;
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  -webkit-transition: stroke-dashoffset 0.5s;
+  transition: stroke-dashoffset 0.5s;
 }
 
 body .main .looper-outer .looper .loop-bars {
@@ -1054,12 +1077,8 @@ body .main .looper-outer .looper .loop-bars .loop-bars-input {
   background: transparent;
 }
 
-body .main .looper-outer .looper .slider-field {
-  margin-top: 15px;
-}
-
 body .main .looper-outer .looper .slider-field .slider-title {
-  font-size: 18px;
+  font-size: 16px;
   color: #FFFFFF;
   margin-bottom: 0px;
   padding-bottom: 2px;

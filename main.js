@@ -18,6 +18,7 @@ function setupAudio() {
 
 // Recording status
 let isRecording = false;
+let looperStatus = [false]
 
 // Index for Recorded Audio Files Array
 let recordingIndex = 0;
@@ -37,6 +38,11 @@ let loopBarsCount = [];
 // Array of Volume Control for Individual Looper
 let volNodes = [];
 
+// For visual recordings display
+let loopButtonsProgress;
+
+let loopBarsCountFake = [];
+let looperIndex = [];
 
 ////////////////////////////////////
 //                                //
@@ -79,7 +85,6 @@ function transport() {
     // Tone.Transport
     let index = 0;
 
-
     Tone.Transport.scheduleRepeat(repeat, '4n');
 
     // Status of metronome (Initial)
@@ -88,6 +93,16 @@ function transport() {
     function repeat(time) {
         // Metronome back to first beat 
         let step = index % 4;
+        let looperStep = [];
+
+        for (i = 0; i < glider.slides.length - 1; i++) {
+            looperStep[i] = looperIndex[i] % 4;
+
+            if (looperStep[i] == 0) {
+                loopBarsCountFake[i] %= loopBars[i];
+                loopBarsCountFake[i]++;
+            }
+        }
 
         // Metronome Dots Visualize
         let metronomedots = document.querySelectorAll('.metronome-dot');
@@ -101,11 +116,11 @@ function transport() {
         if (!bpmMuted)
             metronomeSound.start();
 
-        for (i = 0; i < glider.slides.length - 1; i++) {
-            loopBarsCount[i] %= loopBars[i];
-        }
-
         if (step == 0 ) {
+            for (i = 0; i < glider.slides.length - 1; i++) {
+                loopBarsCount[i] %= loopBars[i];
+            }
+
             for (i = 0; i < glider.slides.length - 1; i++ ){
                 try {
                     if (loopBarsCount[i] == 0)
@@ -115,9 +130,30 @@ function transport() {
                 } 
                 loopBarsCount[i]++;
             }
-        }
+        }        
 
+        loopButtonsProgress.forEach((loopButtonProgress, index) => {
+            const radius = loopButtonProgress.r.baseVal.value;
+            const circumference = radius * 2 * Math.PI;
+            loopButtonProgress.style.strokeDasharray = circumference;        
+    
+            
+            // 0 - 100
+            if (looperStatus[index]) {
+                setProgress(((loopBarsCountFake[index]-1) * 4 + (looperStep[index]+1)) * (1/(4*loopBars[index])) * 100)
+                // console.log((loopBarsCountFake[index]))
+            }
+            function setProgress(percent) {
+                loopButtonProgress.style.strokeDashoffset = circumference - (percent / 100) * circumference;       
+            }
+
+        })
+        console.log(step)
         index++;
+
+        for (i = 0; i < glider.slides.length - 1; i++) {
+            looperIndex[i]++;
+        }
     }
 
     // Transport start/stop Control (Play Button)
@@ -143,6 +179,7 @@ function transport() {
     });
 }
 
+
 ////////////////////////////////////
 //                                //
 //             Looper             //
@@ -155,6 +192,7 @@ function looper() {
     recordingsTime[glider.slides.length - 2] = 0.0;
     loopBars[glider.slides.length - 2] = 1;
     loopBarsCount[glider.slides.length - 2] = 0;
+    looperIndex[glider.slides.length - 2] =  0;
 
     // Get the value of how many bars it will loop once for Individual Looper
     const loopBarsInputs = document.querySelectorAll('.loop-bars-input');
@@ -163,9 +201,9 @@ function looper() {
             loopBars[index] = loopBarsInput.value;
             loopBarsInput.addEventListener('input', () => {
                 loopBars[index] = loopBarsInput.value;
-            });
+            })
         }
-    });
+    })
 
     // Loop Bars Control (Increase bars)
     const loopBarsIncs = document.querySelectorAll('.loop-bars-inc');
@@ -174,9 +212,9 @@ function looper() {
             loopBarsInc.addEventListener('click', inc = () => {
                 loopBarsInputs[index].value++;
                 loopBars[index] = loopBarsInputs[index].value;
-            });
+            })
         }
-    });
+    })
 
 
     // Loop Bars Control (Increase bars)
@@ -186,9 +224,9 @@ function looper() {
             loopBarsDec.addEventListener('click', () => {
                 loopBarsInputs[index].value--;
                 loopBars[index] = loopBarsInputs[index].value;
-            });
+            })
         }
-    });
+    })
 
     // Volume Control for Individual Looper
     const volControls = document.querySelectorAll('.vol-control');
@@ -197,9 +235,9 @@ function looper() {
             volNodes[index] = new Tone.Volume(-20).toDestination();
             volControl.addEventListener('input', () => {            
                 volNodes[index].volume.value = volControl.value;
-            });
+            })
         }
-    });
+    })
 
     const loopButtons = document.querySelectorAll('.loop-button');
     loopButtons.forEach((loopButton, index) => {
@@ -211,20 +249,26 @@ function looper() {
                     isRecording = true;
                     recordingsTime[index] = Tone.Transport.ticks; 
 
-                    // Loop Bars Count (Start on 1 as the loopBarsCount will increase from 0 to 1 in that moment)
-                    loopBarsCount[index] = 1;
+                    //Back to zero now
+                    loopBarsCount[index] = 0;
+                    looperIndex[index] = 0;
+                    if (loopBars[index] > 1)
+                        loopBarsCountFake[index] = -1
+                    else 
+                        loopBarsCountFake[index] = 0;
                 }
                 else {
                     stopRecording();
-                    isRecording = false;
+                    isRecording = false;      
+                    looperStatus[index] = true;              
                 }
                     
-                loopButton.classList.toggle('loop-button-recording');
-                
-            });
+                loopButton.classList.toggle('loop-button-recording'); 
+            })
         }
-    });
+    })
 
+    loopButtonsProgress = document.querySelectorAll('.loop-button-progress');
 }
 
 ////////////////////////////////////

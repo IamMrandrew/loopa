@@ -30,7 +30,7 @@ body {
                 padding-left: 25px;
                 padding-right: 25px;
     
-                background-color: $transparent;
+                background-color: $themeTransparent;
                 border-radius: 20px;
                 display: flex;
                 justify-content: space-around;
@@ -84,7 +84,7 @@ body {
             border-radius: 40px;
             padding: 18px;
             margin-bottom: 10px;
-            background-color: $transparent;
+            background-color: $themeTransparent;
             
             .looper {
                 height: 100%;
@@ -107,17 +107,20 @@ body {
                 .loop-button-circle {
                     margin-left: auto;
                     margin-right: auto;
+                    margin-bottom: 15px;
                     width: 100px;
                     height: 100px;
                     border-radius: 50%;
                     background-color: $themeWhite;
-                    box-shadow: 0 0 0 13px $transparent;
+                    // box-shadow: 0 0 0 13px $themeTransparent;
                     
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     
                     .loop-button, .loop-stop {
+                        position: relative;
+                        z-index: 100;
                         width: 45px;
                         height: 45px;
                         border-radius: 50%;
@@ -134,13 +137,34 @@ body {
                         height: 35px;
                         border-radius: 20%;
                     }
+
+                    svg {
+                        position: absolute;                    
+
+                        .loop-button-track {
+                            stroke: $themeTransparent;
+                            fill: none;
+                            stroke-width: 13px;
+                        }
+
+                        .loop-button-progress {
+                            stroke: $themeLightGreen;
+                            fill: none;
+                            stroke-width: 13px;
+
+                            transform: rotate(-90deg);
+                            transform-origin: center;
+
+                            transition: stroke-dashoffset 0.5s;
+                        }
+                    }
                 }
 
                 .loop-bars {
                     position: absolute;
                     top: 100px;
                     left: 30px;
-                    background-color: $transparent;
+                    background-color: $themeTransparent;
                     border-radius: 15px;
                     padding: 3px;
                     padding-top: 15px;
@@ -174,10 +198,8 @@ body {
                 }
 
                 .slider-field {
-                    margin-top: 15px;
-
                     .slider-title {
-                        font-size: 18px;
+                        font-size: 16px;
                         color: $themeWhite;
                         margin-bottom: 0px;
                         padding-bottom: 2px;
@@ -224,7 +246,7 @@ body {
             color: $themeWhite;
             font-size: 40px;
             border-radius: 25px;
-            background-color: $transparent;     
+            background-color: $themeTransparent;     
             padding: 25px;
             cursor: pointer;
         }
@@ -294,7 +316,7 @@ body {
                 padding: 15px;
                 padding-left: 25px;
                 padding-right: 25px;
-                background-color: $transparent;
+                background-color: $themeTransparent;
                 border-radius: 20px;
                 margin-right: 10px;
                 
@@ -338,7 +360,7 @@ body {
 
             .bpm-mute {
                 padding: 18px;
-                background-color: $transparent;
+                background-color: $themeTransparent;
                 border-radius: 20px;
 
                 i {
