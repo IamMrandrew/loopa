@@ -16,41 +16,42 @@ function setupAudio() {
 ////////////////////////////////////
 
 
-// Recording status
-let isRecording = false;
-let looperStatus = [false]
+// Looper status
+let recordingStatus = [false];
+let recordedStatus = [false]
 
-// Index for Recorded Audio Files Array
-let recordingIndex = 0;
 
-// Array for Recorded Audio Files
+// Array for Recorded Audio Files, Index for Recording Audio Files Array (Pass to recorderjs)
 let recordings = [];
+let recordingsIndex = 0;
 
 // Array for the Record Time (Ticks away from the start beat of Transport) of Recorded Audio Files
-let recordingsTime = [];
+let recordingsOffset = [];
+
 
 // Array for loopBars Input for Individual Looper
 let loopBars = [];
-
 // Array to count how many bars now between last played for Individual Looper
 let loopBarsCount = [];
 
-// Array of Volume Control for Individual Looper
-let volNodes = [];
-
-// For visual recordings display
+// Array for Circular progress bars for Individual Looper
+let loopBarsCountProgress = [];
+let loopProgressIndex = [];
+// HTML Elements of Circular progress bars
 let loopButtonsProgress;
 
-let loopBarsCountFake = [];
-let looperIndex = [];
+
+// Array of Volume Control for Individual Looper
+let volNodes = [];
 // Array of Reverb Control for Individual Looper
 let revNodes = [];
 
-// Get Looper
+// Get Looper HTML element
 const looperHTML = document.querySelector('.glider-item');
 let newLooper = document.createElement('div');
 newLooper.classList.add('glider-item');
 newLooper.innerHTML = looperHTML.innerHTML;
+
 
 ////////////////////////////////////
 //                                //
@@ -104,11 +105,11 @@ function transport() {
         let looperStep = [];
 
         for (i = 0; i < glider.slides.length - 1; i++) {
-            looperStep[i] = looperIndex[i] % 4;
+            looperStep[i] = loopProgressIndex[i] % 4;
 
             if (looperStep[i] == 0) {
-                loopBarsCountFake[i] %= loopBars[i];
-                loopBarsCountFake[i]++;
+                loopBarsCountProgress[i] %= loopBars[i];
+                loopBarsCountProgress[i]++;
             }
         }
 
@@ -124,19 +125,20 @@ function transport() {
         if (!bpmMuted)
             metronomeSound.start();
 
-        if (step == 0 ) {
+            if (step == 0 ) {
             for (i = 0; i < glider.slides.length - 1; i++) {
+                loopBarsCount[i]++;
                 loopBarsCount[i] %= loopBars[i];
             }
 
             for (i = 0; i < glider.slides.length - 1; i++ ){
                 try {
                     if (loopBarsCount[i] == 0)
-                        recordings[i].chain(volNodes[i], revNodes[i],Tone.Destination).start("+" + recordingsTime[i] % (Tone.Ticks("4n").toTicks() * 4) + "i");
+                        recordings[i].chain(volNodes[i], revNodes[i],Tone.Destination).start("+" + recordingsOffset[i] % (Tone.Ticks("4n").toTicks() * 4) + "i");
                 } catch {
                     console.log('%c   Require Input Recordings for Loop  ' + (i + 1) + '  ', "color: #FFFFFF; font-weight: 600; background-color: #4B4B4B");
                 } 
-                loopBarsCount[i]++;
+                
             }
         }        
 
@@ -146,20 +148,20 @@ function transport() {
             loopButtonProgress.style.strokeDasharray = circumference;        
             
             // 0 - 100
-            if (looperStatus[index]) {
-                setProgress(((loopBarsCountFake[index]-1) * 4 + (looperStep[index]+1)) * (1/(4*loopBars[index])) * 100)
-                // console.log((loopBarsCountFake[index]))
+            if (recordedStatus[index]) {
+                setProgress(((loopBarsCountProgress[index]-1) * 4 + (looperStep[index]+1)) * (1/(4*loopBars[index])) * 100)
+                // console.log((loopBarsCountProgress[index]))
             }
             function setProgress(percent) {
                 loopButtonProgress.style.strokeDashoffset = circumference - (percent / 100) * circumference;       
             }
 
         })
-        console.log(step)
+        
         index++;
 
         for (i = 0; i < glider.slides.length - 1; i++) {
-            looperIndex[i]++;
+            loopProgressIndex[i]++;
         }
     }
 
@@ -196,10 +198,10 @@ function transport() {
 function looper() {
     // Initialize recordings and loopBars item
     recordings[glider.slides.length - 2] = new Tone.Player("");
-    recordingsTime[glider.slides.length - 2] = 0.0;
+    recordingsOffset[glider.slides.length - 2] = 0.0;
     loopBars[glider.slides.length - 2] = 1;
     loopBarsCount[glider.slides.length - 2] = 0;
-    looperIndex[glider.slides.length - 2] =  0;
+    loopProgressIndex[glider.slides.length - 2] =  0;
 
     // Get the value of how many bars it will loop once for Individual Looper
     const loopBarsInputs = document.querySelectorAll('.loop-bars-input');
@@ -265,24 +267,21 @@ function looper() {
     loopButtons.forEach((loopButton, index) => {
         if (index >= glider.slides.length - 2) {
             loopButton.addEventListener('click', () => {
-                recordingIndex = index;
-                if (!isRecording) {
+                recordingsIndex = index;
+                if (!recordingStatus[index]) {
                     startRecording();
-                    isRecording = true;
-                    recordingsTime[index] = Tone.Transport.ticks; 
+                    recordingStatus[index] = true;
+                    recordingsOffset[index] = Tone.Transport.ticks; 
 
                     //Back to zero now
                     loopBarsCount[index] = 0;
-                    looperIndex[index] = 0;
-                    if (loopBars[index] > 1)
-                        loopBarsCountFake[index] = -1
-                    else 
-                        loopBarsCountFake[index] = 0;
+                    loopProgressIndex[index] = 0;
+                    loopBarsCountProgress[index] = 0;
                 }
                 else {
                     stopRecording();
-                    isRecording = false;      
-                    looperStatus[index] = true;              
+                    recordingStatus[index] = false;      
+                    recordedStatus[index] = true;              
                 }
                     
                 loopButton.classList.toggle('loop-button-recording'); 
@@ -491,7 +490,7 @@ function createDownloadLink(blob) {
     var li = document.createElement('li');
     var link = document.createElement('a');
 
-    recordings[recordingIndex] = new Tone.Player(url);
+    recordings[recordingsIndex] = new Tone.Player(url);
 }
 
 

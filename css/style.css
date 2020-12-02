@@ -1064,6 +1064,7 @@ body .main .looper-outer .looper .loop-bars {
 body .main .looper-outer .looper .loop-bars .loop-bars-inc, body .main .looper-outer .looper .loop-bars .loop-bars-dec {
   font-size: 30px;
   color: #FFFFFF;
+  cursor: pointer;
 }
 
 body .main .looper-outer .looper .loop-bars .loop-bars-input {
