@@ -138,7 +138,6 @@ function transport() {
             const radius = loopButtonProgress.r.baseVal.value;
             const circumference = radius * 2 * Math.PI;
             loopButtonProgress.style.strokeDasharray = circumference;        
-    
             
             // 0 - 100
             if (looperStatus[index]) {
@@ -286,6 +285,14 @@ function looper() {
     })
 
     loopButtonsProgress = document.querySelectorAll('.loop-button-progress');
+    loopButtonsProgress.forEach((loopButtonProgress, index) => {
+        if (index >= glider.slides.length - 2) {
+            const radius = loopButtonProgress.r.baseVal.value;
+            const circumference = radius * 2 * Math.PI;
+            loopButtonProgress.style.strokeDasharray = circumference; 
+            loopButtonProgress.style.strokeDashoffset = circumference;       
+        }
+    })    
 }
 
 ////////////////////////////////////
