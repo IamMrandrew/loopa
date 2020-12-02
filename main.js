@@ -237,8 +237,12 @@ function looper() {
             volNodes[index] = new Tone.Volume(-20).toDestination();
             volControl.addEventListener('input', () => {            
                 volNodes[index].volume.value = volControl.value;
+                if(volControl.value == -30){
+                    volNodes[index].mute=true;
+                }
             })
         }
+        
     })
 
     // Reverb Control for Individual Looper
@@ -324,6 +328,9 @@ function sliderControl() {
             let color = `linear-gradient(90deg, #DEFFE7 ${x}%,  #FFFFFF ${x}%)`;
             slider.style.background = color;
         });
+        let x = ((slider.value - slider.min) / (slider.max-slider.min)) * 100;
+        let color = `linear-gradient(90deg, #DEFFE7 ${x}%,  #FFFFFF ${x}%)`;
+        slider.style.background = color;
     });
 }
 
