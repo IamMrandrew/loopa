@@ -37,6 +37,8 @@ let loopBarsCount = [];
 // Array of Volume Control for Individual Looper
 let volNodes = [];
 
+// Array of Reverb Control for Individual Looper
+let revNodes = [];
 
 ////////////////////////////////////
 //                                //
@@ -197,6 +199,17 @@ function looper() {
             volNodes[index] = new Tone.Volume(-20).toDestination();
             volControl.addEventListener('input', () => {            
                 volNodes[index].volume.value = volControl.value;
+            });
+        }
+    });
+
+    // Reverb Control for Individual Looper
+    const revControls = document.querySelectorAll('.rev-control');
+    revControls.forEach((revControl, index) => {
+        if (index >= glider.slides.length - 2) {
+            revNodes[index] = new Tone.JCReverb(0).toDestination();
+           revControl.addEventListener('input', () => {            
+                revNodes[index].roomSize = revControl.value;
             });
         }
     });
