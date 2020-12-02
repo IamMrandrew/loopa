@@ -111,7 +111,7 @@ function transport() {
                     if (loopBarsCount[i] == 0)
                         recordings[i].chain(volNodes[i], Tone.Destination).start("+" + recordingsTime[i] % (Tone.Ticks("4n").toTicks() * 4) + "i");
                 } catch {
-                    console.log('%c  Require Input Recordings for Loop ' + (i + 1) + '  ', "color: #FFFFFF; font-weight: 600; background-color: #4B4B4B");
+                    console.log('%c   Require Input Recordings for Loop  ' + (i + 1) + '  ', "color: #FFFFFF; font-weight: 600; background-color: #4B4B4B");
                 } 
                 loopBarsCount[i]++;
             }
@@ -355,7 +355,7 @@ function startRecording() {
         //start the recording process
         rec.record()
 
-        console.log('%c   Recording started   ', "color: #FFFFFF; font-weight: 600; background-color: #94AFA6");
+        console.log('%c   Recording Started   ', "color: #FFFFFF; font-weight: 600; background-color: #94AFA6");
 
     }).catch(function(err) {
         //enable the record button if getUserMedia() fails
@@ -364,7 +364,7 @@ function startRecording() {
 }
 
 function stopRecording() {
-    console.log('%c  Stop Button Clicked  ', "color: #FFFFFF; font-weight: 600; background-color: #F17474");
+    console.log('%c   Stop Button Clicked   ', "color: #FFFFFF; font-weight: 600; background-color: #F17474");
 
     //tell the recorder to stop the recording
     rec.stop();
