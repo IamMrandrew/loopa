@@ -46,6 +46,12 @@ let looperIndex = [];
 // Array of Reverb Control for Individual Looper
 let revNodes = [];
 
+// Get Looper
+const looperHTML = document.querySelector('.glider-item');
+let newLooper = document.createElement('div');
+newLooper.classList.add('glider-item');
+newLooper.innerHTML = looperHTML.innerHTML;
+
 ////////////////////////////////////
 //                                //
 //          Main Transport        //
@@ -304,10 +310,8 @@ function looper() {
 function addLooper() {
     let addLooper = document.querySelector('.add-looper');
     let gliderTrack = document.querySelector('.glider-track');
-    // looperGliderItem = looperGliderItem.cloneNode(true); // use for grab from html
 
-    addLooper.addEventListener('click', () => {      
-        let newLooper = document.querySelector('.glider-item');
+    addLooper.addEventListener('click', () => {   
         newLooper = newLooper.cloneNode(true);
 
         // ChildNodes[1] because the first node is occupied by spaces
@@ -317,6 +321,7 @@ function addLooper() {
         glider.refresh(true);
 
         sliderControl();
+        filters();
         looper();
     });
 }
@@ -339,6 +344,37 @@ function sliderControl() {
         let color = `linear-gradient(90deg, #DEFFE7 ${x}%,  #FFFFFF ${x}%)`;
         slider.style.background = color;
     });
+}
+
+////////////////////////////////////
+//                                //
+//        Effects/ Filters        //
+//                                //
+////////////////////////////////////
+
+function filters() {
+    const LPFs = document.querySelectorAll('.LPF');
+    const LPFPopups = document.querySelectorAll('.LPF-popup');
+    const closeLPFPopups = document.querySelectorAll('.close-LPF-popup');
+    const looper = document.querySelectorAll('.looper')
+
+    LPFs.forEach((LPF, index) => {
+        if (index >= glider.slides.length - 2) {
+            LPF.addEventListener('click', () => {
+                LPFPopups[index].classList.add('active');
+                looper[index].classList.add('blur');
+            })
+        }
+    })
+
+    closeLPFPopups.forEach((closeLPFPopup, index) => {
+        if (index >= glider.slides.length - 2) {
+            closeLPFPopup.addEventListener('click', () => {
+                LPFPopups[index].classList.remove('active');
+                looper[index].classList.remove('blur');
+            })
+        }
+    })
 }
 
 let glider = new Glider(document.querySelector('.glider'), {
@@ -465,3 +501,4 @@ transport();
 sliderControl();
 looper();
 addLooper();
+filters();
