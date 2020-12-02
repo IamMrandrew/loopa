@@ -41,10 +41,10 @@ let loopProgressIndex = [];
 let loopButtonsProgress;
 
 
-// Array of Volume Control for Individual Looper
+// Array of Effects/ Filters for Individual Looper
 let volNodes = [];
-// Array of Reverb Control for Individual Looper
 let revNodes = [];
+let LPFNodes = [];
 
 // Get Looper HTML element
 const looperHTML = document.querySelector('.glider-item');
@@ -134,8 +134,7 @@ function transport() {
             for (i = 0; i < glider.slides.length - 1; i++ ){
                 try {
                     if (loopBarsCount[i] == 0)
-                        recordings[i].chain(volNodes[i], revNodes[i],Tone.Destination).start("+" + recordingsOffset[i] % (Tone.Ticks("4n").toTicks() * 4) + "i");
-                } catch {
+                        recordings[i].chain(volNodes[i], LPFNodes[i],revNodes[i]).start("+" + recordingsOffset[i] % (Tone.Ticks("4n").toTicks() * 4) + "i");                } catch {
                     console.log('%c   Require Input Recordings for Loop  ' + (i + 1) + '  ', "color: #FFFFFF; font-weight: 600; background-color: #4B4B4B");
                 } 
                 
@@ -257,8 +256,35 @@ function looper() {
     revControls.forEach((revControl, index) => {
         if (index >= glider.slides.length - 2) {
             revNodes[index] = new Tone.JCReverb(0.2).toDestination();
-           revControl.addEventListener('input', () => {            
+            revControl.addEventListener('input', () => {            
                 revNodes[index].roomSize.value = revControl.value;
+            });
+        }
+    });
+
+
+    // LPF Control for Individual Looper
+    const LPFControls = document.querySelectorAll('.LPF-control');
+    const LPFToggles = document.querySelectorAll('.LPF-toggle');
+
+    LPFControls.forEach((LPFControl, index) => {
+        if (index >= glider.slides.length - 2) {
+            LPFNodes[index] = new Tone.Filter(20000, "lowpass", -48).toDestination();
+            LPFControl.addEventListener('input', () => {            
+                LPFNodes[index].frequency.value = LPFControl.value;
+                LPFToggles[index].checked = true;                
+            });
+        }
+    });
+    
+    LPFToggles.forEach((LPFToggle, index) => {
+        if (index >= glider.slides.length - 2) {
+            LPFToggle.addEventListener('change', () => {                   
+                if (!LPFToggle.checked) {
+                    LPFNodes[index].frequency.rampTo(20000, 0.1);
+                } else {
+                    LPFNodes[index].frequency.value = LPFControls[index].value;
+                }        
             });
         }
     });
