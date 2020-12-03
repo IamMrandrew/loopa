@@ -43,6 +43,7 @@ let loopButtonsProgress;
 
 // Array of Effects/ Filters for Individual Looper
 let volNodes = [];
+let panNodes = [];
 let revNodes = [];
 let LPFNodes = [];
 
@@ -134,7 +135,8 @@ function transport() {
             for (i = 0; i < glider.slides.length - 1; i++ ){
                 try {
                     if (loopBarsCount[i] == 0)
-                        recordings[i].chain(volNodes[i], LPFNodes[i],revNodes[i]).start("+" + recordingsOffset[i] % (Tone.Ticks("4n").toTicks() * 4) + "i");                } catch {
+                        recordings[i].chain(LPFNodes[i],revNodes[i], panNodes[i], volNodes[i], Tone.Destination).start("+" + recordingsOffset[i] % (Tone.Ticks("4n").toTicks() * 4) + "i");  
+                } catch {
                     console.log('%c   Require Input Recordings for Loop  ' + (i + 1) + '  ', "color: #FFFFFF; font-weight: 600; background-color: #4B4B4B");
                 } 
                 
@@ -240,7 +242,7 @@ function looper() {
     const volControls = document.querySelectorAll('.vol-control');
     volControls.forEach((volControl, index) => {
         if (index >= glider.slides.length - 2) {
-            volNodes[index] = new Tone.Volume(-20).toDestination();
+            volNodes[index] = new Tone.Volume(-20);
             volControl.addEventListener('input', () => {            
                 volNodes[index].volume.value = volControl.value;
                 if(volControl.value == -30){
@@ -251,11 +253,22 @@ function looper() {
         
     })
 
+    // Panner Control for Individual Looper
+    const panControls = document.querySelectorAll('.pan-control');
+    panControls.forEach((panControl, index) => {
+        if (index >= glider.slides.length - 2) {
+            panNodes[index] = new Tone.Panner(0);
+            panControl.addEventListener('input', () => {            
+                panNodes[index].pan.value = panControl.value;
+            });
+        }
+    });
+
     // Reverb Control for Individual Looper
     const revControls = document.querySelectorAll('.rev-control');
     revControls.forEach((revControl, index) => {
         if (index >= glider.slides.length - 2) {
-            revNodes[index] = new Tone.JCReverb(0.2).toDestination();
+            revNodes[index] = new Tone.JCReverb(0.2);
             revControl.addEventListener('input', () => {            
                 revNodes[index].roomSize.value = revControl.value;
             });
@@ -269,7 +282,7 @@ function looper() {
 
     LPFControls.forEach((LPFControl, index) => {
         if (index >= glider.slides.length - 2) {
-            LPFNodes[index] = new Tone.Filter(20000, "lowpass", -48).toDestination();
+            LPFNodes[index] = new Tone.Filter(20000, "lowpass", -48);
             LPFControl.addEventListener('input', () => {            
                 LPFNodes[index].frequency.value = LPFControl.value;
                 LPFToggles[index].checked = true;                
@@ -346,7 +359,7 @@ function addLooper() {
         glider.refresh(true);
 
         sliderControl();
-        filters();
+        effects();
         looper();
     });
 }
@@ -377,7 +390,7 @@ function sliderControl() {
 //                                //
 ////////////////////////////////////
 
-function filters() {
+function effects() {
     const LPFs = document.querySelectorAll('.LPF');
     const LPFPopups = document.querySelectorAll('.LPF-popup');
     const closeLPFPopups = document.querySelectorAll('.close-LPF-popup');
@@ -526,4 +539,4 @@ transport();
 sliderControl();
 looper();
 addLooper();
-filters();
+effects();
