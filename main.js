@@ -40,6 +40,9 @@ let loopProgressIndex = [];
 // HTML Elements of Circular progress bars
 let loopButtonsProgress;
 
+// Mute status for Individual Looper
+let looperMuted = []
+
 
 // Array of Effects/ Filters for Individual Looper
 let volNodes = [];
@@ -352,6 +355,25 @@ function looper() {
             })
         }
     })
+
+    const looperMutes = document.querySelectorAll('.looper-mute i');
+    looperMutes.forEach((looperMute, index) => {
+        if (index >= glider.slides.length - 2) {
+            looperMuted[index] = false;
+            looperMute.addEventListener('click', () => {
+                if (!looperMuted[index]){
+                    volNodes[index].mute=true;
+                    looperMuted[index] = true;
+                }                    
+                else {
+                    looperMuted[index] = false;
+                    volNodes[index].mute=false;
+                }                    
+                looperMute.classList.toggle('looper-mute-disable');
+            });
+        }
+    })
+    
 
     loopButtonsProgress = document.querySelectorAll('.loop-button-progress');
     loopButtonsProgress.forEach((loopButtonProgress, index) => {

@@ -967,12 +967,42 @@ body .main .looper-outer .looper {
 body .main .looper-outer .looper .looper-header {
   margin-top: 15px;
   margin-bottom: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 body .main .looper-outer .looper .looper-header h2 {
   color: #FFFFFF;
   font-weight: 600;
   font-size: 24px;
+}
+
+body .main .looper-outer .looper .looper-header .looper-mute {
+  padding: 10px;
+  margin-bottom: 0.5rem;
+  border-radius: 20px;
+}
+
+body .main .looper-outer .looper .looper-header .looper-mute i {
+  font-size: 25px;
+  color: #FFFFFF;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+body .main .looper-outer .looper .looper-header .looper-mute i:hover, body .main .looper-outer .looper .looper-header .looper-mute i:focus {
+  cursor: pointer;
+}
+
+body .main .looper-outer .looper .looper-header .looper-mute .looper-mute-disable {
+  opacity: 30%;
 }
 
 body .main .looper-outer .looper .loop-button-circle {

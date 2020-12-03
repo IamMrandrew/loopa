@@ -98,11 +98,34 @@ body {
                 .looper-header {
                     margin-top: 15px;
                     margin-bottom: 30px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;                    
 
                     h2 {
                         color: $themeWhite;
                         font-weight: 600;
                         font-size: 24px;
+                    }
+
+                    .looper-mute {
+                        padding: 10px;
+                        margin-bottom: 0.5rem;                        
+                        border-radius: 20px;
+        
+                        i {
+                            font-size: 25px;
+                            color: $themeWhite;
+                            transition: all 0.5s;
+        
+                            &:hover, &:focus {
+                                cursor: pointer;
+                            }
+                        }
+        
+                        .looper-mute-disable {
+                            opacity: 30%;
+                        }
                     }
                 }
 
