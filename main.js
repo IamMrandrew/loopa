@@ -265,15 +265,40 @@ function looper() {
     });
 
     // Reverb Control for Individual Looper
-    const revControls = document.querySelectorAll('.rev-control');
+    const revControls = document.querySelectorAll('.REV-control');
+    const revControls2 = document.querySelectorAll('.REV-control-2');
+    const revToggles = document.querySelectorAll('.REV-toggle');
     revControls.forEach((revControl, index) => {
         if (index >= glider.slides.length - 2) {
             revNodes[index] = new Tone.JCReverb(0.2);
             revControl.addEventListener('input', () => {            
                 revNodes[index].roomSize.value = revControl.value;
+                revToggles[index].checked = true; 
             });
         }
     });
+
+    revControls2.forEach((revControl2, index) => {
+        if (index >= glider.slides.length - 2) {
+            revControl2.addEventListener('input', () => {            
+                revNodes[index].wet.value = revControl2.value;
+                revToggles[index].checked = true; 
+            });
+        }
+    });
+
+    revToggles.forEach((revToggle, index) => {
+        if (index >= glider.slides.length - 2) {
+            revToggle.addEventListener('change', () => {                   
+                if (!revToggle.checked) {
+                    revNodes[index].wet.value = 0;
+                } else {
+                    revNodes[index].wet.value = revControls2[index].value;
+                }        
+            });
+        }
+    });
+
 
 
     // LPF Control for Individual Looper
@@ -391,10 +416,10 @@ function sliderControl() {
 ////////////////////////////////////
 
 function effects() {
+    const looper = document.querySelectorAll('.looper')
     const LPFs = document.querySelectorAll('.LPF');
     const LPFPopups = document.querySelectorAll('.LPF-popup');
     const closeLPFPopups = document.querySelectorAll('.close-LPF-popup');
-    const looper = document.querySelectorAll('.looper')
 
     LPFs.forEach((LPF, index) => {
         if (index >= glider.slides.length - 2) {
@@ -409,6 +434,28 @@ function effects() {
         if (index >= glider.slides.length - 2) {
             closeLPFPopup.addEventListener('click', () => {
                 LPFPopups[index].classList.remove('active');
+                looper[index].classList.remove('blur');
+            })
+        }
+    })
+
+    const REVs = document.querySelectorAll('.REV');
+    const REVPopups = document.querySelectorAll('.REV-popup');
+    const closeREVPopups = document.querySelectorAll('.close-REV-popup');
+
+    REVs.forEach((REV, index) => {
+        if (index >= glider.slides.length - 2) {
+            REV.addEventListener('click', () => {
+                REVPopups[index].classList.add('active');
+                looper[index].classList.add('blur');
+            })
+        }
+    })
+
+    closeREVPopups.forEach((closeREVPopup, index) => {
+        if (index >= glider.slides.length - 2) {
+            closeREVPopup.addEventListener('click', () => {
+                REVPopups[index].classList.remove('active');
                 looper[index].classList.remove('blur');
             })
         }

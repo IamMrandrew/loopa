@@ -1123,7 +1123,7 @@ body .main .looper-outer .looper .slider-field .slider-control::-moz-range-thumb
   border: none !important;
 }
 
-body .main .looper-outer .looper .filters-title {
+body .main .looper-outer .looper .effects-title {
   font-size: 16px;
   color: #FFFFFF;
   margin-top: 5px;
@@ -1131,7 +1131,7 @@ body .main .looper-outer .looper .filters-title {
   padding-bottom: 2px;
 }
 
-body .main .looper-outer .looper .filters-field {
+body .main .looper-outer .looper .effects-field {
   padding: 8px 15px 10px 15px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1141,7 +1141,7 @@ body .main .looper-outer .looper .filters-field {
           justify-content: start;
 }
 
-body .main .looper-outer .looper .filters-field .filter {
+body .main .looper-outer .looper .effects-field .effect {
   background-color: rgba(239, 239, 239, 0.3);
   color: #FFFFFF;
   font-size: 14px;
@@ -1160,7 +1160,7 @@ body .main .looper-outer .looper.blur {
   transition: filter 0.5s, -webkit-filter 0.5s;
 }
 
-body .main .looper-outer .filter-popup {
+body .main .looper-outer .effect-popup {
   position: absolute;
   z-index: 150;
   top: 150px;
@@ -1170,8 +1170,9 @@ body .main .looper-outer .filter-popup {
   opacity: 0;
   pointer-events: none;
   width: 250px;
-  height: 150px;
+  min-height: 150px;
   padding: 15px;
+  padding-bottom: 20px;
   -webkit-transform: scale(0.5);
           transform: scale(0.5);
   -webkit-transition: opacity 100ms ease-in-out, -webkit-transform 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19);
@@ -1180,7 +1181,7 @@ body .main .looper-outer .filter-popup {
   transition: opacity 100ms ease-in-out, transform 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19), -webkit-transform 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19);
 }
 
-body .main .looper-outer .filter-popup i {
+body .main .looper-outer .effect-popup i {
   color: #FFFFFF;
   font-size: 18px;
   position: absolute;
@@ -1189,7 +1190,7 @@ body .main .looper-outer .filter-popup i {
   cursor: pointer;
 }
 
-body .main .looper-outer .filter-popup .filter-header {
+body .main .looper-outer .effect-popup .effect-header {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1201,7 +1202,7 @@ body .main .looper-outer .filter-popup .filter-header {
           align-items: baseline;
 }
 
-body .main .looper-outer .filter-popup .filter-header .filter-title {
+body .main .looper-outer .effect-popup .effect-header .effect-title {
   font-size: 16px;
   color: #FFFFFF;
   margin-top: 10px;
@@ -1209,7 +1210,7 @@ body .main .looper-outer .filter-popup .filter-header .filter-title {
   padding-bottom: 5px;
 }
 
-body .main .looper-outer .filter-popup .filter-header .filter-toggle {
+body .main .looper-outer .effect-popup .effect-header .effect-toggle {
   position: relative;
   top: 5px;
   width: 35px;
@@ -1223,11 +1224,11 @@ body .main .looper-outer .filter-popup .filter-header .filter-toggle {
   transition: all 0.5s;
 }
 
-body .main .looper-outer .filter-popup .filter-header .filter-toggle:checked {
+body .main .looper-outer .effect-popup .effect-header .effect-toggle:checked {
   background-color: #A9C9BD;
 }
 
-body .main .looper-outer .filter-popup .filter-header .filter-toggle::before {
+body .main .looper-outer .effect-popup .effect-header .effect-toggle::before {
   content: '';
   position: absolute;
   width: 20px;
@@ -1240,18 +1241,18 @@ body .main .looper-outer .filter-popup .filter-header .filter-toggle::before {
   transition: all 0.4s;
 }
 
-body .main .looper-outer .filter-popup .filter-header .filter-toggle:checked::before {
+body .main .looper-outer .effect-popup .effect-header .effect-toggle:checked::before {
   left: 15px;
 }
 
-body .main .looper-outer .filter-popup .slider-title {
+body .main .looper-outer .effect-popup .slider-title {
   font-size: 16px;
   color: #FFFFFF;
   margin-bottom: 0px;
   padding-bottom: 2px;
 }
 
-body .main .looper-outer .filter-popup .slider-control {
+body .main .looper-outer .effect-popup .slider-control {
   -webkit-appearance: none;
   background: -webkit-gradient(linear, left top, right top, color-stop(30%, #DEFFE7), color-stop(30%, #FFFFFF));
   background: linear-gradient(90deg, #DEFFE7 30%, #FFFFFF 30%);
@@ -1263,7 +1264,7 @@ body .main .looper-outer .filter-popup .slider-control {
   outline: none;
 }
 
-body .main .looper-outer .filter-popup .slider-control::-webkit-slider-thumb {
+body .main .looper-outer .effect-popup .slider-control::-webkit-slider-thumb {
   -webkit-appearance: none;
   background-color: #FFFFFF;
   width: 20px;
@@ -1272,11 +1273,11 @@ body .main .looper-outer .filter-popup .slider-control::-webkit-slider-thumb {
   border: none !important;
 }
 
-body .main .looper-outer .filter-popup .slider-control::-webkit-slider-thumb:hover, body .main .looper-outer .filter-popup .slider-control::-webkit-slider-thumbfocus {
+body .main .looper-outer .effect-popup .slider-control::-webkit-slider-thumb:hover, body .main .looper-outer .effect-popup .slider-control::-webkit-slider-thumbfocus {
   cursor: pointer;
 }
 
-body .main .looper-outer .filter-popup .slider-control::-moz-range-thumb {
+body .main .looper-outer .effect-popup .slider-control::-moz-range-thumb {
   background-color: #FFFFFF;
   width: 20px;
   height: 20px;
@@ -1284,7 +1285,7 @@ body .main .looper-outer .filter-popup .slider-control::-moz-range-thumb {
   border: none !important;
 }
 
-body .main .looper-outer .filter-popup.active {
+body .main .looper-outer .effect-popup.active {
   opacity: 1;
   pointer-events: all;
   top: 150px;

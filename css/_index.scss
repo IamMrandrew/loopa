@@ -243,7 +243,7 @@ body {
                     }
                 }
 
-                .filters-title {
+                .effects-title {
                     font-size: 16px;
                     color: $themeWhite;
                     margin-top: 5px;
@@ -251,12 +251,12 @@ body {
                     padding-bottom: 2px;
                 }
 
-                .filters-field {
+                .effects-field {
                     padding: 8px 15px 10px 15px;
                     display: flex;
                     justify-content: start;
 
-                    .filter {
+                    .effect {
                         background-color: $themeTransparent;
                         color: $themeWhite;
                         font-size: 14px;
@@ -273,7 +273,7 @@ body {
                 transition: filter 0.5s;
             }
 
-            .filter-popup {
+            .effect-popup {
                 position: absolute;
                 z-index: 150;
                 top: 150px;
@@ -283,8 +283,9 @@ body {
                 opacity: 0;
                 pointer-events: none;
                 width: 250px;
-                height: 150px;
+                min-height: 150px;
                 padding: 15px;
+                padding-bottom: 20px;
                 transform: scale(0.5);
                 transition: opacity 100ms ease-in-out, transform 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19);
 
@@ -297,12 +298,12 @@ body {
                     cursor: pointer;                    
                 }
 
-                .filter-header {
+                .effect-header {
                     display: flex;
                     justify-content: space-between;
                     align-items: baseline;
 
-                    .filter-title {
+                    .effect-title {
                         font-size: 16px;
                         color: $themeWhite;
                         margin-top: 10px;
@@ -310,7 +311,7 @@ body {
                         padding-bottom: 5px;
                     }
 
-                    .filter-toggle {
+                    .effect-toggle {
                         position: relative;    
                         top: 5px;                   
                         width: 35px;
@@ -388,7 +389,7 @@ body {
                 }
             }
 
-            .filter-popup.active {
+            .effect-popup.active {
                 opacity: 1;
                 pointer-events: all;
                 top: 150px;
