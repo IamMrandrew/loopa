@@ -206,6 +206,8 @@ function looper() {
     loopBars[glider.slides.length - 2] = 1;
     loopBarsCount[glider.slides.length - 2] = 0;
     loopProgressIndex[glider.slides.length - 2] =  0;
+    recordingStatus[glider.slides.length - 2] = false;
+    recordedStatus[glider.slides.length - 2] = false;
 
     // Get the value of how many bars it will loop once for Individual Looper
     const loopBarsInputs = document.querySelectorAll('.loop-bars-input');
@@ -400,7 +402,10 @@ function addLooper() {
         newLooper = newLooper.cloneNode(true);
 
         // ChildNodes[1] because the first node is occupied by spaces
-        newLooper.childNodes[1].childNodes[1].childNodes[1].innerHTML = `<h2>Loop ${glider.slides.length + 1 - 1}</h2>`;
+        newLooper.childNodes[1].childNodes[1].childNodes[1].innerHTML = `<h2>Loop ${glider.slides.length + 1 - 1}</h2>` +
+        '<div class="looper-mute">' +
+            '<i class="fas fa-volume-down"></i>' +
+        '</div>';
 
         gliderTrack.insertBefore(newLooper, gliderTrack.childNodes[glider.slides.length - 1]);
         glider.refresh(true);
