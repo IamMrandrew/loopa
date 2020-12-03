@@ -923,12 +923,168 @@ body nav .nav-wrap .audio-control .record-button {
   margin-left: 5px;
 }
 
-body nav .nav-wrap .bar {
+body nav .nav-wrap .burger {
+  cursor: pointer;
+}
+
+body nav .nav-wrap .burger .bar {
   background-color: #FFFFFF;
   width: 26px;
   height: 4px;
   margin-bottom: 5px;
   justify-self: flex-end;
+}
+
+body nav .nav-wrap .nav-list {
+  position: absolute;
+  z-index: 1000;
+  top: 65px;
+  right: 20px;
+  height: 110px;
+  padding: 20px 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  border-radius: 22px;
+  background-color: #FFFFFF;
+  -webkit-transform: scale(0.5);
+          transform: scale(0.5);
+  -webkit-transition: opacity 0.2s, -webkit-transform 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19);
+  transition: opacity 0.2s, -webkit-transform 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19);
+  transition: opacity 0.2s, transform 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19);
+  transition: opacity 0.2s, transform 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19), -webkit-transform 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19);
+}
+
+body nav .nav-wrap .nav-list .nav-item {
+  color: #94AFA6;
+  font-size: 24px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+body nav .nav-wrap .nav-list.active {
+  opacity: 1;
+  pointer-events: all;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+
+body .instruction-popup {
+  padding: 15px;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 25%;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 1000;
+  -webkit-transform: scale(0.5);
+          transform: scale(0.5);
+  -webkit-transition: opacity 100ms ease-in-out, -webkit-transform 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19);
+  transition: opacity 100ms ease-in-out, -webkit-transform 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19);
+  transition: opacity 100ms ease-in-out, transform 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19);
+  transition: opacity 100ms ease-in-out, transform 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19), -webkit-transform 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19);
+}
+
+body .instruction-popup .instruction-popup-inner {
+  position: relative;
+  background-color: #FFFFFF;
+  border-radius: 30px;
+  padding: 30px;
+  padding-bottom: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+body .instruction-popup .instruction-popup-inner img {
+  width: 50%;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+body .instruction-popup .instruction-popup-inner .instruction-wrapper {
+  color: #4B4B4B;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+body .instruction-popup .instruction-popup-inner .instruction-wrapper .instruction-title {
+  font-size: 40px;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+body .instruction-popup .instruction-popup-inner .instruction-wrapper .instruction-content {
+  letter-spacing: 1px;
+  line-height: 22px;
+}
+
+body .instruction-popup .instruction-popup-inner .instruction-wrapper .instruction-content p:nth-child(1) {
+  margin-bottom: 15px;
+}
+
+body .instruction-popup .instruction-popup-inner .instruction-wrapper .instruction-content p:nth-child(2) {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+body .instruction-popup .instruction-popup-inner i {
+  color: #4B4B4B;
+  font-size: 20px;
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  cursor: pointer;
+}
+
+body .instruction-popup .instruction-popup-inner .instruction-dismiss {
+  background-color: #94AFA6;
+  padding: 13px 25px;
+  width: 100%;
+  border-radius: 20px;
+  text-decoration: none;
+  color: #FFFFFF;
+  font-size: 18px;
+  letter-spacing: 2px;
+  font-weight: 500;
+  margin: 15px;
+  outline: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  border: none;
+  cursor: pointer;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body .instruction-popup.active {
+  opacity: 1;
+  pointer-events: all;
+  -webkit-transform: scale(1);
+          transform: scale(1);
 }
 
 body .main {
@@ -1334,6 +1490,11 @@ body .main .add-looper {
   background-color: rgba(239, 239, 239, 0.3);
   padding: 25px;
   cursor: pointer;
+}
+
+body .main.blur {
+  -webkit-filter: blur(1px) brightness(90%);
+          filter: blur(1px) brightness(90%);
 }
 
 body .glider-contain {

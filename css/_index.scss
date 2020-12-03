@@ -62,21 +62,149 @@ body {
                 }
             }
     
-            .bar {
+            .burger {
+                cursor: pointer;
+
+                .bar {
+                    background-color: $themeWhite;
+                    width: 26px;
+                    height: 4px;
+                    margin-bottom: 5px;
+                    justify-self: flex-end;
+                }
+            }
+
+            .nav-list {
+                position: absolute;
+                z-index: 1000;
+                top: 65px;
+                right: 20px;
+                height: 110px;
+                padding: 20px 10px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-direction: column;
+                opacity: 0;
+                pointer-events: none;
+                border-radius: 22px;
                 background-color: $themeWhite;
-                width: 26px;
-                height: 4px;
-                margin-bottom: 5px;
-                justify-self: flex-end;
+                transform: scale(0.5);
+                transition: opacity 0.2s, transform 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19);
+
+                .nav-item {
+                    color: $themeGreen;
+                    font-size: 24px;
+                    font-weight: 600;
+                    cursor: pointer;
+                }
+            }
+
+            .nav-list.active {
+                opacity: 1;
+                pointer-events: all;
+                transform: scale(1.0);
             }
         }
+    }
+    .instruction-popup {
+        padding: 15px;
+        opacity: 0;
+        pointer-events: none;
+        position: absolute;
+        top: 25%;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        z-index: 1000;        
+        transform: scale(0.5);
+        transition: opacity 100ms ease-in-out, transform 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19);
+
+        .instruction-popup-inner {
+            position: relative;
+            background-color: $themeWhite;
+            border-radius: 30px;
+            padding: 30px;
+            padding-bottom: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+
+            img {
+                width: 50%;
+                flex: 1;
+            }
+
+            .instruction-wrapper {
+                color: $themeBlack;
+                flex: 1;
+
+                .instruction-title {
+                    font-size:40px;
+                    font-weight: 600;
+                    letter-spacing: 2px;
+                }
+
+                .instruction-content {
+                    letter-spacing: 1px; 
+                    line-height: 22px; 
+                    
+
+                    p:nth-child(1) {
+                        margin-bottom: 15px
+                    }
+
+                    p:nth-child(2) {
+                        font-weight: 600;
+                        font-size: 18px;
+                    }
+                }
+            }
+
+            i {
+                color: $themeBlack;
+                font-size: 20px;
+                position: absolute;
+                top: 20px;
+                right: 24px;
+                cursor: pointer;                    
+            }
+
+            .instruction-dismiss {
+                background-color: $themeGreen;
+                padding: 13px 25px;
+                width: 100%;
+                border-radius: 20px;
+                text-decoration: none;
+                color: $themeWhite;
+                font-size: 18px;
+                letter-spacing: 2px;
+                font-weight: 500;
+                margin: 15px;            
+                outline: none;
+                box-shadow: none;
+                border: none;
+                cursor: pointer;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    }
+
+    .instruction-popup.active {
+        opacity: 1;
+        pointer-events: all;
+        transform: scale(1);        
+
     }
 
     .main {
         display: flex;
         justify-content: space-around;
         flex-wrap: wrap;
-        padding: 0px;
+        padding: 0px;        
 
         .looper-outer {
             position: relative;
@@ -429,6 +557,9 @@ body {
             padding: 25px;
             cursor: pointer;
         }
+    }
+    .main.blur {
+        filter: blur(1px) brightness(90%);
     }
 
     .glider-contain {

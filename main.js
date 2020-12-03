@@ -304,8 +304,6 @@ function looper() {
         }
     });
 
-
-
     // LPF Control for Individual Looper
     const LPFControls = document.querySelectorAll('.LPF-control');
     const LPFToggles = document.querySelectorAll('.LPF-toggle');
@@ -434,6 +432,35 @@ function sliderControl() {
         let color = `linear-gradient(90deg, #DEFFE7 ${x}%,  #FFFFFF ${x}%)`;
         slider.style.background = color;
     });
+}
+
+function navControl() {
+    const burger = document.querySelector('.burger');
+    const navList = document.querySelector('.nav-list');
+    burger.addEventListener('click', () => {
+        navList.classList.toggle('active');
+    })
+
+    const instructionPopup = document.querySelector('.instruction-popup');
+    const instructionToggle = document.querySelector('.instruction-toggle');
+    const instructionClose = document.querySelector('.instruction-close');
+    const instructionDismiss = document.querySelector('.instruction-dismiss');
+    const main = document.querySelector('.main');
+
+    instructionToggle.addEventListener('click', () => {
+        instructionPopup.classList.add('active');
+        navList.classList.toggle('active');
+        main.classList.add('blur');
+    })
+    instructionClose.addEventListener('click', () => {
+        instructionPopup.classList.remove('active');
+        main.classList.remove('blur');
+    })
+    instructionDismiss.addEventListener('click', () => {
+        instructionPopup.classList.remove('active');
+        main.classList.remove('blur');
+    })
+
 }
 
 ////////////////////////////////////
@@ -614,3 +641,4 @@ sliderControl();
 looper();
 addLooper();
 effects();
+navControl();
