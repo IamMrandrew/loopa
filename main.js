@@ -282,7 +282,7 @@ function looper() {
     revControls.forEach((revControl, index) => {
         if (index >= glider.slides.length - 2) {
             revNodes[index] = new Tone.Reverb();
-            revNodes[index].wet.value = revControl.value;
+            revNodes[index].wet.value = 0;
             revControl.addEventListener('input', () => {            
                 revNodes[index].wet.value = revControl.value;
                 revToggles[index].checked = true; 
