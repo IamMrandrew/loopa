@@ -179,6 +179,7 @@ function transport() {
     playButton.addEventListener('click', () => {
         if (metronomePlaying) {
             Tone.Transport.stop();
+            index = 0;
 
             for (i = 0; i < glider.slides.length - 1; i++) {
                 recordings[i].stop();
