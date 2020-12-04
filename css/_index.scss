@@ -63,7 +63,7 @@ body {
             }
     
             .burger {
-                cursor: pointer;
+                cursor: pointer;                
 
                 .bar {
                     background-color: $themeWhite;
@@ -71,6 +71,21 @@ body {
                     height: 4px;
                     margin-bottom: 5px;
                     justify-self: flex-end;
+                    transition: transform 0.3s, opacity 0.3s;
+                }
+
+                &.active {
+                    .bar1 {
+                        transform: rotate(-45deg) translate(-5px, 5px);
+                    }
+                    
+                    .bar2 { 
+                        opacity: 0;
+                    }
+                    
+                    .bar3 {
+                        transform: rotate(45deg) translate(-6px, -8px);
+                    }
                 }
             }
 

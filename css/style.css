@@ -933,6 +933,24 @@ body nav .nav-wrap .burger .bar {
   height: 4px;
   margin-bottom: 5px;
   justify-self: flex-end;
+  -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+  transition: opacity 0.3s, -webkit-transform 0.3s;
+  transition: transform 0.3s, opacity 0.3s;
+  transition: transform 0.3s, opacity 0.3s, -webkit-transform 0.3s;
+}
+
+body nav .nav-wrap .burger.active .bar1 {
+  -webkit-transform: rotate(-45deg) translate(-5px, 5px);
+          transform: rotate(-45deg) translate(-5px, 5px);
+}
+
+body nav .nav-wrap .burger.active .bar2 {
+  opacity: 0;
+}
+
+body nav .nav-wrap .burger.active .bar3 {
+  -webkit-transform: rotate(45deg) translate(-6px, -8px);
+          transform: rotate(45deg) translate(-6px, -8px);
 }
 
 body nav .nav-wrap .nav-list {

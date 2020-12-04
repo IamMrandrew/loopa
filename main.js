@@ -153,6 +153,11 @@ function transport() {
             
             // 0 - 100
             if (recordedStatus[index]) {
+                if(recordingStatus[index]) {
+                    loopButtonProgress.style.stroke = '#F17474';
+                } else {
+                    loopButtonProgress.style.stroke = '#DEFFE7';
+                }
                 setProgress(((loopBarsCountProgress[index]-1) * 4 + (looperStep[index]+1)) * (1/(4*loopBars[index])) * 100)
                 // console.log((loopBarsCountProgress[index]))
             }
@@ -351,6 +356,7 @@ function looper() {
                 if (!recordingStatus[index]) {
                     startRecording();
                     recordingStatus[index] = true;
+                    recordedStatus[index] = true;   
                     recordingsOffset[index] = Tone.Transport.ticks; 
 
                     //Back to zero now
@@ -361,7 +367,7 @@ function looper() {
                 else {
                     stopRecording();
                     recordingStatus[index] = false;      
-                    recordedStatus[index] = true;              
+                               
                 }
                     
                 loopButton.classList.toggle('loop-button-recording'); 
@@ -452,6 +458,7 @@ function navControl() {
     const navList = document.querySelector('.nav-list');
     burger.addEventListener('click', () => {
         navList.classList.toggle('active');
+        burger.classList.toggle('active');
     })
 
     const instructionPopup = document.querySelector('.instruction-popup');
