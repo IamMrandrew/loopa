@@ -901,9 +901,6 @@ body nav .nav-wrap .audio-control {
 body nav .nav-wrap .audio-control .play-button {
   color: #FFFFFF;
   font-size: 28px;
-}
-
-body nav .nav-wrap .audio-control .play-button:hover, body nav .nav-wrap .audio-control .play-button:focus {
   cursor: pointer;
 }
 
@@ -921,6 +918,15 @@ body nav .nav-wrap .audio-control .record-button {
   border-radius: 50%;
   background-color: #F17474;
   margin-left: 5px;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+body nav .nav-wrap .audio-control .record-button.recording {
+  border-radius: 20%;
+  -webkit-transform: scale(0.85);
+          transform: scale(0.85);
 }
 
 body nav .nav-wrap .burger {
@@ -990,6 +996,15 @@ body nav .nav-wrap .nav-list .nav-item {
   font-size: 24px;
   font-weight: 600;
   cursor: pointer;
+  text-decoration: none;
+}
+
+body nav .nav-wrap .nav-list .nav-item .master-download {
+  color: #CCCCCC;
+}
+
+body nav .nav-wrap .nav-list .nav-item .master-download:link {
+  color: #94AFA6;
 }
 
 body nav .nav-wrap .nav-list.active {

@@ -18,12 +18,12 @@ function setupAudio() {
         
                 */
                 audioContext = new AudioContext();
-        
+                                
                 /*  assign to gumStream for later use  */
                 gumStream = stream;
                 
                 /* use the stream */
-                input = audioContext.createMediaStreamSource(stream);
+                input = audioContext.createMediaStreamSource(stream);     
         
             }).catch(function(err) {
                 //enable the record button if getUserMedia() fails
@@ -163,6 +163,7 @@ function transport() {
                 try {
                     if (loopBarsCount[i] == 0) {
                         recordings[i].chain(LPFNodes[i],revNodes[i], panNodes[i], volNodes[i], Tone.Destination).start("+" + (recordingsOffset[i] % (Tone.Ticks("4n").toTicks() * 4) - 40) + "i");  
+                        recordings[i].chain(LPFNodes[i],revNodes[i], panNodes[i], volNodes[i], dest);  
                         bufferingStatus[i] = true;  
                     }
                         
@@ -229,6 +230,21 @@ function transport() {
             playButton.classList.remove('fa-play');
             playButton.classList.add('fa-pause');
             metronomePlaying = true;
+        }
+    });
+
+    let masterRecording = false;
+    recordButton = document.querySelector('.record-button');
+    recordButton.addEventListener('click', () => {
+        if (masterRecording) {
+            stopMasterRecording();
+            recordButton.classList.toggle('recording');
+            masterRecording = false;
+        }
+        else {
+            startMasterRecording();
+            recordButton.classList.toggle('recording');
+            masterRecording = true;
         }
     });
 }
@@ -660,8 +676,37 @@ function stopRecording() {
 
 function createDownloadLink(blob) {
     var url = URL.createObjectURL(blob);
-
     recordings[recordingsIndex] = new Tone.Player(url);
+}
+
+const audioContextforMainRecord = Tone.context;
+const dest = audioContextforMainRecord.createMediaStreamDestination();
+const masterRecorder = new MediaRecorder(dest.stream);
+
+const chunks = [];
+
+function startMasterRecording() {
+    masterRecorder.start();
+}
+
+
+function stopMasterRecording() {
+    masterRecorder.stop();
+    createMasterAudioFile();
+}
+
+const audio = document.querySelector(".master-download");
+
+function createMasterAudioFile() {
+    masterRecorder.ondataavailable = evt => chunks.push(evt.data);
+    masterRecorder.onstop = evt => {
+    let blob = new Blob(chunks, { type: 'audio/webm;codecs=opus' });
+    W3Module.convertWebmToMP3(blob).then( (mp3Blob) => { 
+        audio.href = URL.createObjectURL(mp3Blob)
+        audio.download = "loopa_master.mp3"
+    } );
+    
+}
 }
 
 
