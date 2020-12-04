@@ -624,21 +624,19 @@ var audioContext //audio context to help us record
 
 function startRecording() {
     console.log('%c   Record Button Clicked   ', "color: #FFFFFF; font-weight: 600; background-color: #94AFA6");
-
     
     var constraints = { audio: true, video:false }
 
+    /* 
+        Create the Recorder object and configure to record mono sound (1 channel)
+        Recording 2 channels  will double the file size
+    */
+    rec = new Recorder(input,{numChannels:1})
 
-        /* 
-            Create the Recorder object and configure to record mono sound (1 channel)
-            Recording 2 channels  will double the file size
-        */
-        rec = new Recorder(input,{numChannels:1})
+    //start the recording process
+    rec.record()
 
-        //start the recording process
-        rec.record()
-
-        console.log('%c   Recording Started   ', "color: #FFFFFF; font-weight: 600; background-color: #94AFA6");
+    console.log('%c   Recording Started   ', "color: #FFFFFF; font-weight: 600; background-color: #94AFA6");
 
 
 }
@@ -648,9 +646,6 @@ function stopRecording() {
 
     //tell the recorder to stop the recording
     rec.stop();
-
- 
-
 
     //create the wav blob and pass it on to createDownloadLink
     rec.exportWAV(createDownloadLink);
