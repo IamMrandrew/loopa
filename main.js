@@ -272,12 +272,14 @@ function looper() {
     // Reverb Control for Individual Looper
     const revControls = document.querySelectorAll('.REV-control');
     const revControls2 = document.querySelectorAll('.REV-control-2');
+    const revControls3 = document.querySelectorAll('.REV-control-3');
     const revToggles = document.querySelectorAll('.REV-toggle');
     revControls.forEach((revControl, index) => {
         if (index >= glider.slides.length - 2) {
-            revNodes[index] = new Tone.JCReverb(0.2);
+            revNodes[index] = new Tone.Reverb();
+            revNodes[index].wet.value = revControl.value;
             revControl.addEventListener('input', () => {            
-                revNodes[index].roomSize.value = revControl.value;
+                revNodes[index].wet.value = revControl.value;
                 revToggles[index].checked = true; 
             });
         }
@@ -286,7 +288,16 @@ function looper() {
     revControls2.forEach((revControl2, index) => {
         if (index >= glider.slides.length - 2) {
             revControl2.addEventListener('input', () => {            
-                revNodes[index].wet.value = revControl2.value;
+                revNodes[index].preDelay = revControl2.value;
+                revToggles[index].checked = true; 
+            });
+        }
+    });
+
+    revControls3.forEach((revControl3, index) => {
+        if (index >= glider.slides.length - 2) {
+            revControl3.addEventListener('input', () => {            
+                revNodes[index].decay = revControl3.value;                
                 revToggles[index].checked = true; 
             });
         }
@@ -298,7 +309,9 @@ function looper() {
                 if (!revToggle.checked) {
                     revNodes[index].wet.value = 0;
                 } else {
-                    revNodes[index].wet.value = revControls2[index].value;
+                    revNodes[index].wet.value = revControls[index].value;
+                    revNodes[index].preDelay = revControls2[index].value;
+                    revNodes[index].decay = revControls3[index].value;
                 }        
             });
         }
