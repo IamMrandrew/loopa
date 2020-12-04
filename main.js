@@ -78,7 +78,7 @@ let revNodes = [];
 let LPFNodes = [];
 
 // Get Looper HTML element
-const looperHTML = document.querySelector('.glider-item');
+const looperHTML = document.querySelector('.glider-main .glider-item');
 
 
 ////////////////////////////////////
@@ -466,7 +466,7 @@ function looper() {
 
 function addLooper() {
     let addLooper = document.querySelector('.add-looper');
-    let gliderTrack = document.querySelector('.glider-track');
+    let gliderTrack = document.querySelector('.glider-main .glider-track');
 
     addLooper.addEventListener('click', () => {   
         let newLooper = document.createElement('div');
@@ -592,9 +592,7 @@ function effects() {
     })
 }
 
-let glider = new Glider(document.querySelector('.glider'), {
-    // slidesToShow: 'auto',
-    // itemWidth: 320,
+let glider = new Glider(document.querySelector('.glider-main'), {
     slidesToShow: 1,
     dots: '.dots',
     draggable: false,
@@ -625,6 +623,12 @@ let glider = new Glider(document.querySelector('.glider'), {
             }
         }
     ]
+});
+
+let gliderInstruction = new Glider(document.querySelector('.glider-instruction'), {
+    slidesToShow: 1,
+    dots: '.dots',
+    draggable: false,
 });
 
 ////////////////////////////////////
