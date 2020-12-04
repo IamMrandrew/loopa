@@ -628,10 +628,6 @@ function startRecording() {
     
     var constraints = { audio: true, video:false }
 
-    navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
-        
-        /* use the stream */
-        input = audioContext.createMediaStreamSource(stream);
 
         /* 
             Create the Recorder object and configure to record mono sound (1 channel)
@@ -644,10 +640,7 @@ function startRecording() {
 
         console.log('%c   Recording Started   ', "color: #FFFFFF; font-weight: 600; background-color: #94AFA6");
 
-    }).catch(function(err) {
-        //enable the record button if getUserMedia() fails
-        console.error("error");
-    });
+
 }
 
 function stopRecording() {
@@ -656,8 +649,7 @@ function stopRecording() {
     //tell the recorder to stop the recording
     rec.stop();
 
-    //stop microphone access
-    gumStream.getAudioTracks()[0].stop();
+ 
 
 
     //create the wav blob and pass it on to createDownloadLink
