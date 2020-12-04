@@ -630,24 +630,21 @@ function startRecording() {
 
     navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
         
-        var constraints = { audio: true, video:false }
+        console.log('%c   Success getUserMedia()         \n   Stream created                 \n   Initializing Recorder.js ...   ', "color: #FFFFFF; font-weight: 600; background-color: #94AFA6");
 
-        navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
-            console.log('%c   Success getUserMedia()         \n   Stream created                 \n   Initializing Recorder.js ...   ', "color: #FFFFFF; font-weight: 600; background-color: #94AFA6");
+        /*
+            create an audio context after getUserMedia is called
+            sampleRate might change after getUserMedia is called, like it does on macOS when recording through AirPods
+            the sampleRate defaults to the one set in your OS for your playback device
 
-            /*
-                create an audio context after getUserMedia is called
-                sampleRate might change after getUserMedia is called, like it does on macOS when recording through AirPods
-                the sampleRate defaults to the one set in your OS for your playback device
+        */
+        audioContext = new AudioContext();
 
-            */
-            audioContext = new AudioContext();
-
-            /*  assign to gumStream for later use  */
-            gumStream = stream;
-            
-            /* use the stream */
-            input = audioContext.createMediaStreamSource(stream);
+        /*  assign to gumStream for later use  */
+        gumStream = stream;
+        
+        /* use the stream */
+        input = audioContext.createMediaStreamSource(stream);
 
         /* 
             Create the Recorder object and configure to record mono sound (1 channel)
