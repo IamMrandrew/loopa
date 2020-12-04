@@ -79,9 +79,6 @@ let LPFNodes = [];
 
 // Get Looper HTML element
 const looperHTML = document.querySelector('.glider-item');
-let newLooper = document.createElement('div');
-newLooper.classList.add('glider-item');
-newLooper.innerHTML = looperHTML.innerHTML;
 
 
 ////////////////////////////////////
@@ -456,7 +453,9 @@ function addLooper() {
     let gliderTrack = document.querySelector('.glider-track');
 
     addLooper.addEventListener('click', () => {   
-        newLooper = newLooper.cloneNode(true);
+        let newLooper = document.createElement('div');
+        newLooper.classList.add('glider-item');
+        newLooper.innerHTML = looperHTML.innerHTML;
 
         // ChildNodes[1] because the first node is occupied by spaces
         newLooper.childNodes[1].childNodes[1].childNodes[1].innerHTML = `<h2>Loop ${glider.slides.length + 1 - 1}</h2>` +
