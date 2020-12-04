@@ -137,8 +137,10 @@ function transport() {
 
             for (i = 0; i < glider.slides.length - 1; i++ ){
                 try {
-                    if (loopBarsCount[i] == 0)
-                        recordings[i].chain(LPFNodes[i],revNodes[i], panNodes[i], volNodes[i], Tone.Destination).start("+" + recordingsOffset[i] % (Tone.Ticks("4n").toTicks() * 4) + "i");  
+                    if (loopBarsCount[i] == 0) {
+                        recordings[i].chain(LPFNodes[i],revNodes[i], panNodes[i], volNodes[i], Tone.Destination).start("+" + (recordingsOffset[i] % (Tone.Ticks("4n").toTicks() * 4) - 40) + "i");  
+                    }
+                        
                 } catch {
                     console.log('%c   Require Input Recordings for Loop  ' + (i + 1) + '  ', "color: #FFFFFF; font-weight: 600; background-color: #4B4B4B");
                 } 
@@ -180,6 +182,10 @@ function transport() {
         if (metronomePlaying) {
             Tone.Transport.stop();
             index = 0;
+
+            for (i = 0; i < glider.slides.length - 1; i++) {
+                loopProgressIndex[i] = 0;
+            }
 
             for (i = 0; i < glider.slides.length - 1; i++) {
                 recordings[i].stop();
