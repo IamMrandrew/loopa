@@ -7,6 +7,7 @@ var W3Module = (function() {
   if (window.Worker) {
     const MAX_CHUNK = 30000000;
     let STEPS = 0;
+    var AudioContext = window.AudioContext || window.webkitAudioContext;
     var audioCtx = new AudioContext();
     let datas = [];
     let limit = 1;
