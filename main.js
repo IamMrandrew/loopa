@@ -470,6 +470,7 @@ function navControl() {
     instructionToggle.addEventListener('click', () => {
         instructionPopup.classList.add('active');
         navList.classList.toggle('active');
+        burger.classList.toggle('active');
         main.classList.add('blur');
     })
     instructionClose.addEventListener('click', () => {
