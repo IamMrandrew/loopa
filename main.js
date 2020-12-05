@@ -522,21 +522,29 @@ function navControl() {
     const instructionDismiss = document.querySelector('.instruction-dismiss');
     const instructionNexts = document.querySelectorAll('.instruction-next');
     const main = document.querySelector('.main');
+    const nav = document.querySelector('nav');
+    const bottom = document.querySelector('.bottom');
 
     instructionToggle.addEventListener('click', () => {
         instructionPopup.classList.add('active');
         navList.classList.toggle('active');
         burger.classList.toggle('active');
         main.classList.add('blur');
+        nav.classList.add('blur');
+        bottom.classList.add('blur');
     })
     instructionClose.addEventListener('click', () => {
         instructionPopup.classList.remove('active');        
         main.classList.remove('blur');
+        nav.classList.remove('blur');
+        bottom.classList.remove('blur');
         gliderInstruction.scrollItem(0);
     })
     instructionDismiss.addEventListener('click', () => {
         instructionPopup.classList.remove('active');    
         main.classList.remove('blur');
+        nav.classList.remove('blur');
+        bottom.classList.remove('blur');
         gliderInstruction.scrollItem(0);
     })
     instructionNexts.forEach((instructionNext, index) => {

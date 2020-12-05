@@ -136,6 +136,10 @@ body {
             }
         }
     }
+
+    nav.blur {
+        filter: blur(1px) brightness(90%);
+    }
     .instruction-popup {
         padding: 15px;
         opacity: 0;
@@ -774,4 +778,7 @@ body {
         }
 
     }   
+    .bottom.blur {
+        filter: blur(1px) brightness(90%);
+    }
 }

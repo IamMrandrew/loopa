@@ -1014,6 +1014,11 @@ body nav .nav-wrap .nav-list.active {
           transform: scale(1);
 }
 
+body nav.blur {
+  -webkit-filter: blur(1px) brightness(90%);
+          filter: blur(1px) brightness(90%);
+}
+
 body .instruction-popup {
   padding: 15px;
   opacity: 0;
@@ -1741,5 +1746,10 @@ body .bottom .bpm-control .bpm-mute i:hover, body .bottom .bpm-control .bpm-mute
 
 body .bottom .bpm-control .bpm-mute .bpm-mute-disable {
   opacity: 30%;
+}
+
+body .bottom.blur {
+  -webkit-filter: blur(1px) brightness(90%);
+          filter: blur(1px) brightness(90%);
 }
 /*# sourceMappingURL=style.css.map */
