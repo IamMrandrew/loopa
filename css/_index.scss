@@ -3,14 +3,14 @@ body {
 
     nav {
         margin-top: 10px;
-        margin-bottom: 3vh;
+        margin-bottom: 4vh;
 
         @media screen and (min-height: 900px) {
             margin-bottom: 10vh;
         }
 
         @media screen and (max-width: 768px) {
-            margin-top: 54px;
+            margin-top: 40px;
         }
 
         .nav-wrap {
@@ -128,6 +128,10 @@ body {
                 background-color: $themeWhite;
                 transform: scale(0.5);
                 transition: opacity 0.2s, transform 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19);
+
+                @media screen and (max-width: 768px) {
+                    top: 95px;
+                }
 
                 .nav-item {
                     color: $themeGreen;
@@ -320,6 +324,12 @@ body {
             margin-bottom: 10px;
             background-color: $themeTransparent;
             
+            @media screen and (max-width: 768px) {
+                height: 495px;
+                width: 350px;
+                border-radius: 40px;
+            }
+
             .looper {
                 height: 100%;
                 background-color: $themeBlack;
@@ -474,7 +484,9 @@ body {
                         margin-right: 15px;
                         outline: none;
                 
-                        
+                        @media screen and (max-width: 768px) {
+                            width: 269px;
+                        }
 
                         &::-webkit-slider-thumb {
                             -webkit-appearance: none;
