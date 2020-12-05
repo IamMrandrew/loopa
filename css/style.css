@@ -1120,7 +1120,7 @@ body .instruction-popup .instruction-popup-inner .glider-item .instruction-wrapp
   margin-bottom: 10px;
 }
 
-body .instruction-popup .instruction-popup-inner .glider-item .instruction-wrapper .instruction-content a:visited {
+body .instruction-popup .instruction-popup-inner .glider-item .instruction-wrapper .instruction-content a:visited, body .instruction-popup .instruction-popup-inner .glider-item .instruction-wrapper .instruction-content a:link {
   color: #94AFA6;
 }
 
