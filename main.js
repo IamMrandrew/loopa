@@ -520,6 +520,7 @@ function navControl() {
     const instructionToggle = document.querySelector('.instruction-toggle');
     const instructionClose = document.querySelector('.instruction-close');
     const instructionDismiss = document.querySelector('.instruction-dismiss');
+    const instructionNexts = document.querySelectorAll('.instruction-next');
     const main = document.querySelector('.main');
 
     instructionToggle.addEventListener('click', () => {
@@ -529,12 +530,19 @@ function navControl() {
         main.classList.add('blur');
     })
     instructionClose.addEventListener('click', () => {
-        instructionPopup.classList.remove('active');
+        instructionPopup.classList.remove('active');        
         main.classList.remove('blur');
+        gliderInstruction.scrollItem(0);
     })
     instructionDismiss.addEventListener('click', () => {
-        instructionPopup.classList.remove('active');
+        instructionPopup.classList.remove('active');    
         main.classList.remove('blur');
+        gliderInstruction.scrollItem(0);
+    })
+    instructionNexts.forEach((instructionNext, index) => {
+        instructionNext.addEventListener('click', () => {
+            gliderInstruction.scrollItem(index+1);
+        })
     })
 
 }
@@ -594,7 +602,7 @@ function effects() {
 
 let glider = new Glider(document.querySelector('.glider-main'), {
     slidesToShow: 1,
-    dots: '.dots',
+    dots: '.dots-main',
     draggable: false,
     dragVelocity: 1,
     responsive: [
@@ -627,7 +635,7 @@ let glider = new Glider(document.querySelector('.glider-main'), {
 
 let gliderInstruction = new Glider(document.querySelector('.glider-instruction'), {
     slidesToShow: 1,
-    dots: '.dots',
+    dots: '.dots-instruction',
     draggable: false,
 });
 

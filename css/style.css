@@ -1046,8 +1046,15 @@ body .instruction-popup .instruction-popup-inner {
   position: relative;
   background-color: #FFFFFF;
   border-radius: 30px;
-  padding: 30px;
   padding-bottom: 10px;
+}
+
+body .instruction-popup .instruction-popup-inner .glider-contain {
+  margin-bottom: 0px;
+}
+
+body .instruction-popup .instruction-popup-inner .glider-contain .dots-instruction .glider-dot.active {
+  background-color: #94AFA6;
 }
 
 body .instruction-popup .instruction-popup-inner .glider-item {
@@ -1059,40 +1066,77 @@ body .instruction-popup .instruction-popup-inner .glider-item {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  padding: 30px;
+  padding-bottom: 0px;
 }
 
-body .instruction-popup .instruction-popup-inner .glider-item img {
-  width: 50%;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+body .instruction-popup .instruction-popup-inner .glider-item .img-wrapper {
+  min-height: 355px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+body .instruction-popup .instruction-popup-inner .glider-item .img-wrapper img {
+  width: 100%;
 }
 
 body .instruction-popup .instruction-popup-inner .glider-item .instruction-wrapper {
   color: #4B4B4B;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
 }
 
 body .instruction-popup .instruction-popup-inner .glider-item .instruction-wrapper .instruction-title {
-  font-size: 40px;
-  font-weight: 600;
+  font-size: 28px;
+  font-weight: 700;
   letter-spacing: 2px;
+  color: #575757;
 }
 
 body .instruction-popup .instruction-popup-inner .glider-item .instruction-wrapper .instruction-content {
   letter-spacing: 1px;
-  line-height: 22px;
+  line-height: 23px;
+  min-height: 220px;
 }
 
-body .instruction-popup .instruction-popup-inner .glider-item .instruction-wrapper .instruction-content p:nth-child(1) {
-  margin-bottom: 15px;
-}
-
-body .instruction-popup .instruction-popup-inner .glider-item .instruction-wrapper .instruction-content p:nth-child(2) {
-  font-weight: 600;
+body .instruction-popup .instruction-popup-inner .glider-item .instruction-wrapper .instruction-content h3 {
   font-size: 18px;
+  margin-bottom: 0;
+  font-weight: 600;
+}
+
+body .instruction-popup .instruction-popup-inner .glider-item .instruction-wrapper .instruction-content p {
+  margin-bottom: 10px;
+}
+
+body .instruction-popup .instruction-popup-inner .glider-item .instruction-wrapper .instruction-content a:visited {
+  color: #94AFA6;
+}
+
+body .instruction-popup .instruction-popup-inner .glider-item .instruction-wrapper .instruction-next {
+  background-color: #94AFA6;
+  padding: 15px 25px;
+  width: 100%;
+  border-radius: 20px;
+  text-decoration: none;
+  color: #FFFFFF;
+  font-size: 18px;
+  letter-spacing: 2px;
+  font-weight: 600;
+  margin: 15px;
+  outline: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  border: none;
+  cursor: pointer;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 body .instruction-popup .instruction-popup-inner i {
@@ -1101,19 +1145,20 @@ body .instruction-popup .instruction-popup-inner i {
   position: absolute;
   top: 20px;
   right: 24px;
+  z-index: 2000;
   cursor: pointer;
 }
 
 body .instruction-popup .instruction-popup-inner .instruction-dismiss {
   background-color: #94AFA6;
-  padding: 13px 25px;
+  padding: 15px 25px;
   width: 100%;
   border-radius: 20px;
   text-decoration: none;
   color: #FFFFFF;
-  font-size: 18px;
+  font-size: 20px;
   letter-spacing: 2px;
-  font-weight: 500;
+  font-weight: 600;
   margin: 15px;
   outline: none;
   -webkit-box-shadow: none;
