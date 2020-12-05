@@ -1083,6 +1083,12 @@ body .instruction-popup .instruction-popup-inner .glider-item .img-wrapper {
           align-items: center;
 }
 
+@media screen and (max-width: 425px) {
+  body .instruction-popup .instruction-popup-inner .glider-item .img-wrapper {
+    display: none;
+  }
+}
+
 body .instruction-popup .instruction-popup-inner .glider-item .img-wrapper img {
   width: 100%;
 }

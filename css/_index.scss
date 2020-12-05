@@ -182,6 +182,10 @@ body {
                     justify-content: center;
                     align-items: center;
 
+                    @media screen and (max-width: 425px) {
+                        display: none;
+                    }
+
                     img {
                         width: 100%;
                     }
