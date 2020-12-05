@@ -859,6 +859,12 @@ body nav {
   }
 }
 
+@media screen and (max-width: 768px) {
+  body nav {
+    margin-top: 54px;
+  }
+}
+
 body nav .nav-wrap {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -873,12 +879,29 @@ body nav .nav-wrap {
   padding-right: 30px;
 }
 
+body nav .nav-wrap .space {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  body nav .nav-wrap .space {
+    display: block;
+    width: 26px;
+  }
+}
+
 body nav .nav-wrap .main-title {
   color: #FFFFFF;
   font-size: 2rem;
   font-weight: 600;
   justify-self: flex-start;
   margin-bottom: 0px;
+}
+
+@media screen and (max-width: 768px) {
+  body nav .nav-wrap .main-title {
+    display: none;
+  }
 }
 
 body nav .nav-wrap .audio-control {
@@ -1605,6 +1628,12 @@ body .glider-contain {
 @media screen and (min-height: 900px) {
   body .glider-contain {
     margin-bottom: 50px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  body .glider-contain {
+    margin-bottom: 10px;
   }
 }
 

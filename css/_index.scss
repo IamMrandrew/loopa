@@ -9,6 +9,10 @@ body {
             margin-bottom: 10vh;
         }
 
+        @media screen and (max-width: 768px) {
+            margin-top: 54px;
+        }
+
         .nav-wrap {
             display: flex;
             justify-content: space-between;
@@ -16,12 +20,25 @@ body {
             padding-left: 15px;
             padding-right: 30px;
 
+            .space {
+                display: none;
+
+                @media screen and (max-width: 768px) {
+                    display: block;
+                    width: 26px;
+                }
+            }
+
             .main-title {
                 color: $themeWhite;
                 font-size: 2rem;
                 font-weight: 600;
                 justify-self: flex-start;
                 margin-bottom: 0px;
+
+                @media screen and (max-width: 768px) {
+                    display: none;
+                }
             }
     
             .audio-control {
@@ -655,6 +672,10 @@ body {
 
         @media screen and (min-height: 900px) {
             margin-bottom: 50px;
+        }
+
+        @media screen and (max-width: 768px) {
+            margin-bottom: 10px;
         }
         
         .glider {
