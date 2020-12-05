@@ -650,8 +650,6 @@ var audioContext //audio context to help us record
 
 function startRecording() {
     console.log('%c   Record Button Clicked   ', "color: #FFFFFF; font-weight: 600; background-color: #94AFA6");
-    
-    var constraints = { audio: true, video:false }
 
     /* 
         Create the Recorder object and configure to record mono sound (1 channel)
@@ -683,34 +681,31 @@ function createDownloadLink(blob) {
     recordings[recordingsIndex] = new Tone.Player(url);
 }
 
+const audio = document.querySelector(".master-download");
 const audioContextforMainRecord = Tone.context;
 const dest = audioContextforMainRecord.createMediaStreamDestination();
-const masterRecorder = new MediaRecorder(dest.stream);
 
-const chunks = [];
+let masterRecorder = RecordRTC(dest.stream, {
+    type: 'audio',
+    mimeType: 'audio/wav',
+    recorderType: StereoAudioRecorder,
+    disableLogs: true
+})
 
 function startMasterRecording() {
-    masterRecorder.start();
+    masterRecorder.startRecording();
+    console.log('%c   Master Recording Started   ', "color: #FFFFFF; font-weight: 600; background-color: #94AFA6");
 }
 
 
 function stopMasterRecording() {
-    masterRecorder.stop();
-    createMasterAudioFile();
-}
-
-const audio = document.querySelector(".master-download");
-
-function createMasterAudioFile() {
-    masterRecorder.ondataavailable = evt => chunks.push(evt.data);
-    masterRecorder.onstop = evt => {
-    let blob = new Blob(chunks, { type: 'audio/webm;codecs=opus' });
-    W3Module.convertWebmToMP3(blob).then( (mp3Blob) => { 
-        audio.href = URL.createObjectURL(mp3Blob)
-        audio.download = "loopa_master.mp3"
-    } );
-    
-}
+    masterRecorder.stopRecording( ()=> {
+        let blob = masterRecorder.getBlob();
+        audio.href = URL.createObjectURL(blob)
+        audio.download = "loopa_master.wav"
+    });
+    console.log('%c   Master Recording Stopped   ', "color: #FFFFFF; font-weight: 600; background-color: #F17474");
+    console.log('%c   Master output .wav File Created  ', "color: #FFFFFF; font-weight: 600; background-color: #4B4B4B");
 }
 
 
