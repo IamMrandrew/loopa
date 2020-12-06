@@ -38,10 +38,10 @@
         <div class="glider-contain">
         <div class="glider glider-instruction">
             <div class="glider-item">
-                <div class="img-wrapper col-lg-6">
+                <div class="img-wrapper col-md-6">
                     <img src="img/undraw_Music_re_a2jk.png" alt="instruction-img">
                 </div>
-                <div class="instruction-wrapper col-lg-6">
+                <div class="instruction-wrapper col-md-6">
                     <h2 class="instruction-title">Welcome</h2>                 
                     <div class="instruction-content">            
                         <p>Hello, Welcome to Loopa. A web loopstation. You can start your own music creation here.</p>
@@ -53,10 +53,10 @@
                 </div>
             </div>
             <div class="glider-item">
-                <div class="img-wrapper col-lg-6">
+                <div class="img-wrapper col-md-6">
                     <img src="img/undraw_compose_music_ovo2.png" alt="instruction-img-2">
                 </div>                
-                <div class="instruction-wrapper col-lg-6">
+                <div class="instruction-wrapper col-md-6">
                     <h2 class="instruction-title">Getting Started</h2>                 
                     <div class="instruction-content">            
                         <h3>1. Enter the BPM</h3> 
@@ -70,10 +70,10 @@
                 </div>
             </div>
             <div class="glider-item">
-                <div class="img-wrapper col-lg-6">
+                <div class="img-wrapper col-md-6">
                     <img src="img/undraw_compose_music_ovo2.png" alt="instruction-img-2">
                 </div>                
-                <div class="instruction-wrapper col-lg-6">
+                <div class="instruction-wrapper col-md-6">
                     <h2 class="instruction-title">Getting Started</h2>                 
                     <div class="instruction-content">            
                         <h3>4. Record Loops</h3> 
@@ -85,10 +85,10 @@
                 </div>
             </div>
             <div class="glider-item">
-                <div class="img-wrapper col-lg-6">
+                <div class="img-wrapper col-md-6">
                     <img src="img/undraw_Contemplating_re_ynec.png" alt="instruction-img-2">
                 </div>                
-                <div class="instruction-wrapper col-lg-6">
+                <div class="instruction-wrapper col-md-6">
                     <h2 class="instruction-title">Features</h2>                 
                     <div class="instruction-content">            
                         <h3>Effects/ Filters</h3> 
@@ -100,10 +100,10 @@
                 </div>
             </div>
             <div class="glider-item">
-                <div class="img-wrapper col-lg-6">
+                <div class="img-wrapper col-md-6">
                     <img src="img/undraw_happy_music_g6wc.png" alt="instruction-img-2">
                 </div>                
-                <div class="instruction-wrapper col-lg-6">
+                <div class="instruction-wrapper col-md-6">
                     <h2 class="instruction-title">Let's Go</h2>                 
                     <div class="instruction-content">            
                         <h3>Let's Get started</h3> 
@@ -117,7 +117,6 @@
         </div>
         <div class="dots dots-instruction"></div>
         </div>
-    </div>
     </div>
     </div>
 
@@ -204,6 +203,106 @@
         </div>
 
     </div>
+
+    <div class="container-fluid main-sm">
+        <div class="glider-contain">
+        <div class="glider glider-main-sm">
+            <div class="glider-item">                
+                <div class="looper">
+                    <div class="looper-content">
+                        <div class="loop-bars">
+                            <i class="fas fa-sort-up loop-bars-inc"></i>
+                            <input type="text" class="loop-bars-input" value="1">
+                            <i class="fas fa-sort-down loop-bars-dec"></i>
+                        </div>
+                        <div class="loop-button-circle">
+                            <div class="loop-button"></div>
+                            <svg width="225" height="225">
+                                <circle class="loop-button-track" r="90" cx="112.5" cy="112.5"></circle>
+                                <circle class="loop-button-progress" r="90" cx="112.5" cy="112.5"></circle>
+                            </svg>
+                        </div>
+                        <div class="loop-vol">                        
+                            <input type="range" class="vol-control-sm slider-control" value="-20" max="6" min="-30">
+                        </div>
+                    </div>
+                    <div class="looper-footer">                        
+                        <div class="looper-effect">
+                            <img src="img/effect.svg" alt="">
+                        </div>
+                        <h2 class="looper-title">Loop 1</h2>
+                        <div class="looper-mute">
+                            <i class="fas fa-volume-down"></i>
+                        </div>
+                    </div>
+                    <div class="looper-popup">
+                        <div class="looper-header">
+                            <h2>Loop 1</h2>
+                            <div class="looper-mute">
+                                <i class="fas fa-volume-down"></i>
+                            </div>
+                        </div>
+                        <div class="vol-field slider-field">
+                            <h3 class="vol-title slider-title">Volume</h3>
+                            <input type="range" class="vol-control slider-control" value="-20" max="6" min="-30">
+                        </div>
+                        <div class="pan-field slider-field">
+                            <h3 class="pan-title slider-title">Panner</h3>
+                            <input type="range" class="pan-control slider-control" value="0" max="1" min="-1" step="0.01" >
+                        </div>
+                        
+                        <h3 class="effects-title">Effects</h3>
+                        <div class="effects-field">
+                            <div class="effect REV">
+                                <div class="effect-name">REV</div>
+                            </div>
+                            <div class="effect LPF">
+                                <div class="effect-name">LPF</div>
+                            </div>
+                            <div class="effect HPF">
+                                <div class="effect-name">HPF</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="effect-popup LPF-popup">
+                        <i class="fas fa-times close-LPF-popup"></i>
+                        <div class="effect-header">
+                            <h3 class="effect-title">Low Pass Filter</h3>
+                            <input type="checkbox" class="effect-toggle LPF-toggle">
+                        </div>
+                        
+                        <h3 class="slider-title">Frequency</h3>
+                        <input type="range" class="LPF-control slider-control" value="1500" max="4000" min="0" step="1" >
+                    </div>
+                    <div class="effect-popup REV-popup">
+                        <i class="fas fa-times close-REV-popup"></i>
+                        <div class="effect-header">
+                            <h3 class="effect-title">Reverb</h3>
+                            <input type="checkbox" class="effect-toggle REV-toggle">
+                        </div>
+                        <h3 class="rev-title slider-title">Wet</h3>
+                        <input type="range" class="REV-control slider-control" value="0.4" max="1.0" min="0" step="0.01" >
+                        <h3 class="rev-title slider-title">Pre-delay</h3>
+                        <input type="range" class="REV-control-2 slider-control" value="0.1" max="1.0" min="0" step="0.01" >
+                        <h3 class="rev-title slider-title">Decay</h3>
+                        <input type="range" class="REV-control-3 slider-control" value="3" max="20" min="0.001" step="0.01" >
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="glider-item">
+                <div class="add-looper">
+                    <i class="fas fa-plus"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div role="tablist" class="dots dots-main-sm"></div>
+        </div>
+
+    </div>
+
     <div class="container bottom">
         <div class="metronome">
             <div class="metronome-dot dot1"></div>

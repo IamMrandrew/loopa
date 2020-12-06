@@ -66,6 +66,7 @@ let loopBarsCountProgress = [];
 let loopProgressIndex = [];
 // HTML Elements of Circular progress bars
 let loopButtonsProgress;
+let loopButtonsProgressSM;
 
 // Mute status for Individual Looper
 let looperMuted = []
@@ -198,6 +199,31 @@ function transport() {
             }
 
         })
+
+        loopButtonsProgressSM.forEach((loopButtonProgress, index) => {
+            const radius = loopButtonProgress.r.baseVal.value;
+            const circumference = radius * 2 * Math.PI;
+            loopButtonProgress.style.strokeDasharray = circumference;        
+            
+            // 0 - 100
+            if (recordedStatus[index]) {
+                if(recordingStatus[index]) {
+                    loopButtonProgress.style.stroke = '#F17474';
+                } else {
+                    if (bufferingStatus[index]) {
+                        loopButtonProgress.style.stroke = '#DEFFE7';
+                    } else {
+                        loopButtonProgress.style.stroke = '#C4C4C4';
+                    }                      
+                }
+                setProgress(((loopBarsCountProgress[index]-1) * 4 + (looperStep[index]+1)) * (1/(4*loopBars[index])) * 100)
+                // console.log((loopBarsCountProgress[index]))
+            }
+            function setProgress(percent) {
+                loopButtonProgress.style.strokeDashoffset = circumference - (percent / 100) * circumference;       
+            }
+
+        })
         
         index++;
 
@@ -267,8 +293,20 @@ function looper() {
     recordedStatus[glider.slides.length - 2] = false;
     bufferingStatus[glider.slides.length - 2] = false;
 
+    setupMainLooper();
+    setupMainSMLooper();
+}
+
+function setupMainLooper() {
+
+    ////////////////////////////////////
+    //                                //
+    //            Desktop             //
+    //                                //
+    ////////////////////////////////////
+
     // Get the value of how many bars it will loop once for Individual Looper
-    const loopBarsInputs = document.querySelectorAll('.loop-bars-input');
+    const loopBarsInputs = document.querySelectorAll('.main .loop-bars-input');
     loopBarsInputs.forEach((loopBarsInput, index) => {
         if (index >= glider.slides.length - 2) {
             loopBars[index] = loopBarsInput.value;
@@ -279,7 +317,7 @@ function looper() {
     })
 
     // Loop Bars Control (Increase bars)
-    const loopBarsIncs = document.querySelectorAll('.loop-bars-inc');
+    const loopBarsIncs = document.querySelectorAll('.main .loop-bars-inc');
     loopBarsIncs.forEach((loopBarsInc, index) => {
         if (index >= glider.slides.length - 2) {
             loopBarsInc.addEventListener('click', inc = () => {
@@ -291,7 +329,7 @@ function looper() {
 
 
     // Loop Bars Control (Increase bars)
-    const loopBarsDecs = document.querySelectorAll('.loop-bars-dec');
+    const loopBarsDecs = document.querySelectorAll('.main .loop-bars-dec');
     loopBarsDecs.forEach((loopBarsDec, index) => {
         if (index >= glider.slides.length - 2) {
             loopBarsDec.addEventListener('click', () => {
@@ -302,7 +340,7 @@ function looper() {
     })
 
     // Volume Control for Individual Looper
-    const volControls = document.querySelectorAll('.vol-control');
+    const volControls = document.querySelectorAll('.main .vol-control');
     volControls.forEach((volControl, index) => {
         if (index >= glider.slides.length - 2) {
             volNodes[index] = new Tone.Volume(-20);
@@ -317,7 +355,7 @@ function looper() {
     })
 
     // Panner Control for Individual Looper
-    const panControls = document.querySelectorAll('.pan-control');
+    const panControls = document.querySelectorAll('.main .pan-control');
     panControls.forEach((panControl, index) => {
         if (index >= glider.slides.length - 2) {
             panNodes[index] = new Tone.Panner(0);
@@ -328,10 +366,10 @@ function looper() {
     });
 
     // Reverb Control for Individual Looper
-    const revControls = document.querySelectorAll('.REV-control');
-    const revControls2 = document.querySelectorAll('.REV-control-2');
-    const revControls3 = document.querySelectorAll('.REV-control-3');
-    const revToggles = document.querySelectorAll('.REV-toggle');
+    const revControls = document.querySelectorAll('.main .REV-control');
+    const revControls2 = document.querySelectorAll('.main .REV-control-2');
+    const revControls3 = document.querySelectorAll('.main .REV-control-3');
+    const revToggles = document.querySelectorAll('.main .REV-toggle');
     revControls.forEach((revControl, index) => {
         if (index >= glider.slides.length - 2) {
             revNodes[index] = new Tone.Reverb();
@@ -376,8 +414,8 @@ function looper() {
     });
 
     // LPF Control for Individual Looper
-    const LPFControls = document.querySelectorAll('.LPF-control');
-    const LPFToggles = document.querySelectorAll('.LPF-toggle');
+    const LPFControls = document.querySelectorAll('.main .LPF-control');
+    const LPFToggles = document.querySelectorAll('.main .LPF-toggle');
 
     LPFControls.forEach((LPFControl, index) => {
         if (index >= glider.slides.length - 2) {
@@ -401,7 +439,7 @@ function looper() {
         }
     });
 
-    const loopButtons = document.querySelectorAll('.loop-button');
+    const loopButtons = document.querySelectorAll('.main .loop-button');
     loopButtons.forEach((loopButton, index) => {
         if (index >= glider.slides.length - 2) {
             loopButton.addEventListener('click', () => {
@@ -428,7 +466,7 @@ function looper() {
         }
     })
 
-    const looperMutes = document.querySelectorAll('.looper-mute i');
+    const looperMutes = document.querySelectorAll('.main .looper-mute i');
     looperMutes.forEach((looperMute, index) => {
         if (index >= glider.slides.length - 2) {
             looperMuted[index] = false;
@@ -447,7 +485,7 @@ function looper() {
     })
     
 
-    loopButtonsProgress = document.querySelectorAll('.loop-button-progress');
+    loopButtonsProgress = document.querySelectorAll('.main .loop-button-progress');
     loopButtonsProgress.forEach((loopButtonProgress, index) => {
         if (index >= glider.slides.length - 2) {
             const radius = loopButtonProgress.r.baseVal.value;
@@ -456,6 +494,207 @@ function looper() {
             loopButtonProgress.style.strokeDashoffset = circumference;       
         }
     })    
+
+}
+
+function setupMainSMLooper() {
+    ////////////////////////////////////
+    //                                //
+    //             Mobile             //
+    //                                //
+    ////////////////////////////////////
+
+
+    // Get the value of how many bars it will loop once for Individual Looper
+    const loopBarsInputs = document.querySelectorAll('.main-sm .loop-bars-input');
+    loopBarsInputs.forEach((loopBarsInput, index) => {
+        if (index >= glider.slides.length - 2) {
+            loopBars[index] = loopBarsInput.value;
+            loopBarsInput.addEventListener('input', () => {
+                loopBars[index] = loopBarsInput.value;
+            })
+        }
+    })
+
+    // Loop Bars Control (Increase bars)
+    const loopBarsIncs = document.querySelectorAll('.main-sm .loop-bars-inc');
+    loopBarsIncs.forEach((loopBarsInc, index) => {
+        if (index >= glider.slides.length - 2) {
+            loopBarsInc.addEventListener('click', inc = () => {
+                loopBarsInputs[index].value++;
+                loopBars[index] = loopBarsInputs[index].value;
+            })
+        }
+    })
+
+
+    // Loop Bars Control (Increase bars)
+    const loopBarsDecs = document.querySelectorAll('.main-sm .loop-bars-dec');
+    loopBarsDecs.forEach((loopBarsDec, index) => {
+        if (index >= glider.slides.length - 2) {
+            loopBarsDec.addEventListener('click', () => {
+                loopBarsInputs[index].value--;
+                loopBars[index] = loopBarsInputs[index].value;
+            })
+        }
+    })
+
+    // Volume Control for Individual Looper
+    const volControls = document.querySelectorAll('.main-sm .vol-control');
+    volControls.forEach((volControl, index) => {
+        if (index >= glider.slides.length - 2) {
+            volNodes[index] = new Tone.Volume(-20);
+            volControl.addEventListener('input', () => {            
+                volNodes[index].volume.value = volControl.value;
+                if(volControl.value == -30){
+                    volNodes[index].mute=true;
+                }
+            })
+        }
+        
+    })
+
+    // Panner Control for Individual Looper
+    const panControls = document.querySelectorAll('.main-sm .pan-control');
+    panControls.forEach((panControl, index) => {
+        if (index >= glider.slides.length - 2) {
+            panNodes[index] = new Tone.Panner(0);
+            panControl.addEventListener('input', () => {            
+                panNodes[index].pan.value = panControl.value;
+            });
+        }
+    });
+
+    // Reverb Control for Individual Looper
+    const revControls = document.querySelectorAll('.main-sm .REV-control');
+    const revControls2 = document.querySelectorAll('.main-sm .REV-control-2');
+    const revControls3 = document.querySelectorAll('.main-sm .REV-control-3');
+    const revToggles = document.querySelectorAll('.main-sm .REV-toggle');
+    revControls.forEach((revControl, index) => {
+        if (index >= glider.slides.length - 2) {
+            revNodes[index] = new Tone.Reverb();
+            revNodes[index].wet.value = 0;
+            revControl.addEventListener('input', () => {            
+                revNodes[index].wet.value = revControl.value;
+                revToggles[index].checked = true; 
+            });
+        }
+    });
+
+    revControls2.forEach((revControl2, index) => {
+        if (index >= glider.slides.length - 2) {
+            revControl2.addEventListener('input', () => {            
+                revNodes[index].preDelay = revControl2.value;
+                revToggles[index].checked = true; 
+            });
+        }
+    });
+
+    revControls3.forEach((revControl3, index) => {
+        if (index >= glider.slides.length - 2) {
+            revControl3.addEventListener('input', () => {            
+                revNodes[index].decay = revControl3.value;                
+                revToggles[index].checked = true; 
+            });
+        }
+    });
+
+    revToggles.forEach((revToggle, index) => {
+        if (index >= glider.slides.length - 2) {
+            revToggle.addEventListener('change', () => {                   
+                if (!revToggle.checked) {
+                    revNodes[index].wet.value = 0;
+                } else {
+                    revNodes[index].wet.value = revControls[index].value;
+                    revNodes[index].preDelay = revControls2[index].value;
+                    revNodes[index].decay = revControls3[index].value;
+                }        
+            });
+        }
+    });
+
+    // LPF Control for Individual Looper
+    const LPFControls = document.querySelectorAll('.main-sm .LPF-control');
+    const LPFToggles = document.querySelectorAll('.main-sm .LPF-toggle');
+
+    LPFControls.forEach((LPFControl, index) => {
+        if (index >= glider.slides.length - 2) {
+            LPFNodes[index] = new Tone.Filter(20000, "lowpass", -48);
+            LPFControl.addEventListener('input', () => {            
+                LPFNodes[index].frequency.value = LPFControl.value;
+                LPFToggles[index].checked = true;                
+            });
+        }
+    });
+    
+    LPFToggles.forEach((LPFToggle, index) => {
+        if (index >= glider.slides.length - 2) {
+            LPFToggle.addEventListener('change', () => {                   
+                if (!LPFToggle.checked) {
+                    LPFNodes[index].frequency.rampTo(20000, 0.1);
+                } else {
+                    LPFNodes[index].frequency.value = LPFControls[index].value;
+                }        
+            });
+        }
+    });
+
+    const loopButtons = document.querySelectorAll('.main-sm .loop-button');
+    loopButtons.forEach((loopButton, index) => {
+        if (index >= glider.slides.length - 2) {
+            loopButton.addEventListener('click', () => {
+                recordingsIndex = index;
+                if (!recordingStatus[index]) {
+                    startRecording();
+                    recordingStatus[index] = true;
+                    recordedStatus[index] = true; 
+                    bufferingStatus[index] = false;    
+                    recordingsOffset[index] = Tone.Transport.ticks; 
+
+                    //Back to zero now
+                    loopBarsCount[index] = 0;
+                    loopProgressIndex[index] = 0;
+                    loopBarsCountProgress[index] = 0;
+                }
+                else {
+                    stopRecording();
+                    recordingStatus[index] = false;                          
+                }
+                    
+                loopButton.classList.toggle('loop-button-recording'); 
+            })
+        }
+    })
+
+    const looperMutes = document.querySelectorAll('.main-sm .looper-mute i');
+    looperMutes.forEach((looperMute, index) => {
+        if (index >= glider.slides.length - 2) {
+            looperMuted[index] = false;
+            looperMute.addEventListener('click', () => {
+                if (!looperMuted[index]){
+                    volNodes[index].mute=true;
+                    looperMuted[index] = true;
+                }                    
+                else {
+                    looperMuted[index] = false;
+                    volNodes[index].mute=false;
+                }                    
+                looperMute.classList.toggle('looper-mute-disable');
+            });
+        }
+    })
+    
+
+    loopButtonsProgressSM = document.querySelectorAll('.main-sm .loop-button-progress');
+    loopButtonsProgressSM.forEach((loopButtonProgress, index) => {
+        if (index >= glider.slides.length - 2) {
+            const radius = loopButtonProgress.r.baseVal.value;
+            const circumference = radius * 2 * Math.PI;
+            loopButtonProgress.style.strokeDasharray = circumference; 
+            loopButtonProgress.style.strokeDashoffset = circumference;       
+        }
+    })    
+
 }
 
 ////////////////////////////////////
@@ -562,10 +801,20 @@ function navControl() {
 ////////////////////////////////////
 
 function effects() {
+    const looperEffects = document.querySelectorAll('.looper-effect');
+    const looperPopups = document.querySelectorAll('.looper-popup');
     const looper = document.querySelectorAll('.looper')
     const LPFs = document.querySelectorAll('.LPF');
     const LPFPopups = document.querySelectorAll('.LPF-popup');
     const closeLPFPopups = document.querySelectorAll('.close-LPF-popup');
+
+    looperEffects.forEach((looperEffect, index) => {
+        if (index >= glider.slides.length - 2) {
+            looperEffect.addEventListener('click', () => {
+                looperPopups[index].classList.add('active');
+            })
+        }
+    })
 
     LPFs.forEach((LPF, index) => {
         if (index >= glider.slides.length - 2) {
@@ -606,6 +855,8 @@ function effects() {
             })
         }
     })
+
+
 }
 
 let glider = new Glider(document.querySelector('.glider-main'), {
@@ -639,6 +890,13 @@ let glider = new Glider(document.querySelector('.glider-main'), {
             }
         }
     ]
+});
+
+let gliderSM = new Glider(document.querySelector('.glider-main-sm'), {
+    slidesToShow: 1,
+    dots: '.dots-main-sm',
+    draggable: false,
+    dragVelocity: 1,
 });
 
 let gliderInstruction = new Glider(document.querySelector('.glider-instruction'), {
