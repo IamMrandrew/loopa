@@ -1703,10 +1703,11 @@ body .main-sm .looper .looper-content {
 }
 
 body .main-sm .looper .looper-content .loop-button-circle {
+  margin-top: 15px;
   margin-left: 40px;
   margin-right: 40px;
-  width: 170px;
-  height: 170px;
+  width: 161px;
+  height: 161px;
   border-radius: 50%;
   background-color: #FFFFFF;
   display: -webkit-box;
@@ -1743,6 +1744,7 @@ body .main-sm .looper .looper-content .loop-button-circle .loop-button-recording
 
 body .main-sm .looper .looper-content .loop-button-circle svg {
   position: absolute;
+  z-index: 10;
 }
 
 body .main-sm .looper .looper-content .loop-button-circle svg .loop-button-track {

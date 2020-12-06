@@ -720,10 +720,11 @@ body {
                 margin-bottom: 40px;
                 
                 .loop-button-circle {
+                    margin-top: 15px;
                     margin-left: 40px;
                     margin-right: 40px;                    
-                    width: 170px;
-                    height: 170px;
+                    width: 161px;
+                    height: 161px;
                     border-radius: 50%;
                     background-color: $themeWhite;
                     // box-shadow: 0 0 0 13px $themeTransparent;
@@ -753,12 +754,13 @@ body {
                     }
     
                     svg {
-                        position: absolute;                    
+                        position: absolute;  
+                        z-index: 10;                  
     
                         .loop-button-track {
                             stroke: $themeTransparent;
                             fill: none;
-                            stroke-width: 20px;
+                            stroke-width: 20px;                            
                         }
     
                         .loop-button-progress {

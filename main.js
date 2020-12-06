@@ -80,6 +80,7 @@ let LPFNodes = [];
 
 // Get Looper HTML element
 const looperHTML = document.querySelector('.glider-main .glider-item');
+const looperHTMLSM = document.querySelector('.glider-main-sm .glider-item');
 
 
 ////////////////////////////////////
@@ -539,6 +540,20 @@ function setupMainSMLooper() {
         }
     })
 
+    // Volume Control display on mobile for Individual Looper
+    const volControlSMs = document.querySelectorAll('.main-sm .vol-control-sm');
+    volControlSMs.forEach((volControlSM, index) => {
+        if (index >= glider.slides.length - 2) {
+            volControlSM.addEventListener('input', () => {            
+                volNodes[index].volume.value = volControlSM.value;
+                if(volControlSM.value == -30){
+                    volNodes[index].mute=true;
+                }
+            })
+        }
+        
+    })
+
     // Volume Control for Individual Looper
     const volControls = document.querySelectorAll('.main-sm .vol-control');
     volControls.forEach((volControl, index) => {
@@ -666,7 +681,25 @@ function setupMainSMLooper() {
         }
     })
 
-    const looperMutes = document.querySelectorAll('.main-sm .looper-mute i');
+    const looperMuteSMs = document.querySelectorAll('.main-sm .looper-footer .looper-mute i');
+    looperMuteSMs.forEach((looperMuteSM, index) => {
+        if (index >= glider.slides.length - 2) {
+            looperMuted[index] = false;
+            looperMuteSM.addEventListener('click', () => {
+                if (!looperMuted[index]){
+                    volNodes[index].mute=true;
+                    looperMuted[index] = true;
+                }                    
+                else {
+                    looperMuted[index] = false;
+                    volNodes[index].mute=false;
+                }                    
+                looperMuteSM.classList.toggle('looper-mute-disable');
+            });
+        }
+    })
+
+    const looperMutes = document.querySelectorAll('.main-sm .looper-popup .looper-mute i');
     looperMutes.forEach((looperMute, index) => {
         if (index >= glider.slides.length - 2) {
             looperMuted[index] = false;
@@ -707,7 +740,18 @@ function addLooper() {
     let addLooper = document.querySelector('.add-looper');
     let gliderTrack = document.querySelector('.glider-main .glider-track');
 
+    let addLooperSM = document.querySelector('.glider-main-sm .add-looper');
+    let gliderTrackSM = document.querySelector('.glider-main-sm .glider-track');
+
     addLooper.addEventListener('click', () => {   
+        createNewLooper();
+    });
+
+    addLooperSM.addEventListener('click', () => {   
+        createNewLooper();
+    });
+
+    function createNewLooper() {
         let newLooper = document.createElement('div');
         newLooper.classList.add('glider-item');
         newLooper.innerHTML = looperHTML.innerHTML;
@@ -721,10 +765,21 @@ function addLooper() {
         gliderTrack.insertBefore(newLooper, gliderTrack.childNodes[glider.slides.length - 1]);
         glider.refresh(true);
 
+        let newLooperSM = document.createElement('div');
+        newLooperSM.classList.add('glider-item');
+        newLooperSM.innerHTML = looperHTMLSM.innerHTML;
+
+        // ChildNodes[1] because the first node is occupied by spaces
+        newLooperSM.childNodes[1].childNodes[3].childNodes[3].innerHTML = `<h2>Loop ${gliderSM.slides.length + 1 - 1}</h2>`
+
+
+        gliderTrackSM.insertBefore(newLooperSM, gliderTrackSM.childNodes[gliderSM.slides.length - 1]);
+        gliderSM.refresh(true);
+
         sliderControl();
         effects();
         looper();
-    });
+    }
 }
 
 ////////////////////////////////////
