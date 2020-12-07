@@ -1369,8 +1369,8 @@ body .main .looper-outer .looper .loop-button-circle svg .loop-button-progress {
 
 body .main .looper-outer .looper .loop-bars {
   position: absolute;
-  top: 100px;
-  left: 30px;
+  top: 123px;
+  left: 45px;
   background-color: rgba(239, 239, 239, 0.3);
   border-radius: 15px;
   padding: 3px;
