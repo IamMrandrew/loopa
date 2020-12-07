@@ -2122,6 +2122,7 @@ body .main-sm .looper .effect-popup .effect-header .effect-toggle {
   border-radius: 10px;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
+  border: none;
 }
 
 body .main-sm .looper .effect-popup .effect-header .effect-toggle:checked {
