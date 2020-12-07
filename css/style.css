@@ -1240,7 +1240,6 @@ body .main .looper-outer {
   height: 465px;
   width: 330px;
   border-radius: 55px;
-  padding: 18px;
   margin-bottom: 10px;
   background-color: #4B4B4B;
 }
@@ -1257,7 +1256,7 @@ body .main .looper-outer .looper {
   height: 100%;
   background-color: #4B4B4B;
   border-radius: 40px;
-  padding: 15px;
+  padding: 33px;
   position: relative;
   -webkit-transition: -webkit-filter 0.5s;
   transition: -webkit-filter 0.5s;
@@ -1868,6 +1867,10 @@ body .main-sm .looper .looper-footer {
   padding-right: 5px;
 }
 
+body .main-sm .looper .looper-footer .looper-effect {
+  cursor: pointer;
+}
+
 body .main-sm .looper .looper-footer h2 {
   color: #FFFFFF;
   font-weight: 600;
@@ -1918,9 +1921,18 @@ body .main-sm .looper .looper-popup {
   transition: opacity 100ms ease-in-out, transform 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19), -webkit-transform 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19);
 }
 
+body .main-sm .looper .looper-popup .close-looper-popup {
+  color: #FFFFFF;
+  font-size: 21px;
+  position: absolute;
+  top: 18px;
+  right: 25px;
+  cursor: pointer;
+}
+
 body .main-sm .looper .looper-popup .looper-header {
-  margin-top: 15px;
-  margin-bottom: 10px;
+  margin-top: 20px;
+  margin-bottom: 0px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2048,15 +2060,18 @@ body .main-sm .looper .effect-popup {
   position: absolute;
   z-index: 150;
   top: 0;
-  left: 40px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  min-height: 312px;
+  padding: 25px;
+  padding-bottom: 35px;
   background-color: #4B4B4B;
   border-radius: 45px;
   opacity: 0;
   pointer-events: none;
-  width: 250px;
-  min-height: 150px;
-  padding: 15px;
-  padding-bottom: 20px;
   -webkit-transform: scale(0.5);
           transform: scale(0.5);
   -webkit-transition: opacity 100ms ease-in-out, -webkit-transform 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19);
@@ -2065,24 +2080,12 @@ body .main-sm .looper .effect-popup {
   transition: opacity 100ms ease-in-out, transform 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19), -webkit-transform 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19);
 }
 
-@media screen and (max-width: 768px) {
-  body .main-sm .looper .effect-popup {
-    left: 0;
-    right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-    padding: 25px;
-    padding-bottom: 35px;
-  }
-}
-
 body .main-sm .looper .effect-popup i {
   color: #FFFFFF;
-  font-size: 18px;
+  font-size: 21px;
   position: absolute;
-  top: 12px;
-  right: 16px;
+  top: 18px;
+  right: 25px;
   cursor: pointer;
 }
 
@@ -2096,10 +2099,11 @@ body .main-sm .looper .effect-popup .effect-header {
   -webkit-box-align: baseline;
       -ms-flex-align: baseline;
           align-items: baseline;
+  margin-top: 10px;
 }
 
 body .main-sm .looper .effect-popup .effect-header .effect-title {
-  font-size: 16px;
+  font-size: 24px;
   color: #FFFFFF;
   margin-top: 10px;
   margin-bottom: 0px;

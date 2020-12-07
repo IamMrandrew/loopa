@@ -79,9 +79,10 @@ let revNodes = [];
 let LPFNodes = [];
 
 // Get Looper HTML element
-const looperHTML = document.querySelector('.glider-main .glider-item');
-const looperHTMLSM = document.querySelector('.glider-main-sm .glider-item');
-
+let looperHTML = document.querySelector('.glider-main .glider-item');
+looperHTML = looperHTML.innerHTML;
+let looperHTMLSM = document.querySelector('.glider-main-sm .glider-item');
+looperHTMLSM = looperHTMLSM.innerHTML;
 
 ////////////////////////////////////
 //                                //
@@ -754,7 +755,7 @@ function addLooper() {
     function createNewLooper() {
         let newLooper = document.createElement('div');
         newLooper.classList.add('glider-item');
-        newLooper.innerHTML = looperHTML.innerHTML;
+        newLooper.innerHTML = looperHTML;
 
         // ChildNodes[1] because the first node is occupied by spaces
         newLooper.childNodes[1].childNodes[1].childNodes[1].innerHTML = `<h2>Loop ${glider.slides.length + 1 - 1}</h2>` +
@@ -767,10 +768,11 @@ function addLooper() {
 
         let newLooperSM = document.createElement('div');
         newLooperSM.classList.add('glider-item');
-        newLooperSM.innerHTML = looperHTMLSM.innerHTML;
+        newLooperSM.innerHTML = looperHTMLSM;
 
         // ChildNodes[1] because the first node is occupied by spaces
-        newLooperSM.childNodes[1].childNodes[3].childNodes[3].innerHTML = `<h2>Loop ${gliderSM.slides.length + 1 - 1}</h2>`
+        newLooperSM.childNodes[1].childNodes[3].childNodes[3].innerHTML = `Loop ${gliderSM.slides.length + 1 - 1}`
+        newLooperSM.childNodes[1].childNodes[5].childNodes[3].childNodes[1].innerHTML = `Loop ${gliderSM.slides.length + 1 - 1}`
 
 
         gliderTrackSM.insertBefore(newLooperSM, gliderTrackSM.childNodes[gliderSM.slides.length - 1]);
@@ -858,6 +860,7 @@ function navControl() {
 function effects() {
     const looperEffects = document.querySelectorAll('.looper-effect');
     const looperPopups = document.querySelectorAll('.looper-popup');
+    const looperPopupCloses = document.querySelectorAll('.close-looper-popup')
     const looper = document.querySelectorAll('.looper')
     const LPFs = document.querySelectorAll('.LPF');
     const LPFPopups = document.querySelectorAll('.LPF-popup');
@@ -870,6 +873,15 @@ function effects() {
             })
         }
     })
+
+    looperPopupCloses.forEach((looperPopupClose, index) => {
+        if (index >= glider.slides.length - 2) {
+            looperPopupClose.addEventListener('click', () => {
+                looperPopups[index].classList.remove('active');
+            })
+        }
+    })
+
 
     LPFs.forEach((LPF, index) => {
         if (index >= glider.slides.length - 2) {
