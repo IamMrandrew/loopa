@@ -2100,6 +2100,7 @@ body .main-sm .looper .effect-popup .effect-header {
       -ms-flex-align: baseline;
           align-items: baseline;
   margin-top: 10px;
+  margin-bottom: 0.5rem;
 }
 
 body .main-sm .looper .effect-popup .effect-header .effect-title {

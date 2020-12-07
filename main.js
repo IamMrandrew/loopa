@@ -543,10 +543,16 @@ function setupMainSMLooper() {
 
     // Volume Control display on mobile for Individual Looper
     const volControlSMs = document.querySelectorAll('.main-sm .vol-control-sm');
+    const volControls = document.querySelectorAll('.main-sm .vol-control');
+
     volControlSMs.forEach((volControlSM, index) => {
         if (index >= glider.slides.length - 2) {
             volControlSM.addEventListener('input', () => {            
-                volNodes[index].volume.value = volControlSM.value;
+                volNodes[index].volume.value = volControlSM.value; 
+                volControls[index].value = volControlSM.value;           
+                let x = ((volControls[index].value - volControls[index].min) / (volControls[index].max-volControls[index].min)) * 100;
+                let color = `linear-gradient(90deg, #DEFFE7 ${x}%,  #FFFFFF ${x}%)`;
+                volControls[index].style.background = color;    
                 if(volControlSM.value == -30){
                     volNodes[index].mute=true;
                 }
@@ -555,13 +561,16 @@ function setupMainSMLooper() {
         
     })
 
-    // Volume Control for Individual Looper
-    const volControls = document.querySelectorAll('.main-sm .vol-control');
+    // Volume Control for Individual Looper    
     volControls.forEach((volControl, index) => {
         if (index >= glider.slides.length - 2) {
             volNodes[index] = new Tone.Volume(-20);
             volControl.addEventListener('input', () => {            
                 volNodes[index].volume.value = volControl.value;
+                volControlSMs[index].value = volControl.value;
+                let x = ((volControlSMs[index].value - volControlSMs[index].min) / (volControlSMs[index].max-volControlSMs[index].min)) * 100;
+                let color = `linear-gradient(90deg, #DEFFE7 ${x}%,  #FFFFFF ${x}%)`;
+                volControlSMs[index].style.background = color;
                 if(volControl.value == -30){
                     volNodes[index].mute=true;
                 }
@@ -683,6 +692,8 @@ function setupMainSMLooper() {
     })
 
     const looperMuteSMs = document.querySelectorAll('.main-sm .looper-footer .looper-mute i');
+    const looperMutes = document.querySelectorAll('.main-sm .looper-popup .looper-mute i');
+
     looperMuteSMs.forEach((looperMuteSM, index) => {
         if (index >= glider.slides.length - 2) {
             looperMuted[index] = false;
@@ -696,11 +707,11 @@ function setupMainSMLooper() {
                     volNodes[index].mute=false;
                 }                    
                 looperMuteSM.classList.toggle('looper-mute-disable');
+                looperMutes[index].classList.toggle('looper-mute-disable');
             });
         }
     })
 
-    const looperMutes = document.querySelectorAll('.main-sm .looper-popup .looper-mute i');
     looperMutes.forEach((looperMute, index) => {
         if (index >= glider.slides.length - 2) {
             looperMuted[index] = false;
@@ -713,6 +724,7 @@ function setupMainSMLooper() {
                     looperMuted[index] = false;
                     volNodes[index].mute=false;
                 }                    
+                looperMuteSMs[index].classList.toggle('looper-mute-disable');
                 looperMute.classList.toggle('looper-mute-disable');
             });
         }
