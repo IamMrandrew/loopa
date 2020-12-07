@@ -930,7 +930,7 @@ let glider = new Glider(document.querySelector('.glider-main'), {
     slidesToShow: 1,
     dots: '.dots-main',
     draggable: false,
-    dragVelocity: 1,
+    dragVelocity: 1,    
     responsive: [
         {
             breakpoint: 768,
@@ -964,6 +964,7 @@ let gliderSM = new Glider(document.querySelector('.glider-main-sm'), {
     dots: '.dots-main-sm',
     draggable: false,
     dragVelocity: 1,
+    scrollLock: true
 });
 
 let gliderInstruction = new Glider(document.querySelector('.glider-instruction'), {
