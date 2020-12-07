@@ -549,10 +549,8 @@ function setupMainSMLooper() {
         if (index >= glider.slides.length - 2) {
             volControlSM.addEventListener('input', () => {            
                 volNodes[index].volume.value = volControlSM.value; 
-                volControls[index].value = volControlSM.value;           
-                let x = ((volControls[index].value - volControls[index].min) / (volControls[index].max-volControls[index].min)) * 100;
-                let color = `linear-gradient(90deg, #DEFFE7 ${x}%,  #FFFFFF ${x}%)`;
-                volControls[index].style.background = color;    
+                volControls[index].value = volControlSM.value;      
+                forceSliderUpdate(volControls[index]);       
                 if(volControlSM.value == -30){
                     volNodes[index].mute=true;
                 }
@@ -568,9 +566,7 @@ function setupMainSMLooper() {
             volControl.addEventListener('input', () => {            
                 volNodes[index].volume.value = volControl.value;
                 volControlSMs[index].value = volControl.value;
-                let x = ((volControlSMs[index].value - volControlSMs[index].min) / (volControlSMs[index].max-volControlSMs[index].min)) * 100;
-                let color = `linear-gradient(90deg, #DEFFE7 ${x}%,  #FFFFFF ${x}%)`;
-                volControlSMs[index].style.background = color;
+                forceSliderUpdate(volControlSMs[index]); 
                 if(volControl.value == -30){
                     volNodes[index].mute=true;
                 }
@@ -810,12 +806,15 @@ function sliderControl() {
             let color = `linear-gradient(90deg, #DEFFE7 ${x}%,  #FFFFFF ${x}%)`;
             slider.style.background = color;
         });
-        let x = ((slider.value - slider.min) / (slider.max-slider.min)) * 100;
-        let color = `linear-gradient(90deg, #DEFFE7 ${x}%,  #FFFFFF ${x}%)`;
-        slider.style.background = color;
+        forceSliderUpdate(slider);
     });
 }
 
+function forceSliderUpdate(slider) {
+    let x = ((slider.value - slider.min) / (slider.max-slider.min)) * 100;
+    let color = `linear-gradient(90deg, #DEFFE7 ${x}%,  #FFFFFF ${x}%)`;
+    slider.style.background = color;
+}
 function navControl() {
     const burger = document.querySelector('.burger');
     const navList = document.querySelector('.nav-list');
