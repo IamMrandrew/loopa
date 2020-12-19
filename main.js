@@ -77,6 +77,7 @@ let volNodes = [];
 let panNodes = [];
 let revNodes = [];
 let LPFNodes = [];
+let HPFNodes = [];
 
 // Get Looper HTML element
 let looperHTML = document.querySelector('.glider-main .glider-item');
@@ -165,8 +166,8 @@ function transport() {
             for (i = 0; i < glider.slides.length - 1; i++ ){
                 try {
                     if (loopBarsCount[i] == 0) {
-                        recordings[i].chain(LPFNodes[i],revNodes[i], panNodes[i], volNodes[i], Tone.Destination).start("+" + (recordingsOffset[i] % (Tone.Ticks("4n").toTicks() * 4) - 40) + "i");  
-                        recordings[i].chain(LPFNodes[i],revNodes[i], panNodes[i], volNodes[i], dest);  
+                        recordings[i].chain(LPFNodes[i], HPFNodes[i], revNodes[i], panNodes[i], volNodes[i], Tone.Destination).start("+" + (recordingsOffset[i] % (Tone.Ticks("4n").toTicks() * 4) - 40) + "i");  
+                        recordings[i].chain(LPFNodes[i], HPFNodes[i], revNodes[i], panNodes[i], volNodes[i], dest);  
                         bufferingStatus[i] = true;  
                     }
                         
@@ -441,6 +442,32 @@ function setupMainLooper() {
         }
     });
 
+    // HPF Control for Individual Looper
+    const HPFControls = document.querySelectorAll('.main .HPF-control');
+    const HPFToggles = document.querySelectorAll('.main .HPF-toggle');
+
+    HPFControls.forEach((HPFControl, index) => {
+        if (index >= glider.slides.length - 2) {
+            HPFNodes[index] = new Tone.Filter(0, "highpass", -48);
+            HPFControl.addEventListener('input', () => {            
+                HPFNodes[index].frequency.value = HPFControl.value;
+                HPFToggles[index].checked = true;                
+            });
+        }
+    });
+    
+    HPFToggles.forEach((HPFToggle, index) => {
+        if (index >= glider.slides.length - 2) {
+            HPFToggle.addEventListener('change', () => {                   
+                if (!HPFToggle.checked) {
+                    HPFNodes[index].frequency.rampTo(0, 0.1);
+                } else {
+                    HPFNodes[index].frequency.value = HPFControls[index].value;
+                }        
+            });
+        }
+    });
+
     const loopButtons = document.querySelectorAll('.main .loop-button');
     loopButtons.forEach((loopButton, index) => {
         if (index >= glider.slides.length - 2) {
@@ -660,6 +687,32 @@ function setupMainSMLooper() {
         }
     });
 
+    // HPF Control for Individual Looper
+    const HPFControls = document.querySelectorAll('.main-sm .HPF-control');
+    const HPFToggles = document.querySelectorAll('.main-sm .HPF-toggle');
+
+    HPFControls.forEach((HPFControl, index) => {
+        if (index >= glider.slides.length - 2) {
+            HPFNodes[index] = new Tone.Filter(0, "highpass", -48);
+            HPFControl.addEventListener('input', () => {            
+                HPFNodes[index].frequency.value = HPFControl.value;
+                HPFToggles[index].checked = true;                
+            });
+        }
+    });
+    
+    HPFToggles.forEach((HPFToggle, index) => {
+        if (index >= glider.slides.length - 2) {
+            HPFToggle.addEventListener('change', () => {                   
+                if (!HPFToggle.checked) {
+                    HPFNodes[index].frequency.rampTo(0, 0.1);
+                } else {
+                    HPFNodes[index].frequency.value = HPFControls[index].value;
+                }        
+            });
+        }
+    });
+
     const loopButtons = document.querySelectorAll('.main-sm .loop-button');
     loopButtons.forEach((loopButton, index) => {
         if (index >= glider.slides.length - 2) {
@@ -873,9 +926,6 @@ function effects() {
     const looperPopups = document.querySelectorAll('.looper-popup');
     const looperPopupCloses = document.querySelectorAll('.close-looper-popup')
     const looper = document.querySelectorAll('.looper')
-    const LPFs = document.querySelectorAll('.LPF');
-    const LPFPopups = document.querySelectorAll('.LPF-popup');
-    const closeLPFPopups = document.querySelectorAll('.close-LPF-popup');
 
     looperEffects.forEach((looperEffect, index) => {
         if (index >= glider.slides.length - 2) {
@@ -893,6 +943,9 @@ function effects() {
         }
     })
 
+    const LPFs = document.querySelectorAll('.LPF');
+    const LPFPopups = document.querySelectorAll('.LPF-popup');
+    const closeLPFPopups = document.querySelectorAll('.close-LPF-popup');
 
     LPFs.forEach((LPF, index) => {
         if (index >= glider.slides.length - 2) {
@@ -907,6 +960,28 @@ function effects() {
         if (index >= glider.slides.length - 2) {
             closeLPFPopup.addEventListener('click', () => {
                 LPFPopups[index].classList.remove('active');
+                looper[index].classList.remove('blur');
+            })
+        }
+    })
+
+    const HPFs = document.querySelectorAll('.HPF');
+    const HPFPopups = document.querySelectorAll('.HPF-popup');
+    const closeHPFPopups = document.querySelectorAll('.close-HPF-popup');
+
+    HPFs.forEach((HPF, index) => {
+        if (index >= glider.slides.length - 2) {
+            HPF.addEventListener('click', () => {
+                HPFPopups[index].classList.add('active');
+                looper[index].classList.add('blur');
+            })
+        }
+    })
+
+    closeHPFPopups.forEach((closeHPFPopup, index) => {
+        if (index >= glider.slides.length - 2) {
+            closeHPFPopup.addEventListener('click', () => {
+                HPFPopups[index].classList.remove('active');
                 looper[index].classList.remove('blur');
             })
         }
