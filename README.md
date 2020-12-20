@@ -31,7 +31,7 @@ We make use of Tone.js as the web audio framework. It is a relatively comprehens
 Player
 In this project, we utilized the Player provided in Tone.js to play the audio files.
 ```
-    const metronomeSound = new Tone.Player("audio/metronome.mp3").toDestination();
+const metronomeSound = new Tone.Player("audio/metronome.mp3").toDestination();
 ```
 
 #### Transport
