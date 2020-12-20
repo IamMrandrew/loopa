@@ -158,6 +158,7 @@ function transport() {
             metronomeSound.start();
 
         if (step == 0 ) {
+            // Counting the remaining loops for each loopers
             for (i = 0; i < glider.slides.length - 1; i++) {
                 loopBarsCount[i]++;
                 loopBarsCount[i] %= loopBars[i];
