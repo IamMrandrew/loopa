@@ -1,3 +1,5 @@
+<img src="https://user-images.githubusercontent.com/62586450/105276905-5496c880-5bdd-11eb-9b9f-1a0a1cea4f0f.png" width="128" height="128">
+
 # Loopa
 
 This project aimed at developing a web app about Audio Loopstation with Effects and Filters. People can use it to create their music with streamed media as input.
@@ -6,7 +8,7 @@ The project is inspired by the lectures about [Web Audio API](https://developer.
 
 Loopa is created by HTML, CSS and Javascript. Some with popular framework like [Tone.js](https://github.com/Tonejs/Tone.js/), and libraries like [Recorder.js](https://github.com/mattdiamond/Recorderjs), [RecordRTC.js](https://github.com/muaz-khan/RecordRTC) and [Glider.js](https://github.com/NickPiscitelli/Glider.js) are imported for web audio and user interface. 
 
-This course project is in collaboration with @WadeHo. Check out [https://loopa.netlify.app](https://loopa.netlify.app) to start creating your music.
+This course project is in collaboration with @WadeHo. Check out [Loopa](https://loopa.laporatory.com) to start creating your music.
 
 ![Loopa Mockup](https://user-images.githubusercontent.com/62586450/102717217-d9ab6b00-431b-11eb-834c-76494b8cd47c.png)
 Fig 1.1,  Showcase of Loopa
@@ -96,6 +98,8 @@ function createDownloadLink(blob) {
 ```
 
 Due to the lack of maintenance and functionality of Recorder.js, we also used another library called RecordRTC.js. We use it for the recording on the master output ( The output of loopers ) and output to a .wav file.
+
+```
 const audio = document.querySelector(".master-download");
 const audioContextforMainRecord = Tone.context;
 const dest = audioContextforMainRecord.createMediaStreamDestination();
@@ -105,6 +109,7 @@ let masterRecorder = RecordRTC(dest.stream, {
     recorderType: StereoAudioRecorder,
     disableLogs: true
 })
+```
 
 Chain them to the destination we created for RecordRTC
 recordings[i].chain(LPFNodes[i], HPFNodes[i], revNodes[i], panNodes[i], volNodes[i], dest);
