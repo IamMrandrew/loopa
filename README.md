@@ -1,6 +1,7 @@
 <img src="https://user-images.githubusercontent.com/62586450/105276905-5496c880-5bdd-11eb-9b9f-1a0a1cea4f0f.png" width="128" height="128">
 
 # Loopa
+[![Netlify Status](https://api.netlify.com/api/v1/badges/747980a3-60ba-4e6a-a444-2b6dbf6d942a/deploy-status)](https://app.netlify.com/sites/loopa/deploys)
 
 This project aimed at developing a web app about Audio Loopstation with Effects and Filters. People can use it to create their music with streamed media as input.
 
