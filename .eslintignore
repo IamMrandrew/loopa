@@ -1,0 +1,8 @@
+build
+dist
+coverage
+node_modules
+docs
+static/*
+!static/js
+config/*
