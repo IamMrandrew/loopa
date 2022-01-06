@@ -1,15 +1,20 @@
+import * as Tone from 'tone';
+import * as Glider from 'glider-js';
+import * as Recorder from 'recorderjs';
+import * as RecordRTC from 'recordrtc';
+
 function setupAudio() {
     let audioReady = false;
     document.querySelector('.play-button').addEventListener('click', async () => {
         if (!audioReady) {
             await Tone.start();
-            console.log('%c   Audio Ready   ', "color: #FFFFFF; font-weight: 600; background-color: #94AFA6");
+            console.log('%c   Audio Ready   ', 'color: #FFFFFF; font-weight: 600; background-color: #94AFA6');
 
             /* First get the user media here for safari which ask for permission at first */
-            var constraints = { audio: true, video:false }
+            const constraints = { audio: true, video:false };
         
             navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
-                console.log('%c   Success getUserMedia()         \n   Stream created                 \n   Initializing Recorder.js ...   ', "color: #FFFFFF; font-weight: 600; background-color: #94AFA6");
+                console.log('%c   Success getUserMedia()         \n   Stream created                 \n   Initializing Recorder.js ...   ', 'color: #FFFFFF; font-weight: 600; background-color: #94AFA6');
         
                 /*
                     create an audio context after getUserMedia is called
@@ -27,7 +32,7 @@ function setupAudio() {
         
             }).catch(function(err) {
                 //enable the record button if getUserMedia() fails
-                console.error("error");
+                console.error('error');
             });
 
             audioReady = true;
@@ -43,47 +48,47 @@ function setupAudio() {
 
 
 // Looper status
-let recordingStatus = [];
-let recordedStatus = [];
-let bufferingStatus = [];
+const recordingStatus = [];
+const recordedStatus = [];
+const bufferingStatus = [];
 
 
 // Array for Recorded Audio Files, Index for Recording Audio Files Array (Pass to recorderjs)
-let recordings = [];
+const recordings = [];
 let recordingsIndex = 0;
 
 // Array for the Record Time (Ticks away from the start beat of Transport) of Recorded Audio Files
-let recordingsOffset = [];
+const recordingsOffset = [];
 
 
 // Array for loopBars Input for Individual Looper
-let loopBars = [];
+const loopBars = [];
 // Array to count how many bars now between last played for Individual Looper
-let loopBarsCount = [];
+const loopBarsCount = [];
 
 // Array for Circular progress bars for Individual Looper
-let loopBarsCountProgress = [];
-let loopProgressIndex = [];
+const loopBarsCountProgress = [];
+const loopProgressIndex = [];
 // HTML Elements of Circular progress bars
 let loopButtonsProgress;
 let loopButtonsProgressSM;
 
 // Mute status for Individual Looper
-let looperMuted = []
+const looperMuted = [];
 
 
 // Array of Effects/ Filters for Individual Looper
-let volNodes = [];
-let panNodes = [];
-let revNodes = [];
-let LPFNodes = [];
-let HPFNodes = [];
+const volNodes = [];
+const panNodes = [];
+const revNodes = [];
+const LPFNodes = [];
+const HPFNodes = [];
 
 // Get Looper HTML element
-let looperHTML = document.querySelector('.glider-main .glider-item');
+let looperHTML : any = document.querySelector('.glider-main .glider-item');
 looperHTML = looperHTML.innerHTML;
-let looperHTMLSM = document.querySelector('.glider-main-sm .glider-item');
-looperHTMLSM = looperHTMLSM.innerHTML;
+let looperHTMLSM :any = document.querySelector('.glider-main-sm .glider-item');
+looperHTMLSM  = looperHTMLSM.innerHTML;
 
 ////////////////////////////////////
 //                                //
@@ -93,7 +98,7 @@ looperHTMLSM = looperHTMLSM.innerHTML;
 
 function transport() {
     // Initial Metronome Audio File to Player
-    const metronomeSound = new Tone.Player("audio/metronome.mp3").toDestination();
+    const metronomeSound = new Tone.Player('audio/metronome.mp3').toDestination();
     metronomeSound.volume.value = -10;
 
     // Initial bpm value
@@ -101,10 +106,10 @@ function transport() {
     Tone.Transport.bpm.value = bpm;
 
     // Get BPM Input
-    const bpmInput = document.querySelector('.bpm-input');
+    const bpmInput : any = document.querySelector('.bpm-input');
     bpmInput.addEventListener('input', () => {
         if (bpmInput.value > 500) {
-            console.warn('%c   BPM Too High   ', "color: #FFFFFF; font-weight: 600; background-color: #f8423f");
+            console.warn('%c   BPM Too High   ', 'color: #FFFFFF; font-weight: 600; background-color: #f8423f');
         } else {
             bpm = bpmInput.value;
         }
@@ -133,10 +138,10 @@ function transport() {
 
     function repeat(time) {
         // Metronome back to first beat 
-        let step = index % 4;
-        let looperStep = [];
+        const step = index % 4;
+        const looperStep = [];
 
-        for (i = 0; i < glider.slides.length - 1; i++) {
+        for (let i = 0; i < glider.slides.length - 1; i++) {
             looperStep[i] = loopProgressIndex[i] % 4;
 
             if (looperStep[i] == 0) {
@@ -146,11 +151,11 @@ function transport() {
         }
 
         // Metronome Dots Visualize
-        let metronomedots = document.querySelectorAll('.metronome-dot');
+        const metronomedots = document.querySelectorAll('.metronome-dot');
         metronomedots.forEach(metronomedot => {
             metronomedot.classList.remove('current-dot');
         });
-        let currentMetronomeDot = document.querySelector(`.metronome .metronome-dot:nth-child(${step + 1}`);
+        const currentMetronomeDot = document.querySelector(`.metronome .metronome-dot:nth-child(${step + 1}`);
         currentMetronomeDot.classList.add('current-dot');
 
         // Mute Control for Metronome
@@ -159,21 +164,21 @@ function transport() {
 
         if (step == 0 ) {
             // Counting the remaining loops for each loopers
-            for (i = 0; i < glider.slides.length - 1; i++) {
+            for (let i = 0; i < glider.slides.length - 1; i++) {
                 loopBarsCount[i]++;
                 loopBarsCount[i] %= loopBars[i];
             }
 
-            for (i = 0; i < glider.slides.length - 1; i++ ){
+            for (let i = 0; i < glider.slides.length - 1; i++ ){
                 try {
                     if (loopBarsCount[i] == 0) {
-                        recordings[i].chain(LPFNodes[i], HPFNodes[i], revNodes[i], panNodes[i], volNodes[i], Tone.Destination).start("+" + (recordingsOffset[i] % (Tone.Ticks("4n").toTicks() * 4) - 40) + "i");  
+                        recordings[i].chain(LPFNodes[i], HPFNodes[i], revNodes[i], panNodes[i], volNodes[i], Tone.Destination).start('+' + (recordingsOffset[i] % (Tone.Ticks('4n').toTicks() * 4) - 40) + 'i');  
                         recordings[i].chain(LPFNodes[i], HPFNodes[i], revNodes[i], panNodes[i], volNodes[i], dest);  
                         bufferingStatus[i] = true;  
                     }
                         
                 } catch {
-                    console.log('%c   Require Input Recordings for Loop  ' + (i + 1) + '  ', "color: #FFFFFF; font-weight: 600; background-color: #4B4B4B");
+                    console.log('%c   Require Input Recordings for Loop  ' + (i + 1) + '  ', 'color: #FFFFFF; font-weight: 600; background-color: #4B4B4B');
                 } 
                 
             }
@@ -195,14 +200,14 @@ function transport() {
                         loopButtonProgress.style.stroke = '#C4C4C4';
                     }                      
                 }
-                setProgress(((loopBarsCountProgress[index]-1) * 4 + (looperStep[index]+1)) * (1/(4*loopBars[index])) * 100)
+                setProgress(((loopBarsCountProgress[index]-1) * 4 + (looperStep[index]+1)) * (1/(4*loopBars[index])) * 100);
                 // console.log((loopBarsCountProgress[index]))
             }
             function setProgress(percent) {
                 loopButtonProgress.style.strokeDashoffset = circumference - (percent / 100) * circumference;       
             }
 
-        })
+        });
 
         loopButtonsProgressSM.forEach((loopButtonProgress, index) => {
             const radius = loopButtonProgress.r.baseVal.value;
@@ -220,34 +225,34 @@ function transport() {
                         loopButtonProgress.style.stroke = '#C4C4C4';
                     }                      
                 }
-                setProgress(((loopBarsCountProgress[index]-1) * 4 + (looperStep[index]+1)) * (1/(4*loopBars[index])) * 100)
+                setProgress(((loopBarsCountProgress[index]-1) * 4 + (looperStep[index]+1)) * (1/(4*loopBars[index])) * 100);
                 // console.log((loopBarsCountProgress[index]))
             }
             function setProgress(percent) {
                 loopButtonProgress.style.strokeDashoffset = circumference - (percent / 100) * circumference;       
             }
 
-        })
+        });
         
         index++;
 
-        for (i = 0; i < glider.slides.length - 1; i++) {
+        for (let i = 0; i < glider.slides.length - 1; i++) {
             loopProgressIndex[i]++;
         }
     }
 
     // Transport start/stop Control (Play Button)
-    playButton = document.querySelector('.play-button');
+    const playButton = document.querySelector('.play-button');
     playButton.addEventListener('click', () => {
         if (metronomePlaying) {
             Tone.Transport.stop();
             index = 0;
 
-            for (i = 0; i < glider.slides.length - 1; i++) {
+            for (let i = 0; i < glider.slides.length - 1; i++) {
                 loopProgressIndex[i] = 0;
             }
 
-            for (i = 0; i < glider.slides.length - 1; i++) {
+            for (let i = 0; i < glider.slides.length - 1; i++) {
                 recordings[i].stop();
             }
 
@@ -264,7 +269,7 @@ function transport() {
     });
 
     let masterRecording = false;
-    recordButton = document.querySelector('.record-button');
+    const recordButton = document.querySelector('.record-button');
     recordButton.addEventListener('click', () => {
         if (masterRecording) {
             stopMasterRecording();
@@ -288,7 +293,7 @@ function transport() {
 
 function looper() {
     // Initialize recordings and loopBars item
-    recordings[glider.slides.length - 2] = new Tone.Player("");
+    recordings[glider.slides.length - 2] = new Tone.Player('');
     recordingsOffset[glider.slides.length - 2] = 0.0;
     loopBars[glider.slides.length - 2] = 1;
     loopBarsCount[glider.slides.length - 2] = 0;
@@ -310,26 +315,26 @@ function setupMainLooper() {
     ////////////////////////////////////
 
     // Get the value of how many bars it will loop once for Individual Looper
-    const loopBarsInputs = document.querySelectorAll('.main .loop-bars-input');
+    const loopBarsInputs : any = document.querySelectorAll('.main .loop-bars-input');
     loopBarsInputs.forEach((loopBarsInput, index) => {
         if (index >= glider.slides.length - 2) {
             loopBars[index] = loopBarsInput.value;
             loopBarsInput.addEventListener('input', () => {
                 loopBars[index] = loopBarsInput.value;
-            })
+            });
         }
-    })
+    });
 
     // Loop Bars Control (Increase bars)
     const loopBarsIncs = document.querySelectorAll('.main .loop-bars-inc');
     loopBarsIncs.forEach((loopBarsInc, index) => {
         if (index >= glider.slides.length - 2) {
-            loopBarsInc.addEventListener('click', inc = () => {
+            loopBarsInc.addEventListener('click', /*inc =*/ () => {
                 loopBarsInputs[index].value++;
                 loopBars[index] = loopBarsInputs[index].value;
-            })
+            });
         }
-    })
+    });
 
 
     // Loop Bars Control (Increase bars)
@@ -339,12 +344,12 @@ function setupMainLooper() {
             loopBarsDec.addEventListener('click', () => {
                 loopBarsInputs[index].value--;
                 loopBars[index] = loopBarsInputs[index].value;
-            })
+            });
         }
-    })
+    });
 
     // Volume Control for Individual Looper
-    const volControls = document.querySelectorAll('.main .vol-control');
+    const volControls : any = document.querySelectorAll('.main .vol-control');
     volControls.forEach((volControl, index) => {
         if (index >= glider.slides.length - 2) {
             volNodes[index] = new Tone.Volume(-20);
@@ -353,13 +358,13 @@ function setupMainLooper() {
                 if(volControl.value == -30){
                     volNodes[index].mute=true;
                 }
-            })
+            });
         }
         
-    })
+    });
 
     // Panner Control for Individual Looper
-    const panControls = document.querySelectorAll('.main .pan-control');
+    const panControls : any = document.querySelectorAll('.main .pan-control');
     panControls.forEach((panControl, index) => {
         if (index >= glider.slides.length - 2) {
             panNodes[index] = new Tone.Panner(0);
@@ -370,10 +375,10 @@ function setupMainLooper() {
     });
 
     // Reverb Control for Individual Looper
-    const revControls = document.querySelectorAll('.main .REV-control');
-    const revControls2 = document.querySelectorAll('.main .REV-control-2');
-    const revControls3 = document.querySelectorAll('.main .REV-control-3');
-    const revToggles = document.querySelectorAll('.main .REV-toggle');
+    const revControls : any = document.querySelectorAll('.main .REV-control');
+    const revControls2 : any = document.querySelectorAll('.main .REV-control-2');
+    const revControls3 : any = document.querySelectorAll('.main .REV-control-3');
+    const revToggles : any = document.querySelectorAll('.main .REV-toggle');
     revControls.forEach((revControl, index) => {
         if (index >= glider.slides.length - 2) {
             revNodes[index] = new Tone.Reverb();
@@ -418,12 +423,12 @@ function setupMainLooper() {
     });
 
     // LPF Control for Individual Looper
-    const LPFControls = document.querySelectorAll('.main .LPF-control');
-    const LPFToggles = document.querySelectorAll('.main .LPF-toggle');
+    const LPFControls : any = document.querySelectorAll('.main .LPF-control');
+    const LPFToggles : any = document.querySelectorAll('.main .LPF-toggle');
 
     LPFControls.forEach((LPFControl, index) => {
         if (index >= glider.slides.length - 2) {
-            LPFNodes[index] = new Tone.Filter(20000, "lowpass", -48);
+            LPFNodes[index] = new Tone.Filter(20000, 'lowpass', -48);
             LPFControl.addEventListener('input', () => {            
                 LPFNodes[index].frequency.value = LPFControl.value;
                 LPFToggles[index].checked = true;                
@@ -444,12 +449,12 @@ function setupMainLooper() {
     });
 
     // HPF Control for Individual Looper
-    const HPFControls = document.querySelectorAll('.main .HPF-control');
-    const HPFToggles = document.querySelectorAll('.main .HPF-toggle');
+    const HPFControls : any = document.querySelectorAll('.main .HPF-control');
+    const HPFToggles : any = document.querySelectorAll('.main .HPF-toggle');
 
     HPFControls.forEach((HPFControl, index) => {
         if (index >= glider.slides.length - 2) {
-            HPFNodes[index] = new Tone.Filter(0, "highpass", -48);
+            HPFNodes[index] = new Tone.Filter(0, 'highpass', -48);
             HPFControl.addEventListener('input', () => {            
                 HPFNodes[index].frequency.value = HPFControl.value;
                 HPFToggles[index].checked = true;                
@@ -492,9 +497,9 @@ function setupMainLooper() {
                 }
                     
                 loopButton.classList.toggle('loop-button-recording'); 
-            })
+            });
         }
-    })
+    });
 
     const looperMutes = document.querySelectorAll('.main .looper-mute i');
     looperMutes.forEach((looperMute, index) => {
@@ -512,7 +517,7 @@ function setupMainLooper() {
                 looperMute.classList.toggle('looper-mute-disable');
             });
         }
-    })
+    });
     
 
     loopButtonsProgress = document.querySelectorAll('.main .loop-button-progress');
@@ -523,7 +528,7 @@ function setupMainLooper() {
             loopButtonProgress.style.strokeDasharray = circumference; 
             loopButtonProgress.style.strokeDashoffset = circumference;       
         }
-    })    
+    });    
 
 }
 
@@ -536,26 +541,26 @@ function setupMainSMLooper() {
 
 
     // Get the value of how many bars it will loop once for Individual Looper
-    const loopBarsInputs = document.querySelectorAll('.main-sm .loop-bars-input');
+    const loopBarsInputs: any = document.querySelectorAll('.main-sm .loop-bars-input');
     loopBarsInputs.forEach((loopBarsInput, index) => {
         if (index >= glider.slides.length - 2) {
             loopBars[index] = loopBarsInput.value;
             loopBarsInput.addEventListener('input', () => {
                 loopBars[index] = loopBarsInput.value;
-            })
+            });
         }
-    })
+    });
 
     // Loop Bars Control (Increase bars)
-    const loopBarsIncs = document.querySelectorAll('.main-sm .loop-bars-inc');
+    const loopBarsIncs  = document.querySelectorAll('.main-sm .loop-bars-inc');
     loopBarsIncs.forEach((loopBarsInc, index) => {
         if (index >= glider.slides.length - 2) {
-            loopBarsInc.addEventListener('click', inc = () => {
+            loopBarsInc.addEventListener('click', /*inc = */() => {
                 loopBarsInputs[index].value++;
                 loopBars[index] = loopBarsInputs[index].value;
-            })
+            });
         }
-    })
+    });
 
 
     // Loop Bars Control (Increase bars)
@@ -565,13 +570,13 @@ function setupMainSMLooper() {
             loopBarsDec.addEventListener('click', () => {
                 loopBarsInputs[index].value--;
                 loopBars[index] = loopBarsInputs[index].value;
-            })
+            });
         }
-    })
+    });
 
     // Volume Control display on mobile for Individual Looper
-    const volControlSMs = document.querySelectorAll('.main-sm .vol-control-sm');
-    const volControls = document.querySelectorAll('.main-sm .vol-control');
+    const volControlSMs : any = document.querySelectorAll('.main-sm .vol-control-sm');
+    const volControls : any = document.querySelectorAll('.main-sm .vol-control');
 
     volControlSMs.forEach((volControlSM, index) => {
         if (index >= glider.slides.length - 2) {
@@ -582,10 +587,10 @@ function setupMainSMLooper() {
                 if(volControlSM.value == -30){
                     volNodes[index].mute=true;
                 }
-            })
+            });
         }
         
-    })
+    });
 
     // Volume Control for Individual Looper    
     volControls.forEach((volControl, index) => {
@@ -598,13 +603,13 @@ function setupMainSMLooper() {
                 if(volControl.value == -30){
                     volNodes[index].mute=true;
                 }
-            })
+            });
         }
         
-    })
+    });
 
     // Panner Control for Individual Looper
-    const panControls = document.querySelectorAll('.main-sm .pan-control');
+    const panControls : any = document.querySelectorAll('.main-sm .pan-control');
     panControls.forEach((panControl, index) => {
         if (index >= glider.slides.length - 2) {
             panNodes[index] = new Tone.Panner(0);
@@ -615,10 +620,10 @@ function setupMainSMLooper() {
     });
 
     // Reverb Control for Individual Looper
-    const revControls = document.querySelectorAll('.main-sm .REV-control');
-    const revControls2 = document.querySelectorAll('.main-sm .REV-control-2');
-    const revControls3 = document.querySelectorAll('.main-sm .REV-control-3');
-    const revToggles = document.querySelectorAll('.main-sm .REV-toggle');
+    const revControls : any = document.querySelectorAll('.main-sm .REV-control');
+    const revControls2 : any = document.querySelectorAll('.main-sm .REV-control-2');
+    const revControls3 : any = document.querySelectorAll('.main-sm .REV-control-3');
+    const revToggles : any = document.querySelectorAll('.main-sm .REV-toggle');
     revControls.forEach((revControl, index) => {
         if (index >= glider.slides.length - 2) {
             revNodes[index] = new Tone.Reverb();
@@ -663,12 +668,12 @@ function setupMainSMLooper() {
     });
 
     // LPF Control for Individual Looper
-    const LPFControls = document.querySelectorAll('.main-sm .LPF-control');
-    const LPFToggles = document.querySelectorAll('.main-sm .LPF-toggle');
+    const LPFControls : any = document.querySelectorAll('.main-sm .LPF-control');
+    const LPFToggles : any = document.querySelectorAll('.main-sm .LPF-toggle');
 
     LPFControls.forEach((LPFControl, index) => {
         if (index >= glider.slides.length - 2) {
-            LPFNodes[index] = new Tone.Filter(20000, "lowpass", -48);
+            LPFNodes[index] = new Tone.Filter(20000, 'lowpass', -48);
             LPFControl.addEventListener('input', () => {            
                 LPFNodes[index].frequency.value = LPFControl.value;
                 LPFToggles[index].checked = true;                
@@ -689,12 +694,12 @@ function setupMainSMLooper() {
     });
 
     // HPF Control for Individual Looper
-    const HPFControls = document.querySelectorAll('.main-sm .HPF-control');
-    const HPFToggles = document.querySelectorAll('.main-sm .HPF-toggle');
+    const HPFControls : any = document.querySelectorAll('.main-sm .HPF-control');
+    const HPFToggles : any = document.querySelectorAll('.main-sm .HPF-toggle');
 
     HPFControls.forEach((HPFControl, index) => {
         if (index >= glider.slides.length - 2) {
-            HPFNodes[index] = new Tone.Filter(0, "highpass", -48);
+            HPFNodes[index] = new Tone.Filter(0, 'highpass', -48);
             HPFControl.addEventListener('input', () => {            
                 HPFNodes[index].frequency.value = HPFControl.value;
                 HPFToggles[index].checked = true;                
@@ -737,9 +742,9 @@ function setupMainSMLooper() {
                 }
                     
                 loopButton.classList.toggle('loop-button-recording'); 
-            })
+            });
         }
-    })
+    });
 
     const looperMuteSMs = document.querySelectorAll('.main-sm .looper-footer .looper-mute i');
     const looperMutes = document.querySelectorAll('.main-sm .looper-popup .looper-mute i');
@@ -760,7 +765,7 @@ function setupMainSMLooper() {
                 looperMutes[index].classList.toggle('looper-mute-disable');
             });
         }
-    })
+    });
 
     looperMutes.forEach((looperMute, index) => {
         if (index >= glider.slides.length - 2) {
@@ -778,7 +783,7 @@ function setupMainSMLooper() {
                 looperMute.classList.toggle('looper-mute-disable');
             });
         }
-    })
+    });
     
 
     loopButtonsProgressSM = document.querySelectorAll('.main-sm .loop-button-progress');
@@ -789,7 +794,7 @@ function setupMainSMLooper() {
             loopButtonProgress.style.strokeDasharray = circumference; 
             loopButtonProgress.style.strokeDashoffset = circumference;       
         }
-    })    
+    });    
 
 }
 
@@ -800,11 +805,11 @@ function setupMainSMLooper() {
 ////////////////////////////////////
 
 function addLooper() {
-    let addLooper = document.querySelector('.add-looper');
-    let gliderTrack = document.querySelector('.glider-main .glider-track');
+    const addLooper = document.querySelector('.add-looper');
+    const gliderTrack = document.querySelector('.glider-main .glider-track');
 
-    let addLooperSM = document.querySelector('.glider-main-sm .add-looper');
-    let gliderTrackSM = document.querySelector('.glider-main-sm .glider-track');
+    const addLooperSM = document.querySelector('.glider-main-sm .add-looper');
+    const gliderTrackSM = document.querySelector('.glider-main-sm .glider-track');
 
     addLooper.addEventListener('click', () => {   
         createNewLooper();
@@ -815,12 +820,12 @@ function addLooper() {
     });
 
     function createNewLooper() {
-        let newLooper = document.createElement('div');
+        const newLooper = document.createElement('div');
         newLooper.classList.add('glider-item');
         newLooper.innerHTML = looperHTML;
 
         // ChildNodes[1] because the first node is occupied by spaces
-        newLooper.childNodes[1].childNodes[1].childNodes[1].innerHTML = `<h2>Loop ${glider.slides.length + 1 - 1}</h2>` +
+        (newLooper.childNodes[1].childNodes[1].childNodes[1] as any).innerHTML = `<h2>Loop ${glider.slides.length + 1 - 1}</h2>` +
         '<div class="looper-mute">' +
             '<i class="fas fa-volume-down"></i>' +
         '</div>';
@@ -828,13 +833,13 @@ function addLooper() {
         gliderTrack.insertBefore(newLooper, gliderTrack.childNodes[glider.slides.length - 1]);
         glider.refresh(true);
 
-        let newLooperSM = document.createElement('div');
+        const newLooperSM = document.createElement('div');
         newLooperSM.classList.add('glider-item');
         newLooperSM.innerHTML = looperHTMLSM;
 
         // ChildNodes[1] because the first node is occupied by spaces
-        newLooperSM.childNodes[1].childNodes[3].childNodes[3].innerHTML = `Loop ${gliderSM.slides.length + 1 - 1}`
-        newLooperSM.childNodes[1].childNodes[5].childNodes[3].childNodes[1].innerHTML = `Loop ${gliderSM.slides.length + 1 - 1}`
+        (newLooperSM.childNodes[1].childNodes[3].childNodes[3] as any).innerHTML = `Loop ${gliderSM.slides.length + 1 - 1}`;
+        (newLooperSM.childNodes[1].childNodes[5].childNodes[3].childNodes[1] as any).innerHTML = `Loop ${gliderSM.slides.length + 1 - 1}`;
 
 
         gliderTrackSM.insertBefore(newLooperSM, gliderTrackSM.childNodes[gliderSM.slides.length - 1]);
@@ -853,11 +858,11 @@ function addLooper() {
 ////////////////////////////////////
 
 function sliderControl() {
-    let sliders = document.querySelectorAll(".slider-control");
+    const sliders : any = document.querySelectorAll('.slider-control');
     sliders.forEach((slider) => {
         slider.addEventListener('input', () => {
-            let x = ((slider.value - slider.min) / (slider.max-slider.min)) * 100;
-            let color = `linear-gradient(90deg, #DEFFE7 ${x}%,  #FFFFFF ${x}%)`;
+            const x = ((slider.value - slider.min) / (slider.max-slider.min)) * 100;
+            const color = `linear-gradient(90deg, #DEFFE7 ${x}%,  #FFFFFF ${x}%)`;
             slider.style.background = color;
         });
         forceSliderUpdate(slider);
@@ -865,8 +870,8 @@ function sliderControl() {
 }
 
 function forceSliderUpdate(slider) {
-    let x = ((slider.value - slider.min) / (slider.max-slider.min)) * 100;
-    let color = `linear-gradient(90deg, #DEFFE7 ${x}%,  #FFFFFF ${x}%)`;
+    const x = ((slider.value - slider.min) / (slider.max-slider.min)) * 100;
+    const color = `linear-gradient(90deg, #DEFFE7 ${x}%,  #FFFFFF ${x}%)`;
     slider.style.background = color;
 }
 function navControl() {
@@ -875,7 +880,7 @@ function navControl() {
     burger.addEventListener('click', () => {
         navList.classList.toggle('active');
         burger.classList.toggle('active');
-    })
+    });
 
     const instructionPopup = document.querySelector('.instruction-popup');
     const instructionToggle = document.querySelector('.instruction-toggle');
@@ -893,26 +898,26 @@ function navControl() {
         main.classList.add('blur');
         nav.classList.add('blur');
         bottom.classList.add('blur');
-    })
+    });
     instructionClose.addEventListener('click', () => {
         instructionPopup.classList.remove('active');        
         main.classList.remove('blur');
         nav.classList.remove('blur');
         bottom.classList.remove('blur');
         gliderInstruction.scrollItem(0);
-    })
+    });
     instructionDismiss.addEventListener('click', () => {
         instructionPopup.classList.remove('active');    
         main.classList.remove('blur');
         nav.classList.remove('blur');
         bottom.classList.remove('blur');
         gliderInstruction.scrollItem(0);
-    })
+    });
     instructionNexts.forEach((instructionNext, index) => {
         instructionNext.addEventListener('click', () => {
             gliderInstruction.scrollItem(index+1);
-        })
-    })
+        });
+    });
 
 }
 
@@ -925,24 +930,24 @@ function navControl() {
 function effects() {
     const looperEffects = document.querySelectorAll('.looper-effect');
     const looperPopups = document.querySelectorAll('.looper-popup');
-    const looperPopupCloses = document.querySelectorAll('.close-looper-popup')
-    const looper = document.querySelectorAll('.looper')
+    const looperPopupCloses = document.querySelectorAll('.close-looper-popup');
+    const looper = document.querySelectorAll('.looper');
 
     looperEffects.forEach((looperEffect, index) => {
         if (index >= glider.slides.length - 2) {
             looperEffect.addEventListener('click', () => {
                 looperPopups[index].classList.add('active');
-            })
+            });
         }
-    })
+    });
 
     looperPopupCloses.forEach((looperPopupClose, index) => {
         if (index >= glider.slides.length - 2) {
             looperPopupClose.addEventListener('click', () => {
                 looperPopups[index].classList.remove('active');
-            })
+            });
         }
-    })
+    });
 
     const LPFs = document.querySelectorAll('.LPF');
     const LPFPopups = document.querySelectorAll('.LPF-popup');
@@ -953,18 +958,18 @@ function effects() {
             LPF.addEventListener('click', () => {
                 LPFPopups[index].classList.add('active');
                 looper[index].classList.add('blur');
-            })
+            });
         }
-    })
+    });
 
     closeLPFPopups.forEach((closeLPFPopup, index) => {
         if (index >= glider.slides.length - 2) {
             closeLPFPopup.addEventListener('click', () => {
                 LPFPopups[index].classList.remove('active');
                 looper[index].classList.remove('blur');
-            })
+            });
         }
-    })
+    });
 
     const HPFs = document.querySelectorAll('.HPF');
     const HPFPopups = document.querySelectorAll('.HPF-popup');
@@ -975,18 +980,18 @@ function effects() {
             HPF.addEventListener('click', () => {
                 HPFPopups[index].classList.add('active');
                 looper[index].classList.add('blur');
-            })
+            });
         }
-    })
+    });
 
     closeHPFPopups.forEach((closeHPFPopup, index) => {
         if (index >= glider.slides.length - 2) {
             closeHPFPopup.addEventListener('click', () => {
                 HPFPopups[index].classList.remove('active');
                 looper[index].classList.remove('blur');
-            })
+            });
         }
-    })
+    });
 
     const REVs = document.querySelectorAll('.REV');
     const REVPopups = document.querySelectorAll('.REV-popup');
@@ -997,23 +1002,23 @@ function effects() {
             REV.addEventListener('click', () => {
                 REVPopups[index].classList.add('active');
                 looper[index].classList.add('blur');
-            })
+            });
         }
-    })
+    });
 
     closeREVPopups.forEach((closeREVPopup, index) => {
         if (index >= glider.slides.length - 2) {
             closeREVPopup.addEventListener('click', () => {
                 REVPopups[index].classList.remove('active');
                 looper[index].classList.remove('blur');
-            })
+            });
         }
-    })
+    });
 
 
 }
 
-let glider = new Glider(document.querySelector('.glider-main'), {
+const glider = new Glider(document.querySelector('.glider-main'), {
     slidesToShow: 1,
     dots: '.dots-main',
     draggable: false,
@@ -1046,7 +1051,7 @@ let glider = new Glider(document.querySelector('.glider-main'), {
     ]
 });
 
-let gliderSM = new Glider(document.querySelector('.glider-main-sm'), {
+const gliderSM = new Glider(document.querySelector('.glider-main-sm'), {
     slidesToShow: 1,
     dots: '.dots-main-sm',
     draggable: false,
@@ -1054,7 +1059,7 @@ let gliderSM = new Glider(document.querySelector('.glider-main-sm'), {
     scrollLock: true
 });
 
-let gliderInstruction = new Glider(document.querySelector('.glider-instruction'), {
+const gliderInstruction = new Glider(document.querySelector('.glider-instruction'), {
     slidesToShow: 1,
     dots: '.dots-instruction',
     draggable: false,
@@ -1069,33 +1074,33 @@ let gliderInstruction = new Glider(document.querySelector('.glider-instruction')
 //webkitURL is deprecated but nevertheless
 URL = window.URL || window.webkitURL;
 
-var gumStream; 						//stream from getUserMedia()
-var rec; 							//Recorder.js object
-var input; 							//MediaStreamAudioSourceNode we'll be recording
+let gumStream; 						//stream from getUserMedia()
+let rec; 							//Recorder.js object
+let input; 							//MediaStreamAudioSourceNode we'll be recording
 
 // shim for AudioContext when it's not avb. 
-var AudioContext = window.AudioContext || window.webkitAudioContext;
-var audioContext //audio context to help us record
+const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+let audioContext; //audio context to help us record
 
 function startRecording() {
-    console.log('%c   Record Button Clicked   ', "color: #FFFFFF; font-weight: 600; background-color: #94AFA6");
+    console.log('%c   Record Button Clicked   ', 'color: #FFFFFF; font-weight: 600; background-color: #94AFA6');
 
     /* 
         Create the Recorder object and configure to record mono sound (1 channel)
         Recording 2 channels  will double the file size
     */
-    rec = new Recorder(input,{numChannels:1})
+    rec = new Recorder(input,{numChannels:1});
 
     //start the recording process
-    rec.record()
+    rec.record();
 
-    console.log('%c   Recording Started   ', "color: #FFFFFF; font-weight: 600; background-color: #94AFA6");
+    console.log('%c   Recording Started   ', 'color: #FFFFFF; font-weight: 600; background-color: #94AFA6');
 
 
 }
 
 function stopRecording() {
-    console.log('%c   Stop Button Clicked   ', "color: #FFFFFF; font-weight: 600; background-color: #F17474");
+    console.log('%c   Stop Button Clicked   ', 'color: #FFFFFF; font-weight: 600; background-color: #F17474');
 
     //tell the recorder to stop the recording
     rec.stop();
@@ -1106,35 +1111,35 @@ function stopRecording() {
 
 
 function createDownloadLink(blob) {
-    var url = URL.createObjectURL(blob);
+    const url = URL.createObjectURL(blob);
     recordings[recordingsIndex] = new Tone.Player(url);
 }
 
-const audio = document.querySelector(".master-download");
+const audio : any = document.querySelector('.master-download');
 const audioContextforMainRecord = Tone.context;
 const dest = audioContextforMainRecord.createMediaStreamDestination();
 
-let masterRecorder = RecordRTC(dest.stream, {
+const masterRecorder = RecordRTC(dest.stream, {
     type: 'audio',
     mimeType: 'audio/wav',
-    recorderType: StereoAudioRecorder,
+    //recorderType: StereoAudioRecorder,
     disableLogs: true
-})
+});
 
 function startMasterRecording() {
     masterRecorder.startRecording();
-    console.log('%c   Master Recording Started   ', "color: #FFFFFF; font-weight: 600; background-color: #94AFA6");
+    console.log('%c   Master Recording Started   ', 'color: #FFFFFF; font-weight: 600; background-color: #94AFA6');
 }
 
 
 function stopMasterRecording() {
     masterRecorder.stopRecording( ()=> {
-        let blob = masterRecorder.getBlob();
-        audio.href = URL.createObjectURL(blob)
-        audio.download = "loopa_master.wav"
+        const blob = masterRecorder.getBlob();
+        audio.href = URL.createObjectURL(blob);
+        audio.download = 'loopa_master.wav';
     });
-    console.log('%c   Master Recording Stopped   ', "color: #FFFFFF; font-weight: 600; background-color: #F17474");
-    console.log('%c   Master output .wav File Created  ', "color: #FFFFFF; font-weight: 600; background-color: #4B4B4B");
+    console.log('%c   Master Recording Stopped   ', 'color: #FFFFFF; font-weight: 600; background-color: #F17474');
+    console.log('%c   Master output .wav File Created  ', 'color: #FFFFFF; font-weight: 600; background-color: #4B4B4B');
 }
 
 
